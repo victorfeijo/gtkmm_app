@@ -1,5 +1,5 @@
 /* To compile
- * g++ main_window.cc main.cc -o simple-button `pkg-config gtkmm-3.0 --cflags --libs`
+ * g++ main_window.cc main.cc -o app `pkg-config gtkmm-3.0 --cflags --libs`
  */
 
 #include "main_window.h"
