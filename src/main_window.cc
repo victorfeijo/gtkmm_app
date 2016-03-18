@@ -1,4 +1,5 @@
 #include "main_window.h"
+#include "draw_options_box.h"
 
 MainWindow::MainWindow()
 : main_box(Gtk::ORIENTATION_HORIZONTAL),
@@ -17,8 +18,13 @@ MainWindow::MainWindow()
   left_box.set_border_width(10);
   left_frame.add(left_box);
 
-  //add something to left box
+  //Adding the draw options box to left frame
+  left_box.pack_start(
+    *Gtk::manage(new DrawOptionsBox("Draw Options", 30, Gtk::BUTTONBOX_SPREAD)),
+    Gtk::PACK_EXPAND_WIDGET
+  );
 
+  //Right box
   main_box.pack_start(right_frame, Gtk::PACK_EXPAND_WIDGET, 10);
 
   right_box.set_border_width(10);
@@ -26,7 +32,6 @@ MainWindow::MainWindow()
 
   //show all components
   show_all_children();
-
 }
 
 MainWindow::~MainWindow()
