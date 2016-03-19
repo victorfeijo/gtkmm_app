@@ -10,17 +10,17 @@ MainWindow::MainWindow()
 {
   set_border_width(15);
   set_title("Main Window");
-  set_default_size(400, 400);
+  set_default_size(700, 500);
   add(main_box);
 
-  main_box.pack_start(left_frame, Gtk::PACK_EXPAND_WIDGET, 10);
+  main_box.pack_start(left_frame, Gtk::PACK_SHRINK, 10);
 
   left_box.set_border_width(10);
   left_frame.add(left_box);
 
   //Adding the draw options box to left frame
   left_box.pack_start(
-    *Gtk::manage(new DrawOptionsBox("Draw Options", 30, Gtk::BUTTONBOX_SPREAD)),
+    *Gtk::manage(new DrawOptionsBox("Draw Options", 10, Gtk::BUTTONBOX_START)),
     Gtk::PACK_EXPAND_WIDGET
   );
 
