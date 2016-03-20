@@ -7,6 +7,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
+#include <gtkmm/grid.h>
 
 class DrawOptionsBox : public Gtk::Frame
 {
@@ -18,7 +19,9 @@ public:
   virtual ~DrawOptionsBox();
 
 protected:
-  Gtk::Button button_add_object, button_zoom_in,
+  Gtk::Button button_add_object, button_move_up, button_move_down,
+              button_move_left, button_move_right, button_zoom_in,
               button_zoom_out, button_close;
+  Gtk::Grid grid_move;
 };
 #endif // GTKMM_APP_DRAW_OPTIONS_BOX
