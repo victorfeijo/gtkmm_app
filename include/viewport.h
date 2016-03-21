@@ -4,7 +4,7 @@
 #include <gtkmm/drawingarea.h>
 #include <gdkmm/rgba.h>
 #include <cairomm/context.h>
-#include "world.h"
+#include "view_window.h"
 
 class Viewport : public Gtk::DrawingArea
 {
@@ -12,10 +12,15 @@ class Viewport : public Gtk::DrawingArea
 public:
   Viewport();
   virtual ~Viewport();
+  int* convertCordinate(int* cord);
+  ViewWindow * getViewWindow();
+  // void update();
 
 protected:
-  int XWmin, YWmin, XWmax, YWmax;
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
+  // const Cairo::RefPtr<Cairo::Context> * cr;
+  ViewWindow * viewWindow;
+  int Xvpmin, Yvpmin, Xvpmax, Yvpmax;
 
 };
 
