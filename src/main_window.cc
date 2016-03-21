@@ -6,7 +6,8 @@ MainWindow::MainWindow()
       left_box(Gtk::ORIENTATION_VERTICAL),
       right_box(Gtk::ORIENTATION_VERTICAL),
       left_frame("Buttons"),
-      right_frame("Viewport")
+      right_frame("Viewport"),
+      viewport()
 {
   set_border_width(15);
   set_title("Main Window");

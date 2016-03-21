@@ -11,6 +11,8 @@
 #include <gtkmm/adjustment.h>
 #include <glibmm/refptr.h>
 #include "viewport.h"
+#include "view_window.h"
+
 
 class MainWindow : public Gtk::Window
 {
