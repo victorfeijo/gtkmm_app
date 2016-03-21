@@ -1,15 +1,10 @@
 #include "viewport.h"
 
+                          #include <iostream>
+
 Viewport::Viewport()
+    : Xvpmin(0), Yvpmin(0), Xvpmax(0), Yvpmax(0)
 {
-  // TODO allocation não está pronto antes de chamar onDraw;
-  Gtk::Allocation allocation = get_allocation();
-  this->Xvpmin = 0;
-  this->Yvpmin = 0;
-  this->Xvpmax = allocation.get_width();
-  this->Yvpmax = allocation.get_width();
-  this->viewWindow = new ViewWindow(this->Xvpmin, this->Yvpmin,
-                                    this->Xvpmax, this->Yvpmax);
 }
 
 bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
@@ -17,13 +12,30 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   // TODO cr = &cr;
   cr->set_line_width(2);
 
+  if (this->viewWindow == NULL)
+  {
+    Gtk::Allocation allocation = this->get_allocation();
+    this->Xvpmax = allocation.get_width();
+    this->Yvpmax = allocation.get_height();
+    if(this->Xvpmax > 10 && this->Yvpmax > 10)
+    {
+      this->viewWindow = new ViewWindow(this->Xvpmin, this->Yvpmin,
+                                        this->Xvpmax, this->Yvpmax);
+    }
+  }
+  else
+  {
+    Gtk::Allocation allocation = this->get_allocation();
+    // TODO update viewport and viewwindow sizes
+  }
+
   // paint white background
   cr->set_source_rgb(1, 1, 1);
   cr->paint();
 
   cr->set_source_rgb(0.8, 0, 0);
   // draw viewport corners
-  cr->move_to(0, 0);
+  cr->move_to(0,0);
   cr->line_to(this->Xvpmax,0);
   cr->line_to(this->Xvpmax,this->Yvpmax);
   cr->line_to(0,this->Yvpmax);
@@ -45,9 +57,8 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   //   cr->stroke();
 
 //NOTE BEGIN TEST:
-  Gtk::Allocation allocation = get_allocation();
-  const int width = allocation.get_width();
-  const int height = allocation.get_height();
+  const int width = this->Xvpmax;
+  const int height = this->Yvpmax;
   // coordinates for the center of the window
   int xc, yc;
   xc = width / 2;

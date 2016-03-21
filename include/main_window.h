@@ -24,7 +24,7 @@ public:
 protected:
   /* Add here any components or frames
    */
-  Gtk::Box main_box, left_box, right_box;
+  Gtk::Box main_box, left_box;
   Gtk::Frame left_frame, right_frame;
 
   Viewport viewport;

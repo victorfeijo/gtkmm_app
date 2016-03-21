@@ -4,21 +4,21 @@
 #include <map>
 #include <list>
 #include <string>
-#include "objects.h"
+#include "drawable_object.h"
 
 class DisplayFile
 {
 public:
   DisplayFile();
   virtual ~DisplayFile();
-  void addObject(DrawbleObject object);
-  DrawbleObject getObjectByName(string name);
-  void removeObject(DrawableObject object);
+  void addObject(DrawableObject* object);
+  DrawableObject* getObjectByName(string name);
+  void removeObject(DrawableObject* object);
   void removeObjectByName(string name);
   std::list<string> getNamesList();
 
 protected:
-  std::map<string, DrawbleObject> objects;
+  std::map<string, DrawableObject*> objects;
 
 };
 

@@ -19,7 +19,8 @@ public:
 protected:
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
   // const Cairo::RefPtr<Cairo::Context> * cr;
-  ViewWindow * viewWindow;
+  Gtk::Allocation* allocation;
+  ViewWindow* viewWindow = NULL;
   int Xvpmin, Yvpmin, Xvpmax, Yvpmax;
 
 };
