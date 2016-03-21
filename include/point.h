@@ -9,8 +9,8 @@ using namespace std;
 class Point : public DrawableObject
 {
 public:
-  Point(list<Coordenate> view_cords, string name);
+  Point(string name, Coordenate* point_cord);
   ~Point();
-  list<Coordenate> getCoordenates();
+  virtual list<Coordenate*> getCoordenates();
 };
 #endif // GTKMM_APP_POINT

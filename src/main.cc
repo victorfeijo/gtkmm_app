@@ -1,5 +1,7 @@
 #include "main_window.h"
 #include <gtkmm/application.h>
+#include <list>
+#include <string>
 
 int main (int argc, char *argv[])
 {

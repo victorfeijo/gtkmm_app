@@ -13,16 +13,18 @@ using namespace std;
 class DrawableObject
 {
 public:
-  DrawableObject(string name, list<Coordenate> coordenates)
+  DrawableObject(string name)
+  : name(name) {}
+  DrawableObject(string name, list<Coordenate*> coordenates)
   : name(name), coordenates(coordenates) {}
   ~DrawableObject() {}
   std::string getName()
   {
     return name;
   }
-  virtual list<Coordenate> getCoordenates() const = 0;
+  virtual list<Coordenate*> getCoordenates() = 0;
 protected:
   string name;
-  list<Coordenate> coordenates;
+  list<Coordenate*> coordenates;
 };
 #endif // GTKMM_APP_DRAWABLE_OBJECT
