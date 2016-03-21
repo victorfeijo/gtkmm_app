@@ -8,6 +8,8 @@
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/grid.h>
+#include "main_window.h"
+#include "view_window.h"
 
 class DrawOptionsBox : public Gtk::Frame
 {
@@ -15,10 +17,14 @@ class DrawOptionsBox : public Gtk::Frame
 public:
   DrawOptionsBox(const Glib::ustring& title,
                  gint spacing,
-                 Gtk::ButtonBoxStyle layout);
+                 Gtk::ButtonBoxStyle layout,
+                 MainWindow* mainWindow
+                );
   virtual ~DrawOptionsBox();
 
 protected:
+  void on_button_move_up();
+  MainWindow* mainWindow;
   Gtk::Button button_add_object, button_move_up, button_move_down,
               button_move_left, button_move_right, button_zoom_in,
               button_zoom_out, button_close;

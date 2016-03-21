@@ -12,7 +12,6 @@ class Viewport : public Gtk::DrawingArea
 public:
   Viewport();
   virtual ~Viewport();
-  int* convertCordinate(int* cord);
   ViewWindow * getViewWindow();
   // void update();
 
@@ -22,6 +21,8 @@ protected:
   Gtk::Allocation* allocation;
   ViewWindow* viewWindow = NULL;
   int Xvpmin, Yvpmin, Xvpmax, Yvpmax;
+  void updateAllocation(Gtk::Allocation allocation);
+  int* convertCordinate(int* cord);
 
 };
 

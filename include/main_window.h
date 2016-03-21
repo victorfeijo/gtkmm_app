@@ -20,6 +20,7 @@ class MainWindow : public Gtk::Window
 public:
   MainWindow();
   virtual ~MainWindow();
+  Viewport* getViewport();
 
 protected:
   /* Add here any components or frames

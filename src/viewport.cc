@@ -1,33 +1,25 @@
 #include "viewport.h"
 
-                          #include <iostream>
+                                #include <iostream>
 
 Viewport::Viewport()
-    : Xvpmin(0), Yvpmin(0), Xvpmax(0), Yvpmax(0)
+    : viewWindow(new ViewWindow (0, 0, 0, 0)),
+      Xvpmin(0),
+      Yvpmin(0),
+      Xvpmax(0),
+      Yvpmax(0)
 {
 }
 
 bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
+
+  // this->viewWindow->move_up(2);
+  this->updateAllocation(this->get_allocation());
+
   // TODO cr = &cr;
   cr->set_line_width(2);
 
-  if (this->viewWindow == NULL)
-  {
-    Gtk::Allocation allocation = this->get_allocation();
-    this->Xvpmax = allocation.get_width();
-    this->Yvpmax = allocation.get_height();
-    if(this->Xvpmax > 10 && this->Yvpmax > 10)
-    {
-      this->viewWindow = new ViewWindow(this->Xvpmin, this->Yvpmin,
-                                        this->Xvpmax, this->Yvpmax);
-    }
-  }
-  else
-  {
-    Gtk::Allocation allocation = this->get_allocation();
-    // TODO update viewport and viewwindow sizes
-  }
 
   // paint white background
   cr->set_source_rgb(1, 1, 1);
@@ -71,9 +63,16 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   cr->move_to(xc, yc);
   cr->line_to(width, yc);
 
-  // draw point at (10, 20):
-  cr->move_to(10,20);
-  cr->line_to(11,21);
+  // draw point at (10, 20) using window:
+  int* point = this->convertCordinate(new int[2]{300, 200});
+  cr->move_to(point[0],point[1]);
+  cr->line_to(point[0]+1,point[1]+1);
+
+  // draw line using window:
+  int* line1 = this->convertCordinate(new int[2]{100, 230});
+  int* line2 = this->convertCordinate(new int[2]{400, -60});
+  cr->move_to(line1[0],line1[1]);
+  cr->line_to(line2[0]+1,line2[1]+1);
 //NOTE END TEST
 
   cr->stroke();
@@ -83,21 +82,64 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 
 int* Viewport::convertCordinate(int* cord) {
   int Xw = cord[0];
-  int Xvp = (Xw - this->viewWindow->getXwmin()) /
-            (this->viewWindow->getXwmax() - this->viewWindow->getXwmin())
-            * (this->Xvpmax - this->Xvpmin);
+  int Xvp = ((this->Xvpmax - this->Xvpmin) /
+             (this->viewWindow->getXwmax() - this->viewWindow->getXwmin()))
+            * (Xw - this->viewWindow->getXwmin()) + this->Xvpmin;
 
+            std::cout << Xw << " > " << Xvp << std::endl;
   int Yw = cord[1];
-  int Yvp = (1 - (Yw - this->viewWindow->getYwmin()) /
-                 (this->viewWindow->getYwmax() - this->viewWindow->getYwmin()))
-            *  (this->Yvpmax - this->Yvpmin);
+  int Yvp = (this->Yvpmax - this->Yvpmin) -
+            (((this->Yvpmax - this->Yvpmin) /
+              (this->viewWindow->getYwmax() - this->viewWindow->getYwmin()))
+             * (Yw - this->viewWindow->getYwmin()) + this->Yvpmin);
 
+            std::cout << Yw << " >> " << Yvp << std::endl;
   return new int[2] {Xvp, Yvp};
 }
 
 ViewWindow * Viewport::getViewWindow()
 {
   return this->viewWindow;
+}
+
+void Viewport::updateAllocation(Gtk::Allocation allocation)
+{
+
+  if (this->Xvpmax != allocation.get_width() ||
+      this->Yvpmax != allocation.get_height())
+  {
+    int widthDiff = allocation.get_width() - this->Xvpmax;
+    int heightDiff = allocation.get_height() - this->Yvpmax;
+
+    if (this->Xvpmax != 0)
+    {
+      this->viewWindow->setXwmax(this->viewWindow->getXwmax() +
+                                 this->Xvpmax / (this->viewWindow->getXwmax()
+                                  - this->viewWindow->getXwmin())
+                                 * widthDiff);
+    }
+    else
+    {
+      this->viewWindow->setXwmax(widthDiff);
+    }
+
+    if (this->Yvpmax != 0)
+    {
+      this->viewWindow->setYwmin(this->viewWindow->getYwmin() -
+                                 this->Yvpmax / (this->viewWindow->getYwmax()
+                                  - this->viewWindow->getYwmin())
+                                 * heightDiff);
+    }
+    else
+    {
+      this->viewWindow->setYwmax(heightDiff);
+    }
+    this->Xvpmax += widthDiff;
+    this->Yvpmax += heightDiff;
+
+    std::cout << ">>>>>>>>>>>" << this->viewWindow->getYwmin() << '|' << this->viewWindow->getXwmax() << std::endl;
+  }
+
 }
 
 Viewport::~Viewport()

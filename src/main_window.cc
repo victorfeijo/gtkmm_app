@@ -21,7 +21,7 @@ MainWindow::MainWindow()
 
   // Adding the draw options box to left frame
   left_box.pack_start(
-    *Gtk::manage(new DrawOptionsBox("Draw Options", 10, Gtk::BUTTONBOX_START)),
+    *Gtk::manage(new DrawOptionsBox("Draw Options", 10, Gtk::BUTTONBOX_START, this)),
     Gtk::PACK_EXPAND_WIDGET
   );
 
@@ -31,6 +31,11 @@ MainWindow::MainWindow()
   viewport.show();
   // show all components
   show_all_children();
+}
+
+Viewport* MainWindow::getViewport()
+{
+  return &this->viewport;
 }
 
 MainWindow::~MainWindow()
