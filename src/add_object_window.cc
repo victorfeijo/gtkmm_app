@@ -41,5 +41,5 @@ void AddObjectWindow::on_button_add_Coordinate()
 void AddObjectWindow::on_button_finish()
 {
   //
-  hide();
+  close();
 }

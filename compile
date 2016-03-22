@@ -1,7 +1,7 @@
 # Bash script to compile the application
 
 # compile:
-g++ src/*.cc -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -I include/ -std=c++11
+g++ src/*.cc -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -I include/ -std=c++11 -w
 
 # run app if compilation was successful and parameter `run` was passed:
 [ ! $? -ne 0 ] && [ "$1" == "run" ] && ./app.o
