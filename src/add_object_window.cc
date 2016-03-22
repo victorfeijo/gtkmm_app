@@ -3,11 +3,11 @@
 AddObjectWindow::AddObjectWindow()
 : button_add_Coordinate("Add a Coordinate"),
   button_finish("Finish"),
+  x_field(),
+  y_field(),
   x_label("Coordinate X : "),
   y_label("Coordinate Y : "),
-  info_label("Insert a Coordinate"),
-  x_field(),
-  y_field()
+  info_label("Insert a Coordinate")
 {
   set_title("Add Coordinate");
   set_border_width(12);

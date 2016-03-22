@@ -7,16 +7,6 @@ Viewport::Viewport()
       Xvpmax(0),
       Yvpmax(0)
 {
-  // NOTE TESTS USING DISPLAY_FILE AND OBJECTS
-  viewWindow->getDisplayFile()->addObject(new Point("ponto1", new Coordinate(20,30)));
-  viewWindow->getDisplayFile()->addObject(new Rect("reta1", new Coordinate(432,58), new Coordinate(89,355)));
-  list<Coordinate*> coordinates;
-  coordinates.push_back(new Coordinate(100,100));
-  coordinates.push_back(new Coordinate(200,100));
-  coordinates.push_back(new Coordinate(200,200));
-  coordinates.push_back(new Coordinate(300,300));
-  viewWindow->getDisplayFile()->addObject(new WireFrame("wire1", coordinates));
-  // NOTE END TESTS
 }
 
 bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
@@ -75,6 +65,7 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
         Coordinate cordConverted = this->convertCoordinateFromWindow(**it_cord);
         cr->line_to(cordConverted.getx(),cordConverted.gety());
       }
+      cr->line_to(firstCordConverted.getx(),firstCordConverted.gety());
     }
   }
   cr->stroke();

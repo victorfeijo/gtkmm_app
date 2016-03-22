@@ -8,12 +8,6 @@
 #include "view_window.h"
 #include "coordinate.h"
 
-// NOTE TEST
-    #include "point.h"
-    #include "rect.h"
-    #include "wireframe.h"
-//NOTE END TEST
-
 class Viewport : public Gtk::DrawingArea
 {
 
