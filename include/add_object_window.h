@@ -19,11 +19,11 @@ protected:
   /* Add here any components or frames
    */
   Gtk::Grid m_grid;
-  Gtk::Button button_add_coordenate, button_finish;
+  Gtk::Button button_add_Coordinate, button_finish;
   Gtk::Entry x_field, y_field;
   Gtk::Label x_label, y_label, info_label;
 
-  void on_button_add_coordenate();
+  void on_button_add_Coordinate();
   void on_button_finish();
 };
 #endif //GTKMM_APP_ADD_OBJECT_WINDOW

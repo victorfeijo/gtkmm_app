@@ -7,7 +7,7 @@
  */
 #include <list>
 #include <string>
-#include "coordenate.h"
+#include "coordinate.h"
 using namespace std;
 
 class DrawableObject
@@ -15,16 +15,16 @@ class DrawableObject
 public:
   DrawableObject(string name)
   : name(name) {}
-  DrawableObject(string name, list<Coordenate*> coordenates)
-  : name(name), coordenates(coordenates) {}
+  DrawableObject(string name, list<Coordinate*> Coordinates)
+  : name(name), Coordinates(Coordinates) {}
   ~DrawableObject() {}
   std::string getName()
   {
     return name;
   }
-  virtual list<Coordenate*> getCoordenates() = 0;
+  virtual list<Coordinate*> getCoordinates() = 0;
 protected:
   string name;
-  list<Coordenate*> coordenates;
+  list<Coordinate*> Coordinates;
 };
 #endif // GTKMM_APP_DRAWABLE_OBJECT

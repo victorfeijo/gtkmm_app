@@ -24,7 +24,6 @@ public:
   virtual ~DrawOptionsBox();
 
 protected:
-  void on_button_move_up();
   MainWindow* mainWindow;
   Gtk::Button button_add_object, button_move_up, button_move_down,
               button_move_left, button_move_right, button_zoom_in,
@@ -32,5 +31,6 @@ protected:
   Gtk::Grid grid_move;
   AddObjectWindow* add_object_window;
   void on_button_add_object();
+  void on_button_move_up();
 };
 #endif // GTKMM_APP_DRAW_OPTIONS_BOX

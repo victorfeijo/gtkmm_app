@@ -1,7 +1,5 @@
 #include "viewport.h"
 
-                                #include <iostream>
-
 Viewport::Viewport()
     : viewWindow(new ViewWindow (0, 0, 0, 0)),
       Xvpmin(0),
@@ -9,6 +7,16 @@ Viewport::Viewport()
       Xvpmax(0),
       Yvpmax(0)
 {
+  // NOTE TESTS USING DISPLAY_FILE AND OBJECTS
+  viewWindow->getDisplayFile()->addObject(new Point("ponto1", new Coordinate(20,30)));
+  viewWindow->getDisplayFile()->addObject(new Rect("reta1", new Coordinate(432,58), new Coordinate(89,355)));
+  list<Coordinate*> coordinates;
+  coordinates.push_back(new Coordinate(100,100));
+  coordinates.push_back(new Coordinate(200,100));
+  coordinates.push_back(new Coordinate(200,200));
+  coordinates.push_back(new Coordinate(300,300));
+  viewWindow->getDisplayFile()->addObject(new WireFrame("wire1", coordinates));
+  // NOTE END TESTS
 }
 
 bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
@@ -17,7 +25,6 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   // this->viewWindow->move_up(2);
   this->updateAllocation(this->get_allocation());
 
-  // TODO cr = &cr;
   cr->set_line_width(2);
 
 
@@ -25,8 +32,8 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   cr->set_source_rgb(1, 1, 1);
   cr->paint();
 
+  // draw viewport corners (red)
   cr->set_source_rgb(0.8, 0, 0);
-  // draw viewport corners
   cr->move_to(0,0);
   cr->line_to(this->Xvpmax,0);
   cr->line_to(this->Xvpmax,this->Yvpmax);
@@ -37,64 +44,48 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   // set color as black:
   cr->set_source_rgb(0, 0, 0);
 
-  // TODO draw objects
-  // FOREACH OBJECT
-  //   cr->move_to(this->convertCordinates(OBJECT->FIRSTCORDINATE)
-  //   FOREACH OBJECT->COORDINATE
-  //     cr->line_to(this->convertCordinates(OBJECT_CORDINATE)
-  //   endfor
-  //   IF (OBJECT->CORDINATES->SIZE === 1)
-  //     cr->line_to(this->convertCordinates(OBJECT_CORDINATE) + (1,1))
-  //   endif
-  //   cr->stroke();
+  // draw displayfile objects
+  std::list<DrawableObject*> objects = this->viewWindow->getDisplayFile()
+                              ->getObjects();
+  for (std::list<DrawableObject*>::iterator it_obj = objects.begin();
+        it_obj != objects.end(); it_obj++)
+  {
+    list<Coordinate*> objectCoordinates = (*it_obj)->getCoordinates();
+    Coordinate firstCordConverted = this->convertCoordinateFromWindow(
+                                          **(objectCoordinates.begin()));
+    cr->move_to(firstCordConverted.getx(),firstCordConverted.gety());
 
-//NOTE BEGIN TEST:
-  const int width = this->Xvpmax;
-  const int height = this->Yvpmax;
-  // coordinates for the center of the window
-  int xc, yc;
-  xc = width / 2;
-  yc = height / 2;
-
-  // draw lines out from the center of the window
-  cr->move_to(0, 0);
-  cr->line_to(xc, yc);
-  cr->line_to(0, height);
-  cr->move_to(xc, yc);
-  cr->line_to(width, yc);
-
-  // draw point at (10, 20) using window:
-  int* point = this->convertCordinate(new int[2]{300, 200});
-  cr->move_to(point[0],point[1]);
-  cr->line_to(point[0]+1,point[1]+1);
-
-  // draw line using window:
-  int* line1 = this->convertCordinate(new int[2]{100, 230});
-  int* line2 = this->convertCordinate(new int[2]{400, -60});
-  cr->move_to(line1[0],line1[1]);
-  cr->line_to(line2[0]+1,line2[1]+1);
-//NOTE END TEST
-
+    if (objectCoordinates.size() == 1) {  // point case
+      cr->line_to(firstCordConverted.getx()+1,firstCordConverted.gety()+1);
+    }
+    else
+    {
+      for (std::list<Coordinate*>::iterator it_cord = objectCoordinates.begin();
+            it_cord != objectCoordinates.end(); it_cord++)
+      {
+        Coordinate cordConverted = this->convertCoordinateFromWindow(**it_cord);
+        cr->line_to(cordConverted.getx(),cordConverted.gety());
+      }
+    }
+  }
   cr->stroke();
 
   return true;
 }
 
-int* Viewport::convertCordinate(int* cord) {
-  int Xw = cord[0];
+Coordinate Viewport::convertCoordinateFromWindow(Coordinate cord) {
+  int Xw = cord.getx();
   int Xvp = ((this->Xvpmax - this->Xvpmin) /
              (this->viewWindow->getXwmax() - this->viewWindow->getXwmin()))
             * (Xw - this->viewWindow->getXwmin()) + this->Xvpmin;
 
-            std::cout << Xw << " > " << Xvp << std::endl;
-  int Yw = cord[1];
+  int Yw = cord.gety();
   int Yvp = (this->Yvpmax - this->Yvpmin) -
             (((this->Yvpmax - this->Yvpmin) /
               (this->viewWindow->getYwmax() - this->viewWindow->getYwmin()))
              * (Yw - this->viewWindow->getYwmin()) + this->Yvpmin);
 
-            std::cout << Yw << " >> " << Yvp << std::endl;
-  return new int[2] {Xvp, Yvp};
+  return Coordinate(Xvp, Yvp);
 }
 
 ViewWindow * Viewport::getViewWindow()
@@ -137,7 +128,6 @@ void Viewport::updateAllocation(Gtk::Allocation allocation)
     this->Xvpmax += widthDiff;
     this->Yvpmax += heightDiff;
 
-    std::cout << ">>>>>>>>>>>" << this->viewWindow->getYwmin() << '|' << this->viewWindow->getXwmax() << std::endl;
   }
 
 }

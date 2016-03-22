@@ -16,9 +16,10 @@ public:
   void removeObject(DrawableObject* object);
   void removeObjectByName(string name);
   std::list<string> getNamesList();
+  std::list<DrawableObject*> getObjects();
 
 protected:
-  std::map<string, DrawableObject*> objects;
+  std::map<string, DrawableObject*> objectsMap;
 
 };
 

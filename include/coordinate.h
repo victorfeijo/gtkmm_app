@@ -1,13 +1,13 @@
-#ifndef GTKMM_APP_COORDENATE
-#define GTKMM_APP_COORDENATE
+#ifndef GTKMM_APP_COORDINATE
+#define GTKMM_APP_COORDINATE
 
-class Coordenate
+class Coordinate
 {
 public:
-  Coordenate(int x, int y)
+  Coordinate(int x, int y)
   : cord_x(x), cord_y(y)
   {}
-  ~Coordenate() {}
+  ~Coordinate() {}
   int getx()
   {
     return cord_x;
@@ -20,4 +20,4 @@ protected:
   int cord_x;
   int cord_y;
 };
-#endif // GTKMM_APP_COORDENATE
+#endif // GTKMM_APP_Coordinate

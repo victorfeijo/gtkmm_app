@@ -106,6 +106,11 @@ void ViewWindow::setYwmax(int Ywmax)
   this->Ywmax = Ywmax;
 }
 
+DisplayFile* ViewWindow::getDisplayFile()
+{
+  return &this->displayFile;
+}
+
 ViewWindow::~ViewWindow()
 {
 }

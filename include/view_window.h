@@ -1,6 +1,8 @@
 #ifndef GTKMM_APP_VIEW_WINDOW
 #define GTKMM_APP_VIEW_WINDOW
 
+#include "display_file.h"
+
 class ViewWindow
 {
 
@@ -15,8 +17,10 @@ public:
   void move_down(unsigned int length = 10);
   void move_left(unsigned int length = 10);
   void move_right(unsigned int length = 10);
+  DisplayFile* getDisplayFile();
 
 protected:
+  DisplayFile displayFile;
   int Xwmin, Ywmin, Xwmax, Ywmax;
   int getXwmin();
   int getYwmin();

@@ -1,18 +1,16 @@
 #include "point.h"
 
-Point::Point(string name, Coordenate* point_cord)
+Point::Point(string name, Coordinate* point_cord)
 : DrawableObject(name)
 {
-  Coordenate *point_trick = new Coordenate(point_cord->getx(), point_cord->gety());
-  coordenates.push_back(point_cord);
-  coordenates.push_back(point_trick);
+  Coordinates.push_back(point_cord);
 }
 
 Point::~Point()
 {
 }
 
-list<Coordenate*> Point::getCoordenates()
+list<Coordinate*> Point::getCoordinates()
 {
-  return coordenates;
+  return Coordinates;
 }
