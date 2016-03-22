@@ -79,6 +79,12 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   button_save_rect.signal_clicked().connect(sigc::mem_fun(*this,
     &AddObjectWindow::on_button_save_rect) );
 
+  button_add_coordenate.signal_clicked().connect(sigc::mem_fun(*this,
+    &AddObjectWindow::on_button_add_coordinate) );
+
+  button_save_wire.signal_clicked().connect(sigc::mem_fun(*this,
+    &AddObjectWindow::on_button_save_polygon) );
+
   m_notebook.append_page(point_grid, "Point");
   m_notebook.append_page(rect_grid, "Rect");
   m_notebook.append_page(wire_grid, "Polygon");
@@ -123,9 +129,42 @@ void AddObjectWindow::on_button_save_rect()
   close();
 }
 
-void AddObjectWindow::on_button_add_Coordinate()
+void AddObjectWindow::on_button_save_polygon()
 {
-  //
+  if (!wire_cord_list.empty())
+  {
+    std::string name = rect_name_field.get_text().raw();
+    WireFrame *wire = new WireFrame(name, wire_cord_list);
+    this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(wire);
+    this->mainWindow->getViewport()->queue_draw();
+
+    while(!wire_cord_list.empty())
+    {
+      wire_cord_list.pop_back();
+    }
+
+    close();
+  }
+  else
+  {
+    return ;
+  }
+}
+
+void AddObjectWindow::on_button_add_coordinate()
+{
+  std::string x_string = wire_x_field.get_text().raw();
+  std::string y_string = wire_y_field.get_text().raw();
+  int x_cord = atoi(x_string.c_str());
+  int y_cord = atoi(y_string.c_str());
+  Coordinate *wire_cord = new Coordinate(x_cord, y_cord);
+  wire_cord_list.push_back(wire_cord);
+  std::cout << wire_cord->getx() << std::endl;
+
+  wire_x_field.set_text("");
+  wire_y_field.set_text("");
+
+  info_label.set_text("Added X : " + x_string + " Y : " + y_string);
 }
 
 void AddObjectWindow::on_button_close()

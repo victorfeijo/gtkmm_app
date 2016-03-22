@@ -28,6 +28,7 @@ protected:
   /* Add here any components or frames
    */
   MainWindow* mainWindow;
+  std::list<Coordinate*> wire_cord_list;
   Gtk::Grid point_grid, rect_grid, wire_grid;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
@@ -40,7 +41,7 @@ protected:
   Gtk::Label rect_x1_label, rect_x2_label, rect_y1_label, rect_y2_label;
   Gtk::Label wire_x_label, wire_y_label, info_label;
 
-  void on_button_add_Coordinate();
+  void on_button_add_coordinate();
   void on_button_close();
   void on_button_save_point();
   void on_button_save_rect();
