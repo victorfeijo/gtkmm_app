@@ -11,6 +11,7 @@
 #include "main_window.h"
 #include "view_window.h"
 #include "add_object_window.h"
+#include "list_objects_window.h"
 
 class DrawOptionsBox : public Gtk::Frame
 {
@@ -27,10 +28,12 @@ protected:
   MainWindow* mainWindow;
   Gtk::Button button_add_object, button_move_up, button_move_down,
               button_move_left, button_move_right, button_zoom_in,
-              button_zoom_out, button_close;
+              button_zoom_out, button_close, button_list_objects;
   Gtk::Grid grid_move;
   AddObjectWindow* add_object_window;
+  ListObjectsWindow* list_objects_window;
   void on_button_add_object();
+  void on_button_list_objects();
   void on_button_move_up();
   void on_button_move_down();
   void on_button_move_left();

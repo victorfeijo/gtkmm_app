@@ -4,23 +4,23 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
 : mainWindow(mainWindow),
   m_vbox(Gtk::ORIENTATION_VERTICAL),
   button_add_coordenate("Add Coordenate"),
-  button_save_point("Save Point"),
   button_save_rect("Save Rect"),
-  button_save_wire("Save Polygon"),
   button_close("Close"),
+  button_save_wire("Save Polygon"),
+  button_save_point("Save Point"),
+  point_name_field(), point_x_field(), point_y_field(),
+  rect_name_field(), rect_x1_field(), rect_x2_field(),
+  rect_y1_field(), rect_y2_field(), wire_name_field(),
+  wire_x_field(), wire_y_field(),
   point_x_label("Coordinate X : "),
   point_y_label("Coordinate Y : "),
   rect_x1_label("Coordinate X1 : "),
-  rect_y1_label("Coordinate Y1 : "),
   rect_x2_label("Coordinate X2 : "),
+  rect_y1_label("Coordinate Y1 : "),
   rect_y2_label("Coordinate Y2 : "),
   wire_x_label("Coordinate X : "),
   wire_y_label("Coordinate Y : "),
-  info_label("Insert a Coordinate :"),
-  point_name_field(), point_x_field(), point_y_field(),
-  rect_name_field(), rect_x1_field(), rect_x2_field(),
-  wire_name_field(), rect_y1_field(), rect_y2_field(),
-  wire_x_field(), wire_y_field()
+  info_label("Insert a Coordinate :")
 {
   set_title("Add Object");
   set_border_width(12);

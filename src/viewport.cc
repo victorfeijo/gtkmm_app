@@ -7,16 +7,6 @@ Viewport::Viewport()
       Xvpmax(0),
       Yvpmax(0)
 {
-  // NOTE TESTS USING DISPLAY_FILE AND OBJECTS
-  viewWindow->getDisplayFile()->addObject(new Point("ponto1", new Coordinate(20,30)));
-  viewWindow->getDisplayFile()->addObject(new Rect("reta1", new Coordinate(432,58), new Coordinate(89,355)));
-  list<Coordinate*> coordinates;
-  coordinates.push_back(new Coordinate(100,100));
-  coordinates.push_back(new Coordinate(200,100));
-  coordinates.push_back(new Coordinate(200,200));
-  coordinates.push_back(new Coordinate(300,300));
-  viewWindow->getDisplayFile()->addObject(new WireFrame("wire1", coordinates));
-  // NOTE END TESTS
 }
 
 bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
@@ -25,11 +15,20 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   // resize viewwindow when viewport is resized
   this->updateAllocation(this->get_allocation());
 
-  cr->set_line_width(2);
-
   // paint white background
   cr->set_source_rgb(1, 1, 1);
   cr->paint();
+
+  // draw origin
+  cr->set_line_width(2);
+  cr->set_source_rgb(0.4, 0.4, 1);
+  Coordinate originOnWindow = convertCoordinateFromWindow(Coordinate(0, 0));
+  cr->move_to(originOnWindow.getx()-5, originOnWindow.gety());
+  cr->line_to(originOnWindow.getx()+5, originOnWindow.gety());
+  cr->move_to(originOnWindow.getx(), originOnWindow.gety()-5);
+  cr->line_to(originOnWindow.getx(), originOnWindow.gety()+5);
+  cr->stroke();
+  cr->set_line_width(2);
 
   // draw viewport corners (red)
   cr->set_source_rgb(0.8, 0, 0);
@@ -39,6 +38,7 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   cr->line_to(0,this->Yvpmax);
   cr->line_to(0,0);
   cr->stroke();
+
 
   // set color as black:
   cr->set_source_rgb(0, 0, 0);
@@ -65,6 +65,7 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
         Coordinate cordConverted = this->convertCoordinateFromWindow(**it_cord);
         cr->line_to(cordConverted.getx(),cordConverted.gety());
       }
+      cr->line_to(firstCordConverted.getx(),firstCordConverted.gety());
     }
   }
   cr->stroke();
