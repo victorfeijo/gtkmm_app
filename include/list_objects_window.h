@@ -7,13 +7,15 @@
 #include <gtkmm/comboboxtext.h>
 #include <string>
 #include <list>
+#include "main_window.h"
 
 class ListObjectsWindow : public Gtk::Window
 {
 public:
-  ListObjectsWindow();
+  ListObjectsWindow(MainWindow* mainWindow);
   ~ListObjectsWindow();
 protected:
+  MainWindow* mainWindow;
   std::string selected_object;
   Gtk::ComboBoxText objects_list;
   Gtk::Grid m_grid;

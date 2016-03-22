@@ -100,6 +100,6 @@ void DrawOptionsBox::on_button_add_object()
 
 void DrawOptionsBox::on_button_list_objects()
 {
-  list_objects_window = new ListObjectsWindow();
+  list_objects_window = new ListObjectsWindow(this->mainWindow);
   list_objects_window->show();
 }
