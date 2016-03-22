@@ -25,11 +25,20 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   // resize viewwindow when viewport is resized
   this->updateAllocation(this->get_allocation());
 
-  cr->set_line_width(2);
-
   // paint white background
   cr->set_source_rgb(1, 1, 1);
   cr->paint();
+
+  // draw origin
+  cr->set_line_width(2);
+  cr->set_source_rgb(0.4, 0.4, 1);
+  Coordinate originOnWindow = convertCoordinateFromWindow(Coordinate(0, 0));
+  cr->move_to(originOnWindow.getx()-5, originOnWindow.gety());
+  cr->line_to(originOnWindow.getx()+5, originOnWindow.gety());
+  cr->move_to(originOnWindow.getx(), originOnWindow.gety()-5);
+  cr->line_to(originOnWindow.getx(), originOnWindow.gety()+5);
+  cr->stroke();
+  cr->set_line_width(2);
 
   // draw viewport corners (red)
   cr->set_source_rgb(0.8, 0, 0);
@@ -39,6 +48,7 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   cr->line_to(0,this->Yvpmax);
   cr->line_to(0,0);
   cr->stroke();
+
 
   // set color as black:
   cr->set_source_rgb(0, 0, 0);

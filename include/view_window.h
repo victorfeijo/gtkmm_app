@@ -3,8 +3,8 @@
 
 #include "display_file.h"
 
-#define MIN_WIDTH 100
-#define MIN_HEIGHT 100
+#define MIN_WIDTH 50
+#define MIN_HEIGHT 50
 
 class ViewWindow
 {

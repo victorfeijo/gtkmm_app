@@ -8,6 +8,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
                               )
     : Gtk::Frame(title),
       mainWindow(mainWindow),
+      objects_list(),
       button_add_object("Add Object"),
       button_move_up("\u2227"),
       button_move_down("\u2228"),
@@ -41,10 +42,26 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
   bbox->add(button_zoom_in);
   bbox->add(button_zoom_out);
   bbox->add(button_add_object);
+  bbox->add(objects_list);
   bbox->add(button_close);
+
+  std::list<string> list;
+  list.push_back("bhuu");
+  list.push_back("dabhbdaubdauadbudabadiu");
+  list.push_back("gvyauhufsjkhnsimsmksfuiigfukksmitiu");
+  this->updateNames(list);
 
   button_add_object.signal_clicked().connect(sigc::mem_fun(*this,
     &DrawOptionsBox::on_button_add_object) );
+}
+
+void DrawOptionsBox::updateNames(std::list<string> names)
+{
+  objects_list.set_popup_fixed_width(false);
+  for(std::list<string>::iterator it = names.begin(); it != names.end(); it++)
+  {
+    this->objects_list.append(*it);
+  }
 }
 
 void DrawOptionsBox::on_button_move_up()

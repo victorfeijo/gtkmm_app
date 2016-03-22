@@ -8,6 +8,7 @@
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/grid.h>
+#include <list>
 #include "main_window.h"
 #include "view_window.h"
 #include "add_object_window.h"
@@ -22,6 +23,7 @@ public:
                  MainWindow* mainWindow
                 );
   virtual ~DrawOptionsBox();
+  void updateNames(std::list<string> names);
 
 protected:
   MainWindow* mainWindow;
