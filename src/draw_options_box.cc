@@ -94,7 +94,7 @@ DrawOptionsBox::~DrawOptionsBox()
 
 void DrawOptionsBox::on_button_add_object()
 {
-  add_object_window = new AddObjectWindow();
+  add_object_window = new AddObjectWindow(this->mainWindow);
   add_object_window->show();
 }
 
