@@ -10,6 +10,7 @@
 #include <gtkmm/grid.h>
 #include "main_window.h"
 #include "view_window.h"
+#include "add_object_window.h"
 
 class DrawOptionsBox : public Gtk::Frame
 {
@@ -29,5 +30,7 @@ protected:
               button_move_left, button_move_right, button_zoom_in,
               button_zoom_out, button_close;
   Gtk::Grid grid_move;
+  AddObjectWindow* add_object_window;
+  void on_button_add_object();
 };
 #endif // GTKMM_APP_DRAW_OPTIONS_BOX

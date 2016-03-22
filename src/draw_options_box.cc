@@ -1,4 +1,5 @@
 #include "draw_options_box.h"
+#include <iostream>
 
 DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
                                gint spacing,
@@ -36,6 +37,9 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
   bbox->add(button_zoom_out);
   bbox->add(button_add_object);
   bbox->add(button_close);
+
+  button_add_object.signal_clicked().connect(sigc::mem_fun(*this,
+    &DrawOptionsBox::on_button_add_object) );
 }
 
 void DrawOptionsBox::on_button_move_up()
@@ -46,4 +50,10 @@ void DrawOptionsBox::on_button_move_up()
 
 DrawOptionsBox::~DrawOptionsBox()
 {
+}
+
+void DrawOptionsBox::on_button_add_object()
+{
+  add_object_window = new AddObjectWindow();
+  add_object_window->show();
 }
