@@ -2,15 +2,15 @@
 #define GTKMM_APP_WIREFRAME
 
 #include "drawable_object.h"
-#include "coordenate.h"
+#include "coordinate.h"
 
 using namespace std;
 
 class WireFrame : public DrawableObject
 {
 public:
-  WireFrame(string name, list<Coordenate*> coordenates);
+  WireFrame(string name, list<Coordinate*> Coordinates);
   ~WireFrame();
-  virtual list<Coordenate*> getCoordenates();
+  virtual list<Coordinate*> getCoordinates();
 };
 #endif // GTKMM_APP_WIREFRAME

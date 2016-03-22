@@ -1,7 +1,7 @@
 #include "wireframe.h"
 
-WireFrame::WireFrame(string name, list<Coordenate*> coordenates)
-: DrawableObject(name, coordenates)
+WireFrame::WireFrame(string name, list<Coordinate*> Coordinates)
+: DrawableObject(name, Coordinates)
 {
   //nothing for while
 }
@@ -10,7 +10,7 @@ WireFrame::~WireFrame()
 {
 }
 
-list<Coordenate*> WireFrame::getCoordenates()
+list<Coordinate*> WireFrame::getCoordinates()
 {
-  return coordenates;
+  return Coordinates;
 }
