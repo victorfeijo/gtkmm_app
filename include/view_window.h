@@ -11,8 +11,8 @@ class ViewWindow
 public:
   ViewWindow(int Xwmin, int Ywmin, int Xwmax, int Ywmax);
   virtual ~ViewWindow();
-  void zoom_in(float scale = 2);
-  void zoom_out(float scale = 2);
+  void zoom_in(float scale = 1.5);
+  void zoom_out(float scale = 1.5);
   void move_up(unsigned int length = 10);
   void move_down(unsigned int length = 10);
   void move_left(unsigned int length = 10);
@@ -21,7 +21,7 @@ public:
 
 protected:
   DisplayFile displayFile;
-  int Xwmin, Ywmin, Xwmax, Ywmax;
+  float Xwmin, Ywmin, Xwmax, Ywmax;
   int getXwmin();
   int getYwmin();
   int getXwmax();

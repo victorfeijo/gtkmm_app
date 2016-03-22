@@ -32,5 +32,10 @@ protected:
   AddObjectWindow* add_object_window;
   void on_button_add_object();
   void on_button_move_up();
+  void on_button_move_down();
+  void on_button_move_left();
+  void on_button_move_right();
+  void on_button_zoom_in();
+  void on_button_zoom_out();
 };
 #endif // GTKMM_APP_DRAW_OPTIONS_BOX

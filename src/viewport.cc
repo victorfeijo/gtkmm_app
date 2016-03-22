@@ -85,6 +85,7 @@ Coordinate Viewport::convertCoordinateFromWindow(Coordinate cord) {
               (this->viewWindow->getYwmax() - this->viewWindow->getYwmin()))
              * (Yw - this->viewWindow->getYwmin()) + this->Yvpmin);
 
+
   return Coordinate(Xvp, Yvp);
 }
 

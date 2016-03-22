@@ -25,6 +25,11 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
   bbox->set_spacing(spacing);
 
   button_move_up.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_up));
+  button_move_down.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_down));
+  button_move_left.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_left));
+  button_move_right.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_right));
+  button_zoom_in.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_zoom_in));
+  button_zoom_out.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_zoom_out));
 
   grid_move.set_column_homogeneous(true);
   grid_move.attach(button_move_up, 2, 1, 1, 1);
@@ -45,6 +50,36 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
 void DrawOptionsBox::on_button_move_up()
 {
   this->mainWindow->getViewport()->getViewWindow()->move_up();
+  this->mainWindow->getViewport()->queue_draw();
+}
+
+void DrawOptionsBox::on_button_move_down()
+{
+  this->mainWindow->getViewport()->getViewWindow()->move_down();
+  this->mainWindow->getViewport()->queue_draw();
+}
+
+void DrawOptionsBox::on_button_move_left()
+{
+  this->mainWindow->getViewport()->getViewWindow()->move_left();
+  this->mainWindow->getViewport()->queue_draw();
+}
+
+void DrawOptionsBox::on_button_move_right()
+{
+  this->mainWindow->getViewport()->getViewWindow()->move_right();
+  this->mainWindow->getViewport()->queue_draw();
+}
+
+void DrawOptionsBox::on_button_zoom_in()
+{
+  this->mainWindow->getViewport()->getViewWindow()->zoom_in();
+  this->mainWindow->getViewport()->queue_draw();
+}
+
+void DrawOptionsBox::on_button_zoom_out()
+{
+  this->mainWindow->getViewport()->getViewWindow()->zoom_out();
   this->mainWindow->getViewport()->queue_draw();
 }
 
