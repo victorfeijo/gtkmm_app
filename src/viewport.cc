@@ -22,11 +22,10 @@ Viewport::Viewport()
 bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
 
-  // this->viewWindow->move_up(2);
+  // resize viewwindow when viewport is resized
   this->updateAllocation(this->get_allocation());
 
   cr->set_line_width(2);
-
 
   // paint white background
   cr->set_source_rgb(1, 1, 1);
@@ -75,15 +74,15 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 
 Coordinate Viewport::convertCoordinateFromWindow(Coordinate cord) {
   int Xw = cord.getx();
-  int Xvp = ((this->Xvpmax - this->Xvpmin) /
-             (this->viewWindow->getXwmax() - this->viewWindow->getXwmin()))
-            * (Xw - this->viewWindow->getXwmin()) + this->Xvpmin;
+  int Xvp = (int)(((float)(this->Xvpmax - this->Xvpmin) /
+            (float)(this->viewWindow->getXwmax() - this->viewWindow->getXwmin()))
+            * (float)(Xw - this->viewWindow->getXwmin()) + this->Xvpmin);
 
   int Yw = cord.gety();
   int Yvp = (this->Yvpmax - this->Yvpmin) -
-            (((this->Yvpmax - this->Yvpmin) /
-              (this->viewWindow->getYwmax() - this->viewWindow->getYwmin()))
-             * (Yw - this->viewWindow->getYwmin()) + this->Yvpmin);
+            (int)(((float)(this->Yvpmax - this->Yvpmin) /
+            (float)(this->viewWindow->getYwmax() - this->viewWindow->getYwmin()))
+            * (float)(Yw - this->viewWindow->getYwmin()) + this->Yvpmin);
 
 
   return Coordinate(Xvp, Yvp);
@@ -112,7 +111,7 @@ void Viewport::updateAllocation(Gtk::Allocation allocation)
     }
     else
     {
-      this->viewWindow->setXwmax(widthDiff);
+      this->viewWindow->setXwmax(widthDiff*2);
     }
 
     if (this->Yvpmax != 0)
@@ -124,7 +123,7 @@ void Viewport::updateAllocation(Gtk::Allocation allocation)
     }
     else
     {
-      this->viewWindow->setYwmax(heightDiff);
+      this->viewWindow->setYwmax(heightDiff*2);
     }
     this->Xvpmax += widthDiff;
     this->Yvpmax += heightDiff;

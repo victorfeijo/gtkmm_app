@@ -18,10 +18,20 @@ void ViewWindow::zoom_in(float scale)
   {
     float width = this->Xwmax - this->Xwmin;
     float height = this->Ywmax - this->Ywmin;
-    this->Xwmin += (width - (width / scale)) / 2;
-    this->Xwmax -= (width - (width / scale)) / 2;
-    this->Ywmin += (height - (height / scale)) / 2;
-    this->Ywmax -= (height - (height/ scale)) / 2;
+    float newXwmin = Xwmin + (width - (width / scale)) / 2;
+    float newXwmax = Xwmax - (width - (width / scale)) / 2;
+    float newYwmin = Ywmin + (height - (height / scale)) / 2;
+    float newYwmax = Ywmax - (height - (height/ scale)) / 2;
+    if ((newXwmax - newXwmin) < MIN_WIDTH || (newYwmax - newYwmin) < MIN_HEIGHT)
+    {
+      return;
+    }
+    else{
+      this->Xwmin = newXwmin;
+      this->Xwmax = newXwmax;
+      this->Ywmin = newYwmin;
+      this->Ywmax = newYwmax;
+    }
   }
 }
 
