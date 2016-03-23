@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+# Moodle upload folder
+moodle/UPLOAD_THIS_FOLDER
