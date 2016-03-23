@@ -13,11 +13,11 @@
 #include <gtkmm/box.h>
 #include <string>
 #include <iostream>
-#include "point.h"
-#include "rect.h"
-#include "wireframe.h"
-#include "main_window.h"
-#include "coordinate.h"
+#include "point.hpp"
+#include "rect.hpp"
+#include "wireframe.hpp"
+#include "main_window.hpp"
+#include "coordinate.hpp"
 
 class AddObjectWindow : public Gtk::Window
 {

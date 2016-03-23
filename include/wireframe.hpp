@@ -1,8 +1,8 @@
 #ifndef GTKMM_APP_WIREFRAME
 #define GTKMM_APP_WIREFRAME
 
-#include "drawable_object.h"
-#include "coordinate.h"
+#include "drawable_object.hpp"
+#include "coordinate.hpp"
 
 using namespace std;
 

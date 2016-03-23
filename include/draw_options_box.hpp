@@ -8,10 +8,10 @@
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/grid.h>
-#include "main_window.h"
-#include "view_window.h"
-#include "add_object_window.h"
-#include "list_objects_window.h"
+#include "main_window.hpp"
+#include "view_window.hpp"
+#include "add_object_window.hpp"
+#include "list_objects_window.hpp"
 
 class DrawOptionsBox : public Gtk::Frame
 {
@@ -40,5 +40,6 @@ protected:
   void on_button_move_right();
   void on_button_zoom_in();
   void on_button_zoom_out();
+  void on_button_close();
 };
 #endif // GTKMM_APP_DRAW_OPTIONS_BOX

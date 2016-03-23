@@ -1,4 +1,4 @@
-#include "wireframe.h"
+#include "wireframe.hpp"
 
 WireFrame::WireFrame(string name, list<Coordinate*> Coordinates)
 : DrawableObject(name, Coordinates)

@@ -1,8 +1,8 @@
 #ifndef GTKMM_APP_POINT
 #define GTKMM_APP_POINT
 
-#include "drawable_object.h"
-#include "coordinate.h"
+#include "drawable_object.hpp"
+#include "coordinate.hpp"
 
 using namespace std;
 

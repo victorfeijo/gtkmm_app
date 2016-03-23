@@ -1,4 +1,4 @@
-#include "point.h"
+#include "point.hpp"
 
 Point::Point(string name, Coordinate* point_cord)
 : DrawableObject(name)

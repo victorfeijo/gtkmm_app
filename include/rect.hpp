@@ -1,8 +1,8 @@
 #ifndef GTKMM_APP_RECT
 #define GTKMM_APP_RECT
 
-#include "drawable_object.h"
-#include "coordinate.h"
+#include "drawable_object.hpp"
+#include "coordinate.hpp"
 
 using namespace std;
 

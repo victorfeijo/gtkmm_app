@@ -1,4 +1,4 @@
-#include "viewport.h"
+#include "viewport.hpp"
 
 Viewport::Viewport()
     : viewWindow(new ViewWindow (0, 0, 0, 0)),
