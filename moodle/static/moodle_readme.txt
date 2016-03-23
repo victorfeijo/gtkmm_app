@@ -1,3 +1,5 @@
+Alunos: José Victor Feijó (14100842) e Matteus Legat(14100861)
+
 O trabalho foi feito utilizando a bibilioteca gtkmm 3.0, pois acreditamos que é 
 melhor para o conceito de orientação a objetos também para manutenção e futuras
 atualizações no software que estamos desenvolvendo na disciplina.
