@@ -1,4 +1,4 @@
-#include "view_window.h"
+#include "view_window.hpp"
 
 ViewWindow::ViewWindow(int Xwmin, int Ywmin, int Xwmax, int Ywmax)
     : Xwmin(Xwmin),

@@ -10,8 +10,8 @@
 #include <gtkmm/viewport.h>
 #include <gtkmm/adjustment.h>
 #include <glibmm/refptr.h>
-#include "viewport.h"
-#include "view_window.h"
+#include "viewport.hpp"
+#include "view_window.hpp"
 
 
 class MainWindow : public Gtk::Window

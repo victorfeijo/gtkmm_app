@@ -1,7 +1,7 @@
 #ifndef GTKMM_APP_VIEW_WINDOW
 #define GTKMM_APP_VIEW_WINDOW
 
-#include "display_file.h"
+#include "display_file.hpp"
 
 #define MIN_WIDTH 50
 #define MIN_HEIGHT 50

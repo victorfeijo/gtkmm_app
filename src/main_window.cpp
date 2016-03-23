@@ -1,5 +1,5 @@
-#include "main_window.h"
-#include "draw_options_box.h"
+#include "main_window.hpp"
+#include "draw_options_box.hpp"
 
 MainWindow::MainWindow()
     : main_box(Gtk::ORIENTATION_HORIZONTAL),

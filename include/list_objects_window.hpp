@@ -7,7 +7,7 @@
 #include <gtkmm/comboboxtext.h>
 #include <string>
 #include <list>
-#include "main_window.h"
+#include "main_window.hpp"
 
 class ListObjectsWindow : public Gtk::Window
 {

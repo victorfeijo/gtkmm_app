@@ -1,4 +1,4 @@
-#include "main_window.h"
+#include "main_window.hpp"
 #include <gtkmm/application.h>
 #include <list>
 #include <string>

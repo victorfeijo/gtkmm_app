@@ -7,7 +7,7 @@
  */
 #include <list>
 #include <string>
-#include "coordinate.h"
+#include "coordinate.hpp"
 using namespace std;
 
 class DrawableObject

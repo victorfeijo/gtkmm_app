@@ -1,4 +1,4 @@
-#include "rect.h"
+#include "rect.hpp"
 
 Rect::Rect(string name, Coordinate* rect_cord1, Coordinate* rect_cord2)
 : DrawableObject(name)

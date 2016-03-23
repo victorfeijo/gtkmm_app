@@ -5,8 +5,8 @@
 #include <gdkmm/rgba.h>
 #include <cairomm/context.h>
 #include <list>
-#include "view_window.h"
-#include "coordinate.h"
+#include "view_window.hpp"
+#include "coordinate.hpp"
 
 class Viewport : public Gtk::DrawingArea
 {

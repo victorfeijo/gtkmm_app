@@ -1,4 +1,4 @@
-#include "add_object_window.h"
+#include "add_object_window.hpp"
 
 AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
 : mainWindow(mainWindow),
