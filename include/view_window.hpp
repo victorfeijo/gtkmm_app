@@ -3,8 +3,8 @@
 
 #include "display_file.hpp"
 
-#define MIN_WIDTH 50
-#define MIN_HEIGHT 50
+#define MIN_WIDTH 15
+#define MIN_HEIGHT 15
 
 class ViewWindow
 {
