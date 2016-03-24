@@ -1,4 +1,5 @@
 #include "draw_options_box.hpp"
+#include <iostream>
 
 DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
                                gint spacing,
@@ -12,10 +13,12 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
       button_move_down("\u2228"),
       button_move_left("<"),
       button_move_right(">"),
-      button_zoom_in("Zoom in"),
-      button_zoom_out("Zoom out"),
+      button_zoom_in("+"),
+      button_zoom_out("-"),
       button_close("Close"),
-      button_list_objects("List Objects")
+      button_list_objects("List Objects"),
+      entry_move_length(),
+      entry_zoom_scale()
 {
   Gtk::ButtonBox* bbox = Gtk::manage( new Gtk::ButtonBox(Gtk::ORIENTATION_VERTICAL) );
   bbox->set_border_width(10);
@@ -28,18 +31,35 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
   button_move_down.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_down));
   button_move_left.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_left));
   button_move_right.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_right));
-  button_zoom_in.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_zoom_in));
-  button_zoom_out.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_zoom_out));
+
+  entry_move_length.set_width_chars(1);
+  entry_move_length.set_text(DEFAULT_MOVE_LENGTH);
 
   grid_move.set_column_homogeneous(true);
   grid_move.attach(button_move_up, 2, 1, 1, 1);
   grid_move.attach(button_move_left, 1, 2, 1, 1);
+  grid_move.attach(entry_move_length, 2, 2, 1, 1);
   grid_move.attach(button_move_right, 3, 2, 1, 1);
   grid_move.attach(button_move_down, 2, 3, 1, 1);
 
   bbox->add(grid_move);
-  bbox->add(button_zoom_in);
-  bbox->add(button_zoom_out);
+
+  button_zoom_in.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_zoom_in));
+  button_zoom_out.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_zoom_out));
+
+  entry_zoom_scale.set_width_chars(1);
+  char array[4];
+  sprintf(array, "%f", DEFAULT_ZOOM_SCALE);
+  array[3] = '\0';
+  entry_zoom_scale.set_text(array);
+
+  grid_zoom.set_column_homogeneous(true);
+  grid_zoom.attach(button_zoom_out, 1, 1, 1, 1);
+  grid_zoom.attach(entry_zoom_scale, 2, 1, 1, 1);
+  grid_zoom.attach(button_zoom_in, 3, 1, 1, 1);
+
+  bbox->add(grid_zoom);
+
   bbox->add(button_add_object);
   bbox->add(button_list_objects);
   bbox->add(button_close);
@@ -56,38 +76,92 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
 
 void DrawOptionsBox::on_button_move_up()
 {
-  this->mainWindow->getViewport()->getViewWindow()->move_up();
-  this->mainWindow->getViewport()->queue_draw();
+  int move_length = atoi(entry_move_length.get_text().raw().c_str());
+  if (move_length == 0)
+  {
+    entry_move_length.set_text(DEFAULT_MOVE_LENGTH);
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->move_up(move_length);
+    this->mainWindow->getViewport()->queue_draw();
+  }
 }
 
 void DrawOptionsBox::on_button_move_down()
 {
-  this->mainWindow->getViewport()->getViewWindow()->move_down();
-  this->mainWindow->getViewport()->queue_draw();
+  int move_length = atoi(entry_move_length.get_text().raw().c_str());
+  if (move_length == 0)
+  {
+    entry_move_length.set_text(DEFAULT_MOVE_LENGTH);
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->move_down(move_length);
+    this->mainWindow->getViewport()->queue_draw();
+  }
 }
 
 void DrawOptionsBox::on_button_move_left()
 {
-  this->mainWindow->getViewport()->getViewWindow()->move_left();
-  this->mainWindow->getViewport()->queue_draw();
+  int move_length = atoi(entry_move_length.get_text().raw().c_str());
+  if (move_length == 0)
+  {
+    entry_move_length.set_text(DEFAULT_MOVE_LENGTH);
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->move_left(move_length);
+    this->mainWindow->getViewport()->queue_draw();
+  }
 }
 
 void DrawOptionsBox::on_button_move_right()
 {
-  this->mainWindow->getViewport()->getViewWindow()->move_right();
-  this->mainWindow->getViewport()->queue_draw();
+  int move_length = atoi(entry_move_length.get_text().raw().c_str());
+  if (move_length == 0)
+  {
+    entry_move_length.set_text(DEFAULT_MOVE_LENGTH);
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->move_right(move_length);
+    this->mainWindow->getViewport()->queue_draw();
+  }
 }
 
 void DrawOptionsBox::on_button_zoom_in()
 {
-  this->mainWindow->getViewport()->getViewWindow()->zoom_in();
-  this->mainWindow->getViewport()->queue_draw();
+  float zoom_scale = atof(entry_zoom_scale.get_text().raw().c_str());
+  if (zoom_scale <=1)
+  {
+    char array[4];
+    sprintf(array, "%f", DEFAULT_ZOOM_SCALE);
+    array[3] = '\0';
+    entry_zoom_scale.set_text(array);
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->zoom_in(zoom_scale);
+    this->mainWindow->getViewport()->queue_draw();
+  }
 }
 
 void DrawOptionsBox::on_button_zoom_out()
 {
-  this->mainWindow->getViewport()->getViewWindow()->zoom_out();
-  this->mainWindow->getViewport()->queue_draw();
+  float zoom_scale = atof(entry_zoom_scale.get_text().raw().c_str());
+  if (zoom_scale <=1)
+  {
+    char array[4];
+    sprintf(array, "%f", DEFAULT_ZOOM_SCALE);
+    array[3] = '\0';
+    entry_zoom_scale.set_text(array);
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->zoom_out(zoom_scale);
+    this->mainWindow->getViewport()->queue_draw();
+  }
 }
 
 DrawOptionsBox::~DrawOptionsBox()
