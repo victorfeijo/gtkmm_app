@@ -74,16 +74,17 @@ bool Viewport::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 }
 
 Coordinate Viewport::convertCoordinateFromWindow(Coordinate cord) {
-  long int Xw = cord.getx();
-  long int Xvp = (long int)(((double)(this->Xvpmax - this->Xvpmin) /
-            (double)(this->viewWindow->getXwmax() - this->viewWindow->getXwmin()))
-            * (double)(Xw - this->viewWindow->getXwmin()) + this->Xvpmin);
+  int Xw = cord.getx();
+  int Xvp = (int)(((float)(this->Xvpmax - this->Xvpmin) /
+            (float)(this->viewWindow->getXwmax() - this->viewWindow->getXwmin()))
+            * (float)(Xw - this->viewWindow->getXwmin()) + this->Xvpmin);
 
-  long int Yw = cord.gety();
-  long int Yvp = (this->Yvpmax - this->Yvpmin) -
-            (long int)(((double)(this->Yvpmax - this->Yvpmin) /
-            (double)(this->viewWindow->getYwmax() - this->viewWindow->getYwmin()))
-            * (double)(Yw - this->viewWindow->getYwmin()) + this->Yvpmin);
+  int Yw = cord.gety();
+  int Yvp = (this->Yvpmax - this->Yvpmin) -
+            (int)(((float)(this->Yvpmax - this->Yvpmin) /
+            (float)(this->viewWindow->getYwmax() - this->viewWindow->getYwmin()))
+            * (float)(Yw - this->viewWindow->getYwmin()) + this->Yvpmin);
+
 
   return Coordinate(Xvp, Yvp);
 }
@@ -99,16 +100,15 @@ void Viewport::updateAllocation(Gtk::Allocation allocation)
   if (this->Xvpmax != allocation.get_width() ||
       this->Yvpmax != allocation.get_height())
   {
-    int widthDiff = allocation.get_width() - (this->Xvpmax - this->Xvpmin);
-    int heightDiff = allocation.get_height() - (this->Yvpmax - this->Yvpmin);
+    int widthDiff = allocation.get_width() - this->Xvpmax;
+    int heightDiff = allocation.get_height() - this->Yvpmax;
 
     if (this->Xvpmax != 0)
     {
       this->viewWindow->setXwmax(this->viewWindow->getXwmax() +
-                                 (float)(this->viewWindow->getXwmax()
+                                 this->Xvpmax / (this->viewWindow->getXwmax()
                                   - this->viewWindow->getXwmin())
-                                 * (float)widthDiff
-                                 / (float)(this->Xvpmax - this->Xvpmin));
+                                 * widthDiff);
     }
     else
     {
@@ -118,10 +118,9 @@ void Viewport::updateAllocation(Gtk::Allocation allocation)
     if (this->Yvpmax != 0)
     {
       this->viewWindow->setYwmin(this->viewWindow->getYwmin() -
-                                 (float)(this->viewWindow->getYwmax()
+                                 this->Yvpmax / (this->viewWindow->getYwmax()
                                   - this->viewWindow->getYwmin())
-                                 * (float)heightDiff
-                                 / (float)(this->Yvpmax - this->Yvpmin));
+                                 * heightDiff);
     }
     else
     {

@@ -4,20 +4,20 @@
 class Coordinate
 {
 public:
-  Coordinate(long int x, long int y)
+  Coordinate(int x, int y)
   : cord_x(x), cord_y(y)
   {}
   ~Coordinate() {}
-  long int getx()
+  int getx()
   {
     return cord_x;
   }
-  long int gety()
+  int gety()
   {
     return cord_y;
   }
 protected:
-  long int cord_x;
-  long int cord_y;
+  int cord_x;
+  int cord_y;
 };
 #endif // GTKMM_APP_Coordinate

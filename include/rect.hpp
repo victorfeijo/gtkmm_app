@@ -6,11 +6,11 @@
 
 using namespace std;
 
-class Line : public DrawableObject
+class Rect : public DrawableObject
 {
 public:
-  Line(string name, Coordinate* line_cord1, Coordinate* line_cord2);
-  ~Line();
+  Rect(string name, Coordinate* rect_cord1, Coordinate* rect_cord2);
+  ~Rect();
   virtual list<Coordinate*> getCoordinates();
 };
 #endif // GTKMM_APP_RECT
