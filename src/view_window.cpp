@@ -86,42 +86,42 @@ void ViewWindow::move_right(int length)
   this->Xwmax += length;
 }
 
-int ViewWindow::getXwmin()
+float ViewWindow::getXwmin()
 {
-  return (int) this->Xwmin;
+  return this->Xwmin;
 }
 
-int ViewWindow::getYwmin()
+float ViewWindow::getYwmin()
 {
-  return (int) this->Ywmin;
+  return this->Ywmin;
 }
 
-int ViewWindow::getXwmax()
+float ViewWindow::getXwmax()
 {
-  return (int) this->Xwmax;
+  return this->Xwmax;
 }
 
-int ViewWindow::getYwmax()
+float ViewWindow::getYwmax()
 {
-  return (int) this->Ywmax;
+  return this->Ywmax;
 }
 
-void ViewWindow::setXwmin(int Xwmin)
+void ViewWindow::setXwmin(float Xwmin)
 {
   this->Xwmin = Xwmin;
 }
 
-void ViewWindow::setYwmin(int Ywmin)
+void ViewWindow::setYwmin(float Ywmin)
 {
   this->Ywmin = Ywmin;
 }
 
-void ViewWindow::setXwmax(int Xwmax)
+void ViewWindow::setXwmax(float Xwmax)
 {
   this->Xwmax = Xwmax;
 }
 
-void ViewWindow::setYwmax(int Ywmax)
+void ViewWindow::setYwmax(float Ywmax)
 {
   this->Ywmax = Ywmax;
 }

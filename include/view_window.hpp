@@ -27,14 +27,14 @@ public:
 protected:
   DisplayFile displayFile;
   float Xwmin, Ywmin, Xwmax, Ywmax;
-  int getXwmin();
-  int getYwmin();
-  int getXwmax();
-  int getYwmax();
-  void setXwmin(int Xwmin);
-  void setYwmin(int Ywmin);
-  void setXwmax(int Xwmax);
-  void setYwmax(int Ywmax);
+  float getXwmin();
+  float getYwmin();
+  float getXwmax();
+  float getYwmax();
+  void setXwmin(float Xwmin);
+  void setYwmin(float Ywmin);
+  void setXwmax(float Xwmax);
+  void setYwmax(float Ywmax);
 
 };
 

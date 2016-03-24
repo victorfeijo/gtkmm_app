@@ -101,7 +101,7 @@ void AddObjectWindow::on_button_save_point()
   std::string name = point_name_field.get_text().raw();
   if (name.empty())
   {
-    point_name_field.grab_focus_without_selecting();
+    point_name_field.grab_focus();
     return;
   }
   std::string x_string = point_x_field.get_text().raw();
@@ -120,7 +120,7 @@ void AddObjectWindow::on_button_save_line()
   std::string name = line_name_field.get_text().raw();
   if (name.empty())
   {
-    line_name_field.grab_focus_without_selecting();
+    line_name_field.grab_focus();
     return;
   }
   std::string x1_string = line_x1_field.get_text().raw();
@@ -146,7 +146,7 @@ void AddObjectWindow::on_button_save_polygon()
     std::string name = wire_name_field.get_text().raw();
     if (name.empty())
     {
-      wire_name_field.grab_focus_without_selecting();
+      wire_name_field.grab_focus();
       return;
     }
     WireFrame *wire = new WireFrame(name, wire_cord_list);
