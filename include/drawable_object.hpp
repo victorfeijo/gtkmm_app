@@ -1,7 +1,7 @@
 #ifndef GTKMM_APP_DRAWABLE_OBJECT
 #define GTKMM_APP_DRAWABLE_OBJECT
 
- /*This class represent's a object such as rect or polygon
+ /*This class represent's a object such as line or polygon
  * to be drawed on the view port.
  * Include any library as need to use other's components.
  */
