@@ -1,7 +1,16 @@
 # Bash script to compile the application
 
+source='src/*.cpp'
+
+# join cpp files to compile faster if parameter `fast` was passed:
+([ "$1" == "fast" ] || [ "$2" == "fast" ]) && cat $source > join.cpp && source='join.cpp'
+
 # compile:
-g++ src/*.cpp -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -I include/ -std=c++11 -w
+g++ $source -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -I include/ -std=c++11 -Wall
+[ $? -ne 0 ] && error=1
+
+# remove joined cpp if exists:
+[ -e "join.cpp" ] && rm join.cpp
 
 # run app if compilation was successful and parameter `run` was passed:
-[ ! $? -ne 0 ] && [ "$1" == "run" ] && ./app.o
+[ ! $error ] && ([ "$1" == "run" ] || [ "$2" == "run" ]) && ./app.o

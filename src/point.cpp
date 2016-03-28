@@ -1,7 +1,7 @@
 #include "point.hpp"
 
 Point::Point(string name, Coordinate* point_cord)
-: DrawableObject(name)
+    : DrawableObject(name)
 {
   Coordinates.push_back(point_cord);
 }

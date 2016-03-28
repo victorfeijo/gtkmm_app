@@ -8,6 +8,7 @@
 #include <string>
 #include <list>
 #include "main_window.hpp"
+#include "transform_object_window.hpp"
 
 class ListObjectsWindow : public Gtk::Window
 {
@@ -19,10 +20,12 @@ protected:
   std::string selected_object;
   Gtk::ComboBoxText objects_list;
   Gtk::Grid m_grid;
-  Gtk::Button button_delete, button_close;
+  Gtk::Button button_transform, button_delete, button_close;
+  TransformObjectWindow* transform_object_window;
 
+  void on_button_transform();
   void on_button_delete();
-  void on_list_select();
   void on_button_close();
+
 };
 #endif //GTKMM_APP_ADD_OBJECT_WINDOW
