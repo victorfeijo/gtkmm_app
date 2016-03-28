@@ -1,8 +1,8 @@
 # Bash script to create a folder to upload on Moodle
 
 upfolder=UPLOAD_THIS_FOLDER
-source='../src/*.cpp'
-headers='../include/*.hpp'
+source='../src/elements/*.cpp ../src/view/*.cpp ../src/services/*.cpp ../src/structures/*.cpp ../main.cpp'
+headers='../include/elements/*.hpp ../include/services/*.hpp ../include/structures/*.hpp ../include/view/*.hpp'
 
 # remove folder and its contents if exists
 [ -e $upfolder ] && rm -r ./UPLOAD_THIS_FOLDER

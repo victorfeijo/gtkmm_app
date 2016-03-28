@@ -22,8 +22,10 @@ protected:
   Gtk::Allocation* allocation;
   ViewWindow* viewWindow = NULL;
   int Xvpmin, Yvpmin, Xvpmax, Yvpmax;
-  void updateAllocation(Gtk::Allocation allocation);
-  Coordinate convertCoordinateFromWindow(Coordinate cord);
+  // MOVER PARA VIEWPORT_SERVICES
+    void updateAllocation(Gtk::Allocation allocation);
+    Coordinate convertCoordinateFromWindow(Coordinate cord);
+    // void drawViewport(Viewport* viewport, const Cairo::RefPtr<Cairo::Context>& cr);
 
 };
 
