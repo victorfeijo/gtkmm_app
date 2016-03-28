@@ -1,6 +1,6 @@
 # Bash script to compile the application
 
-declare source='main.cpp  src/elements/*.cpp src/structures/*.cpp src/view/*.cpp'
+declare source='main.cpp src/services/*.cpp src/elements/*.cpp src/structures/*.cpp src/view/*.cpp'
 declare -a include=('include/services' 'include/elements' 'include/structures' 'include/view')
 
 # join cpp files to compile faster if parameter `fast` was passed:

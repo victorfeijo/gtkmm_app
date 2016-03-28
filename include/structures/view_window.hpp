@@ -11,8 +11,6 @@
 class ViewWindow
 {
 
-  friend class Viewport;
-
 public:
   ViewWindow(int Xwmin, int Ywmin, int Xwmax, int Ywmax);
   virtual ~ViewWindow();
@@ -23,10 +21,6 @@ public:
   void move_left(int length = 10);
   void move_right(int length = 10);
   DisplayFile* getDisplayFile();
-
-protected:
-  DisplayFile displayFile;
-  float Xwmin, Ywmin, Xwmax, Ywmax;
   float getXwmin();
   float getYwmin();
   float getXwmax();
@@ -35,6 +29,10 @@ protected:
   void setYwmin(float Ywmin);
   void setXwmax(float Xwmax);
   void setYwmax(float Ywmax);
+
+protected:
+  DisplayFile displayFile;
+  float Xwmin, Ywmin, Xwmax, Ywmax;
 
 };
 
