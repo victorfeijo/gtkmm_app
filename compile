@@ -1,12 +1,14 @@
 # Bash script to compile the application
 
-source='src/*.cpp'
+declare source='main.cpp src/services/*.cpp src/elements/*.cpp src/structures/*.cpp src/view/*.cpp'
+declare -a include=('include/services' 'include/elements' 'include/structures' 'include/view')
 
 # join cpp files to compile faster if parameter `fast` was passed:
 ([ "$1" == "fast" ] || [ "$2" == "fast" ]) && cat $source > join.cpp && source='join.cpp'
 
 # compile:
-g++ $source -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -I include/ -std=c++11 -Wall
+g++ $source -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -std=c++11 -Wall \
+    $(for i in "${include[@]}"; do echo "-I$i"; done)
 [ $? -ne 0 ] && error=1
 
 # remove joined cpp if exists:
