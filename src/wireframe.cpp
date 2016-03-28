@@ -1,7 +1,7 @@
 #include "wireframe.hpp"
 
 WireFrame::WireFrame(string name, list<Coordinate*> Coordinates)
-: DrawableObject(name, Coordinates)
+    : DrawableObject(name, Coordinates)
 {
   //nothing for while
 }

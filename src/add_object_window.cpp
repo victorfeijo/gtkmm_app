@@ -1,29 +1,26 @@
 #include "add_object_window.hpp"
 
 AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
-: mainWindow(mainWindow),
-  m_vbox(Gtk::ORIENTATION_VERTICAL),
-  button_add_coordenate("Add Coordenate"),
-  button_save_point("Save Point"),
-  button_save_line("Save Line"),
-  button_save_wire("Save Polygon"),
-  button_close("Close"),
-  point_x_label("Coordinate X : "),
-  point_y_label("Coordinate Y : "),
-  line_x1_label("Coordinate X1 : "),
-  line_y1_label("Coordinate Y1 : "),
-  line_x2_label("Coordinate X2 : "),
-  line_y2_label("Coordinate Y2 : "),
-  wire_x_label("Coordinate X : "),
-  wire_y_label("Coordinate Y : "),
-  info_label("Insert a Coordinate :"),
-  point_name_field(), point_x_field(), point_y_field(),
-  line_name_field(), line_x1_field(), line_x2_field(),
-  wire_name_field(), line_y1_field(), line_y2_field(),
-  wire_x_field(), wire_y_field()
+    : mainWindow(mainWindow),
+      m_vbox(Gtk::ORIENTATION_VERTICAL),
+      button_add_coordenate("Add Coordenate"),
+      button_save_line("Save Line"),
+      button_save_wire("Save Polygon"),
+      button_save_point("Save Point"),
+      button_close("Close"),
+      point_x_label("Coordinate X: "),
+      point_y_label("Coordinate Y: "),
+      line_x1_label("Coordinate X\u2081: "),
+      line_x2_label("Coordinate X\u2082: "),
+      line_y1_label("Coordinate Y\u2081: "),
+      line_y2_label("Coordinate Y\u2082: "),
+      wire_x_label("Coordinate X: "),
+      wire_y_label("Coordinate Y: "),
+      info_label("Insert a Coordinate:")
 {
   set_title("Add Object");
   set_border_width(12);
+  set_resizable(false);
 
   add(m_vbox);
 

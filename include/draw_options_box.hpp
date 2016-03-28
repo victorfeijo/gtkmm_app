@@ -24,7 +24,7 @@ public:
                  gint spacing,
                  Gtk::ButtonBoxStyle layout,
                  MainWindow* mainWindow
-                );
+               );
   virtual ~DrawOptionsBox();
 
 protected:

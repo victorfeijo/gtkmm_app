@@ -32,8 +32,8 @@ protected:
   Gtk::Grid point_grid, line_grid, wire_grid;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
-  Gtk::Button button_add_coordenate, button_save_line, button_close,
-              button_save_wire, button_save_point;
+  Gtk::Button button_add_coordenate, button_save_line, button_save_wire,
+              button_save_point, button_close;
   Gtk::Entry point_name_field, point_x_field, point_y_field;
   Gtk::Entry line_name_field, line_x1_field, line_x2_field, line_y1_field, line_y2_field;
   Gtk::Entry wire_name_field, wire_x_field, wire_y_field;

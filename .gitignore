@@ -29,3 +29,6 @@
 
 # Moodle upload folder
 moodle/UPLOAD_THIS_FOLDER
+
+# Joined source file
+join.cpp

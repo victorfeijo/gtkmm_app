@@ -14,9 +14,9 @@ class DrawableObject
 {
 public:
   DrawableObject(string name)
-  : name(name) {}
+      : name(name) {}
   DrawableObject(string name, list<Coordinate*> Coordinates)
-  : name(name), Coordinates(Coordinates) {}
+      : name(name), Coordinates(Coordinates) {}
   ~DrawableObject() {}
   std::string getName()
   {

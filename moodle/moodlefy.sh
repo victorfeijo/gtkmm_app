@@ -15,13 +15,13 @@ cp ./static/moodle_compile.sh $upfolder/compile.sh
 cp ./static/moodle_readme.txt $upfolder/README.txt
 
 
-# copy headers 
+# copy headers
 cp $headers -t $upfolder
 
 if [ "$1" == "join" ]; then
   # join cpp files if parameter `join` was passed
   find $source -type f -printf '\n\n// ========== FILE: %p ========== //\n\n\n'\
-      -exec cat {} \; >> $upfolder/source.cpp
+      -exec cat {} \; > $upfolder/source.cpp
 else
   # copy cpp files
   cp $source -t $upfolder
