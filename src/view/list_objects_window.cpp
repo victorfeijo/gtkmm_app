@@ -23,6 +23,7 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
 
   m_grid.set_column_homogeneous(true);
 
+  objects_list.set_border_width(10);
   m_grid.attach(objects_list, 1, 1, 3, 1);
   m_grid.attach(button_transform, 1, 2, 1, 1);
   m_grid.attach(button_delete, 2, 2, 1, 1);

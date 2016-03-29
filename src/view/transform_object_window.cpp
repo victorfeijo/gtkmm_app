@@ -4,7 +4,13 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
     : mainWindow(mainWindow),
       object(object),
       m_vbox(Gtk::ORIENTATION_VERTICAL),
-      button_close("Close")
+      button_close("Close"),
+      label_translation_x("Translate x : "),
+      label_translation_y("Translate y : "),
+      button_add_translation("Translate"),
+      label_scale_sx("Scale Sx : "),
+      label_scale_sy("Scale Sy : "),
+      button_add_scale("Scale")
 {
   set_title("Transform Object");
   set_border_width(12);
@@ -12,17 +18,30 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
 
   add(m_vbox);
 
-  m_notebook.set_border_width(0);
+  m_notebook.set_border_width(10);
   m_vbox.pack_start(m_notebook);
   m_vbox.pack_start(button_close, Gtk::PACK_SHRINK);
 
   //Add translation grid
   translation_grid.set_column_homogeneous(true);
   translation_grid.set_row_spacing(10);
+  translation_grid.attach(label_translation_y, 1, 1, 1, 1);
+  translation_grid.attach(label_translation_x, 1, 2, 1, 1);
+  translation_grid.attach(translation_x_field, 2, 1, 1, 1);
+  translation_grid.attach(translation_y_field, 2, 2, 1, 1);
+  button_add_translation.set_border_width(10);
+  translation_grid.attach(button_add_translation, 2, 3, 1, 1);
+
 
   //Add scale grid
   scale_grid.set_column_homogeneous(true);
   scale_grid.set_row_spacing(10);
+  scale_grid.attach(label_scale_sx, 1, 1, 1, 1);
+  scale_grid.attach(label_scale_sy, 1, 2, 1, 1);
+  scale_grid.attach(scale_sx_field, 2, 1, 1, 1);
+  scale_grid.attach(scale_sy_field, 2, 2, 1, 1);
+  button_add_scale.set_border_width(10);
+  scale_grid.attach(button_add_scale, 2, 3, 1, 1);
 
   //Add polygon grid
   rotate_grid.set_column_homogeneous(true);
@@ -30,6 +49,12 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
 
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
     &TransformObjectWindow::on_button_close));
+
+  button_add_translation.signal_clicked().connect(sigc::mem_fun(*this,
+    &TransformObjectWindow::on_button_translate));
+
+  button_add_scale.signal_clicked().connect(sigc::mem_fun(*this,
+    &TransformObjectWindow::on_button_scale));
 
   m_notebook.append_page(translation_grid, "Translate");
   m_notebook.append_page(scale_grid, "Scale");
@@ -45,4 +70,14 @@ TransformObjectWindow::~TransformObjectWindow()
 void TransformObjectWindow::on_button_close()
 {
   close();
+}
+
+void TransformObjectWindow::on_button_translate()
+{
+  //TODO
+}
+
+void TransformObjectWindow::on_button_scale()
+{
+  //TODO
 }
