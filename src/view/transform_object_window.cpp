@@ -10,7 +10,11 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
       button_add_translation("Translate"),
       label_scale_sx("Scale Sx : "),
       label_scale_sy("Scale Sy : "),
-      button_add_scale("Scale")
+      button_add_scale("Scale"),
+      label_rotate_degree("Angle to rotate : "),
+      label_rotate_x("Rotate point x : "),
+      label_rotate_y("Rotate point y : "),
+      button_add_rotate("Rotate")
 {
   set_title("Transform Object");
   set_border_width(12);
@@ -32,7 +36,6 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
   button_add_translation.set_border_width(10);
   translation_grid.attach(button_add_translation, 2, 3, 1, 1);
 
-
   //Add scale grid
   scale_grid.set_column_homogeneous(true);
   scale_grid.set_row_spacing(10);
@@ -43,9 +46,17 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
   button_add_scale.set_border_width(10);
   scale_grid.attach(button_add_scale, 2, 3, 1, 1);
 
-  //Add polygon grid
+  //Add rotate grid
   rotate_grid.set_column_homogeneous(true);
   rotate_grid.set_row_spacing(10);
+  rotate_grid.attach(label_rotate_degree, 1, 1, 1, 1);
+  rotate_grid.attach(label_rotate_x, 1, 2, 1, 1);
+  rotate_grid.attach(label_rotate_y, 1, 3, 1, 1);
+  rotate_grid.attach(rotate_degree_field, 2, 1, 1, 1);
+  rotate_grid.attach(rotate_x_field, 2, 2, 1, 1);
+  rotate_grid.attach(rotate_y_field, 2, 3, 1, 1);
+  button_add_rotate.set_border_width(10);
+  rotate_grid.attach(button_add_rotate, 2, 4, 1, 1);
 
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
     &TransformObjectWindow::on_button_close));
@@ -55,6 +66,9 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
 
   button_add_scale.signal_clicked().connect(sigc::mem_fun(*this,
     &TransformObjectWindow::on_button_scale));
+
+  button_add_rotate.signal_clicked().connect(sigc::mem_fun(*this,
+    &TransformObjectWindow::on_button_rotate));
 
   m_notebook.append_page(translation_grid, "Translate");
   m_notebook.append_page(scale_grid, "Scale");
@@ -78,6 +92,11 @@ void TransformObjectWindow::on_button_translate()
 }
 
 void TransformObjectWindow::on_button_scale()
+{
+  //TODO
+}
+
+void TransformObjectWindow::on_button_rotate()
 {
   //TODO
 }
