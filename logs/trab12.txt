@@ -1,0 +1,11 @@
+Writing the first log line.
+Writing the second log line.
+Writing the first log line.
+Writing the second log line.
+Writing the first log line.
+Writing the second log line.
+Writing the first log line.
+Writing the second log line.
+test
+Tue Mar 29 11:44:00 2016
+test
