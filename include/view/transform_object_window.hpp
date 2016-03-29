@@ -13,6 +13,7 @@
 #include "coordinate.hpp"
 #include "translate_object_service.hpp"
 #include "scale_object_service.hpp"
+#include "rotate_object_service.hpp"
 
 class TransformObjectWindow : public Gtk::Window
 {
@@ -26,18 +27,23 @@ protected:
   DrawableObject* object;
   TranslateObjectService* translate_service;
   ScaleObjectService* scale_service;
+  RotateObjectService* rotate_service;
   Gtk::Grid translation_grid, scale_grid, rotate_grid;
-  Gtk::Label label_translation_x, label_translation_y;
-  Gtk::Entry translation_x_field, translation_y_field;
-  Gtk::Label label_scale_sx, label_scale_sy;
-  Gtk::Entry scale_sx_field, scale_sy_field;
+  Gtk::Label label_translation_x, label_translation_y,
+             label_scale_sx, label_scale_sy,
+             label_rotate_x, label_rotate_y, label_rotate_degree;
+  Gtk::Entry translation_x_field, translation_y_field,
+             scale_sx_field, scale_sy_field,
+             rotate_x_field, rotate_y_field, rotate_degree_field;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
-  Gtk::Button button_close, button_add_translation, button_add_scale;
+  Gtk::Button button_close, button_add_translation,
+              button_add_scale, button_add_rotate;
 
   void on_button_close();
   void on_button_translate();
   void on_button_scale();
+  void on_button_rotate();
 };
 
 #endif
