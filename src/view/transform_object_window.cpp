@@ -7,7 +7,10 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
       button_close("Close"),
       label_translation_x("Translate x : "),
       label_translation_y("Translate y : "),
-      button_add_translation("Translate")
+      button_add_translation("Translate"),
+      label_scale_sx("Scale Sx : "),
+      label_scale_sy("Scale Sy : "),
+      button_add_scale("Scale")
 {
   set_title("Transform Object");
   set_border_width(12);
@@ -33,6 +36,12 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
   //Add scale grid
   scale_grid.set_column_homogeneous(true);
   scale_grid.set_row_spacing(10);
+  scale_grid.attach(label_scale_sx, 1, 1, 1, 1);
+  scale_grid.attach(label_scale_sy, 1, 2, 1, 1);
+  scale_grid.attach(scale_sx_field, 2, 1, 1, 1);
+  scale_grid.attach(scale_sy_field, 2, 2, 1, 1);
+  button_add_scale.set_border_width(10);
+  scale_grid.attach(button_add_scale, 2, 3, 1, 1);
 
   //Add polygon grid
   rotate_grid.set_column_homogeneous(true);
@@ -43,6 +52,9 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
 
   button_add_translation.signal_clicked().connect(sigc::mem_fun(*this,
     &TransformObjectWindow::on_button_translate));
+
+  button_add_scale.signal_clicked().connect(sigc::mem_fun(*this,
+    &TransformObjectWindow::on_button_scale));
 
   m_notebook.append_page(translation_grid, "Translate");
   m_notebook.append_page(scale_grid, "Scale");
@@ -61,6 +73,11 @@ void TransformObjectWindow::on_button_close()
 }
 
 void TransformObjectWindow::on_button_translate()
+{
+  //TODO
+}
+
+void TransformObjectWindow::on_button_scale()
 {
   //TODO
 }
