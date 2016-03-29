@@ -23,6 +23,7 @@ public:
   MainWindow();
   virtual ~MainWindow();
   Viewport* getViewport();
+  LogTextView* getLogTextView();
 
 protected:
   /* Add here any components or frames

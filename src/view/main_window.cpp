@@ -9,7 +9,7 @@ MainWindow::MainWindow()
       right_frame("Viewport"),
       down_frame("Log Bar"),
       viewport(),
-      log_text_view("logs/trab12.txt")
+      log_text_view("logs/log_file.txt")
 {
   set_border_width(15);
   set_title("Main Window");
@@ -41,13 +41,17 @@ MainWindow::MainWindow()
   scrolled_log.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
   down_frame.add(scrolled_log);
   // show all components
-  log_text_view.add_log_line("test\n");
   show_all_children();
 }
 
 Viewport* MainWindow::getViewport()
 {
   return &this->viewport;
+}
+
+LogTextView* MainWindow::getLogTextView()
+{
+  return &this->log_text_view;
 }
 
 MainWindow::~MainWindow()

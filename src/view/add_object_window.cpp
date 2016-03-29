@@ -109,6 +109,11 @@ void AddObjectWindow::on_button_save_point()
   Point *point = new Point(name, point_cord);
   this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(point);
   this->mainWindow->getViewport()->queue_draw();
+
+  mainWindow->getLogTextView()->add_log_line(
+    "Point named : [" + name + "] was added with (" + x_string + ", " + y_string + ")\n"
+  );
+
   close();
 }
 
@@ -133,6 +138,12 @@ void AddObjectWindow::on_button_save_line()
   Line *line = new Line(name, point_cord1, point_cord2);
   this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(line);
   this->mainWindow->getViewport()->queue_draw();
+
+  mainWindow->getLogTextView()->add_log_line(
+    "Rect named : [" + name + "] was added with (" + x1_string + ", " + y1_string + ") and " +
+    "(" + x2_string + ", " + y2_string + ")\n"
+  );
+
   close();
 }
 
@@ -150,10 +161,18 @@ void AddObjectWindow::on_button_save_polygon()
     this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(wire);
     this->mainWindow->getViewport()->queue_draw();
 
+    std::string polygon_string_cord = "";
     while(!wire_cord_list.empty())
     {
+      Coordinate* cord = wire_cord_list.back();
       wire_cord_list.pop_back();
+      polygon_string_cord += "(" + std::to_string(cord->getx()) + ", " +
+        std::to_string(cord->gety()) + ")";
     }
+
+    mainWindow->getLogTextView()->add_log_line(
+      "A polygon named : [" + name + "] was added with " + polygon_string_cord + "\n"
+    );
 
     close();
   }

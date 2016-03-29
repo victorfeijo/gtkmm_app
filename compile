@@ -7,7 +7,7 @@ declare -a include=('include/services' 'include/elements' 'include/structures' '
 ([ "$1" == "fast" ] || [ "$2" == "fast" ]) && cat $source > join.cpp && source='join.cpp'
 
 # compile:
-g++ $source -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -std=c++11 -Wall \
+g++ $source -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -std=c++11 -w \
     $(for i in "${include[@]}"; do echo "-I$i"; done)
 [ $? -ne 0 ] && error=1
 
