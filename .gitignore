@@ -34,4 +34,4 @@ moodle/UPLOAD_THIS_FOLDER
 join.cpp
 
 # Log files
-logs/.*
+logs/

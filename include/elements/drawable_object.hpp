@@ -23,6 +23,11 @@ public:
     return name;
   }
   virtual list<Coordinate*> getCoordinates() = 0;
+  virtual string getType() = 0;
+  void setCoordinates(list<Coordinate*> Coordinates)
+  {
+    this->Coordinates = Coordinates;
+  }
 protected:
   string name;
   list<Coordinate*> Coordinates;

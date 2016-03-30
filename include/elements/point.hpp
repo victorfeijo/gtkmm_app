@@ -12,5 +12,6 @@ public:
   Point(string name, Coordinate* point_cord);
   ~Point();
   virtual list<Coordinate*> getCoordinates();
+  virtual string getType();
 };
 #endif // GTKMM_APP_POINT

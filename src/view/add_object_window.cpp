@@ -140,7 +140,7 @@ void AddObjectWindow::on_button_save_line()
   this->mainWindow->getViewport()->queue_draw();
 
   mainWindow->getLogTextView()->add_log_line(
-    "Rect named : [" + name + "] was added with (" + x1_string + ", " + y1_string + ") and " +
+    "Line named : [" + name + "] was added with (" + x1_string + ", " + y1_string + ") and " +
     "(" + x2_string + ", " + y2_string + ")\n"
   );
 

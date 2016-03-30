@@ -14,3 +14,8 @@ list<Coordinate*> WireFrame::getCoordinates()
 {
   return Coordinates;
 }
+
+string WireFrame::getType()
+{
+  return "Polygon";
+}
