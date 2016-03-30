@@ -14,3 +14,8 @@ list<Coordinate*> Point::getCoordinates()
 {
   return Coordinates;
 }
+
+string Point::getType()
+{
+  return "Point";
+}

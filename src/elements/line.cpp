@@ -15,3 +15,8 @@ list<Coordinate*> Line::getCoordinates()
 {
   return Coordinates;
 }
+
+string Line::getType()
+{
+  return "Line";
+}

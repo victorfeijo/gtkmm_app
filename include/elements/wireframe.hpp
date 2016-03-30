@@ -12,5 +12,6 @@ public:
   WireFrame(string name, list<Coordinate*> Coordinates);
   ~WireFrame();
   virtual list<Coordinate*> getCoordinates();
+  virtual string getType();
 };
 #endif // GTKMM_APP_WIREFRAME
