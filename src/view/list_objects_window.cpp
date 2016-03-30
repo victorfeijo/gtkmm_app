@@ -23,11 +23,12 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
 
   m_grid.set_column_homogeneous(true);
 
-  objects_list.set_border_width(10);
+  // objects_list.set_border_width(10);
+  m_grid.set_row_spacing(10);
   m_grid.attach(objects_list, 1, 1, 3, 1);
-  m_grid.attach(button_transform, 1, 2, 1, 1);
-  m_grid.attach(button_delete, 2, 2, 1, 1);
-  m_grid.attach(button_close, 3, 2, 1, 1);
+  m_grid.attach(button_transform, 1, 3, 1, 1);
+  m_grid.attach(button_delete, 2, 3, 1, 1);
+  m_grid.attach(button_close, 3, 3, 1, 1);
 
   button_transform.signal_clicked().connect(sigc::mem_fun(*this,
       &ListObjectsWindow::on_button_transform) );
@@ -52,6 +53,8 @@ void ListObjectsWindow::on_button_delete()
     this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()
         ->removeObjectByName((string) name);
     this->mainWindow->getViewport()->queue_draw();
+    this->mainWindow->getLogTextView()->add_log_line(
+        "Object named [" + name + "] deleted\n");
     this->hide();
   }
 }

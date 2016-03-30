@@ -19,7 +19,7 @@ LogTextView::~LogTextView()
 void LogTextView::add_log_line(string line)
 {
   Glib::ustring actual_text = log_text_buffer->get_text();
-  log_text_buffer->set_text(actual_text + line);
+  log_text_buffer->set_text(line + actual_text);
   this->set_buffer(log_text_buffer);
   this->add_line_file(line);
 }
