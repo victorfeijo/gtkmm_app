@@ -32,3 +32,6 @@ moodle/UPLOAD_THIS_FOLDER
 
 # Joined source file
 join.cpp
+
+# Log files
+logs/.*
