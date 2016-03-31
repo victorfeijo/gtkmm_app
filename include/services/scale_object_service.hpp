@@ -4,7 +4,9 @@
 #include "drawable_object.hpp"
 #include <string>
 #include <list>
+#include <iostream>
 #include "matrix.hpp"
+#include "translate_object_service.hpp"
 
 class ScaleObjectService
 {

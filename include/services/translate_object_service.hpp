@@ -4,6 +4,7 @@
 #include "drawable_object.hpp"
 #include "matrix.hpp"
 #include <list>
+#include <iostream>
 
 class TranslateObjectService
 {
