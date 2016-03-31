@@ -7,6 +7,7 @@
 
  #include <gtkmm/textview.h>
  #include <gtkmm/textbuffer.h>
+ #include <gtkmm/adjustment.h>
  #include <string>
  #include <fstream>
  #include <iostream>

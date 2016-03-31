@@ -111,7 +111,8 @@ void AddObjectWindow::on_button_save_point()
   this->mainWindow->getViewport()->queue_draw();
 
   mainWindow->getLogTextView()->add_log_line(
-    "Point named : [" + name + "] was added with (" + x_string + ", " + y_string + ")\n"
+    "Point named [" + name + "] was added with ("
+        + to_string(x_cord) + ", " + to_string(y_cord) + ")\n"
   );
 
   close();
@@ -140,8 +141,9 @@ void AddObjectWindow::on_button_save_line()
   this->mainWindow->getViewport()->queue_draw();
 
   mainWindow->getLogTextView()->add_log_line(
-    "Line named : [" + name + "] was added with (" + x1_string + ", " + y1_string + ") and " +
-    "(" + x2_string + ", " + y2_string + ")\n"
+    "Line named [" + name + "] was added with (" + to_string(x1_cord)+ ", "
+        + to_string(y1_cord) + ") and " + "(" + to_string(x2_cord) + ", "
+        + to_string(y2_cord) + ")\n"
   );
 
   close();
@@ -166,12 +168,12 @@ void AddObjectWindow::on_button_save_polygon()
     {
       Coordinate* cord = wire_cord_list.back();
       wire_cord_list.pop_back();
-      polygon_string_cord += "(" + std::to_string(cord->getx()) + ", " +
-        std::to_string(cord->gety()) + ")";
+      polygon_string_cord += "(" + to_string(cord->getx()) + ", " +
+          to_string(cord->gety()) + ") ";
     }
 
     mainWindow->getLogTextView()->add_log_line(
-      "A polygon named : [" + name + "] was added with " + polygon_string_cord + "\n"
+      "A polygon named [" + name + "] was added with " + polygon_string_cord + "\n"
     );
 
     close();

@@ -92,15 +92,15 @@ void TransformObjectWindow::on_button_translate()
   std::string dy_string = translation_y_field.get_text().raw();
   int dx = atoi(dx_string.c_str());
   int dy = atoi(dy_string.c_str());
-  
+
   translate_service->translate(this->object, dx, dy);
 
   this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(this->object);
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
-    this->object->getType() + " named : [" + this->object->getName() + "] was translated in ("
-    + dx_string + ", " + dy_string + ")\n"
+      this->object->getType() + " named [" + this->object->getName() + "] was translated in ("
+      + to_string(dx) + ", " + to_string(dy) + ")\n"
   );
   close();
 }

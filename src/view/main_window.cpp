@@ -13,13 +13,15 @@ MainWindow::MainWindow()
 {
   set_border_width(15);
   set_title("Main Window");
-  set_default_size(700, 500);
+  set_default_size(700, 550);
   // set_resizable(false);
   add(main_box);
 
-  main_box.pack_start(drawable_box, Gtk::PACK_SHRINK, 10);
+  main_box.pack_start(drawable_box, Gtk::PACK_EXPAND_WIDGET);
 
-  drawable_box.pack_start(left_frame, Gtk::PACK_SHRINK, 10);
+  drawable_box.pack_start(left_frame, Gtk::PACK_SHRINK);
+
+  left_frame.set_border_width(5);
 
   left_box.set_border_width(10);
   left_frame.add(left_box);
@@ -31,15 +33,18 @@ MainWindow::MainWindow()
   );
 
   // viewport
-  drawable_box.pack_start(right_frame, Gtk::PACK_EXPAND_WIDGET, 10);
+  drawable_box.pack_start(right_frame, Gtk::PACK_EXPAND_WIDGET);
+  right_frame.set_border_width(5);
   right_frame.add(viewport);
   viewport.show();
 
   //Log
-  main_box.pack_start(down_frame, Gtk::PACK_EXPAND_WIDGET, 10);
   scrolled_log.add(log_text_view);
   scrolled_log.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+  scrolled_log.set_size_request(0, 75);
+  down_frame.set_border_width(5);
   down_frame.add(scrolled_log);
+  main_box.pack_start(down_frame, Gtk::PACK_SHRINK);
   // show all components
   show_all_children();
 }
