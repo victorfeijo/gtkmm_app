@@ -3,7 +3,7 @@
 Point::Point(string name, Coordinate* point_cord)
     : DrawableObject(name)
 {
-  Coordinates.push_back(point_cord);
+  coordinates.push_back(point_cord);
 }
 
 Point::~Point()
@@ -12,7 +12,7 @@ Point::~Point()
 
 list<Coordinate*> Point::getCoordinates()
 {
-  return Coordinates;
+  return coordinates;
 }
 
 string Point::getType()

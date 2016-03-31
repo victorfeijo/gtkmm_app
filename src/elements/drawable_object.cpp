@@ -5,7 +5,7 @@ DrawableObject::DrawableObject(string name)
 {
 }
 
-DrawableObject::DrawableObject(string name, list<Coordinate*> Coordinates)
+DrawableObject::DrawableObject(string name, list<Coordinate*> coordinates)
     : name(name), coordinates(coordinates)
 {
 }
