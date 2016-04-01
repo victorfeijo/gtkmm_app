@@ -120,7 +120,21 @@ void TransformObjectWindow::on_button_translate()
 
 void TransformObjectWindow::on_button_scale()
 {
-  //TODO
+  std::string sx_string = scale_sx_field.get_text().raw();
+  std::string sy_string = scale_sy_field.get_text().raw();
+  int sx = atoi(sx_string.c_str());
+  int sy = atoi(sy_string.c_str());
+
+  scale_service.scale(this->object, sx, sy);
+
+  this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(this->object);
+  this->mainWindow->getViewport()->queue_draw();
+
+  this->mainWindow->getLogTextView()->add_log_line(
+      this->object->getType() + " named [" + this->object->getName() + "] was scaled in ("
+      + to_string(sx) + ", " + to_string(sy) + ")\n"
+  );
+  close();
 }
 
 void TransformObjectWindow::on_button_rotate()

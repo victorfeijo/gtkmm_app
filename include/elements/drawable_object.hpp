@@ -20,7 +20,7 @@ public:
   virtual list<Coordinate*> getCoordinates() = 0;
   virtual string getType() = 0;
   void setCoordinates(list<Coordinate*> coordinates);
-  Coordinate getCenter();
+  Coordinate* getCenter();
 
 protected:
   string name;

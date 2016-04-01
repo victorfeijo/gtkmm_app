@@ -24,7 +24,7 @@ void DrawableObject::setCoordinates(list<Coordinate*> coordinates)
   this->coordinates = coordinates;
 }
 
-Coordinate DrawableObject::getCenter()
+Coordinate* DrawableObject::getCenter()
 {
   long int xSum, ySum, zSum, xAvg, yAvg, zAvg;
   int count = 0;
@@ -42,5 +42,7 @@ Coordinate DrawableObject::getCenter()
   xAvg = xSum / count;
   yAvg = ySum / count;
   zAvg = zSum / count;
-  return Coordinate(xAvg, yAvg, zAvg);
+
+  Coordinate *center_cord = new Coordinate(xAvg, yAvg, zAvg);
+  return center_cord;
 }
