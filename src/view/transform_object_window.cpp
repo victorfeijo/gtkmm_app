@@ -125,7 +125,7 @@ void TransformObjectWindow::on_button_scale()
   int sx = atoi(sx_string.c_str());
   int sy = atoi(sy_string.c_str());
 
-  scale_service->scale(this->object, sx, sy);
+  scale_service.scale(this->object, sx, sy);
 
   this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(this->object);
   this->mainWindow->getViewport()->queue_draw();
