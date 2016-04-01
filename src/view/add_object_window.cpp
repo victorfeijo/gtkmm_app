@@ -38,6 +38,7 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   point_grid.attach(point_y_label, 1, 3, 1, 1);
   point_grid.attach(point_y_field, 2, 3, 1, 1);
   point_grid.attach(button_save_point, 1, 4, 2, 1);
+  point_grid.set_border_width(10);
 
   //Add line grid
   line_grid.set_column_homogeneous(true);
@@ -53,10 +54,12 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   line_grid.attach(line_y2_label, 3, 3, 1, 1);
   line_grid.attach(line_y2_field, 4, 3, 1, 1);
   line_grid.attach(button_save_line, 1, 4, 4, 1);
+  line_grid.set_border_width(10);
 
   //Add polygon grid
   wire_grid.set_column_homogeneous(true);
   wire_grid.set_row_spacing(10);
+  wire_grid.set_column_spacing(10);
   wire_name_field.set_placeholder_text("Name");
   wire_grid.attach(wire_name_field, 1, 1, 1, 1);
   wire_grid.attach(info_label, 2, 1, 1, 1);
@@ -66,6 +69,7 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   wire_grid.attach(wire_y_field, 2, 3, 1, 1);
   wire_grid.attach(button_add_coordenate, 1, 4, 1, 1);
   wire_grid.attach(button_save_wire, 2, 4, 1, 1);
+  wire_grid.set_border_width(10);
 
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
     &AddObjectWindow::on_button_close) );
