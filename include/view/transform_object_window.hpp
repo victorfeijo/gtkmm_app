@@ -25,9 +25,9 @@ protected:
    */
   MainWindow* mainWindow;
   DrawableObject* object;
-  TranslateObjectService* translate_service;
-  ScaleObjectService* scale_service;
-  RotateObjectService* rotate_service;
+  TranslateObjectService translate_service;
+  ScaleObjectService scale_service;
+  RotateObjectService rotate_service;
   Gtk::Grid translation_grid, scale_grid, rotate_grid;
   Gtk::Label label_translation_x, label_translation_y,
              label_scale_sx, label_scale_sy,
@@ -37,13 +37,15 @@ protected:
              rotate_x_field, rotate_y_field, rotate_degree_field;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
-  Gtk::Button button_close, button_add_translation,
-              button_add_scale, button_add_rotate;
+  Gtk::Button button_close, button_add_translation, button_add_scale,
+              button_add_rotate, button_rotate_object, button_rotate_world;
 
   void on_button_close();
   void on_button_translate();
   void on_button_scale();
   void on_button_rotate();
+  void on_button_rotate_world();
+  void on_button_rotate_object();
 };
 
 #endif

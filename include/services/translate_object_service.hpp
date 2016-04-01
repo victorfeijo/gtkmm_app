@@ -11,7 +11,7 @@ class TranslateObjectService
 public:
   TranslateObjectService();
   ~TranslateObjectService();
-  void translate(DrawableObject *object, int dx, int dy);
+  void translate(DrawableObject *object, int dx, int dy, int dz = 0);
 };
 
 #endif

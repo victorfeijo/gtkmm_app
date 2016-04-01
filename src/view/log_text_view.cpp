@@ -1,8 +1,14 @@
 #include "log_text_view.hpp"
 
+#define LOG_FOLDER "logs/"
+
 LogTextView::LogTextView(string path_log_file)
     : path_log_file(path_log_file)
 {
+  // create log file
+  system("mkdir " LOG_FOLDER " &> /dev/null");
+  system((string("touch ") + path_log_file + string(" &> /dev/null")).c_str());
+
   set_border_width(10);
   set_editable(false);
   log_text_buffer = Gtk::TextBuffer::create();
