@@ -12,6 +12,7 @@
  #include <fstream>
  #include <iostream>
  #include <ctime>
+ 
  using namespace std;
 
  class LogTextView : public Gtk::TextView

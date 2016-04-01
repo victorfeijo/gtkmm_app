@@ -100,14 +100,26 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> another)
   }
 }
 
+template <typename T>
+Matrix<T> Matrix<T>::operator*(int n)
+{
+  Matrix mult = Matrix<T>(rows, columns);
+  for (int i = 0; i < rows; i++)
+  for (int j = 0; j < columns; j++)
+  {
+    mult.set(i, j, this->get(i,j) * n);
+  }
+  return mult;
+}
+
 // function to force compile and avoid link error (undefined reference).
 void f1()
 {
   // INSERT TEMPLATE VARIATIONS THAT WILL BE USED AND CALL EVERY FUNCTION
     // int
     Matrix<int> m1(1,1);
-    m1.getRows(); m1.getColumns(); m1.get(0,0); m1.set(0,0,0); m1+m1; m1*m1;
+    m1.getRows(); m1.getColumns(); m1.get(0,0); m1.set(0,0,0); m1+m1; m1*m1; m1*1;
     // double
     Matrix<double> m2(1,1);
-    m2.getRows(); m2.getColumns(); m2.get(0,0); m2.set(0,0,0); m2+m2; m2*m2;
+    m2.getRows(); m2.getColumns(); m2.get(0,0); m2.set(0,0,0); m2+m2; m2*m2; m2*1;
 }

@@ -6,8 +6,8 @@
 class ScaleObjectService
 {
 public:
-  ScaleObjectService();
-  ~ScaleObjectService();
+  ScaleObjectService(){};
+  ~ScaleObjectService(){};
   void scale(DrawableObject *object);
 };
 

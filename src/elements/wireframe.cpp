@@ -12,7 +12,7 @@ WireFrame::~WireFrame()
 
 list<Coordinate*> WireFrame::getCoordinates()
 {
-  return Coordinates;
+  return coordinates;
 }
 
 string WireFrame::getType()

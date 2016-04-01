@@ -17,6 +17,7 @@ public:
 
   Matrix operator+(Matrix another);
   Matrix operator*(Matrix<T> another);
+  Matrix operator*(int n);
 
 protected:
   int rows, columns;
