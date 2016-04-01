@@ -9,7 +9,7 @@ using namespace std;
 class WireFrame : public DrawableObject
 {
 public:
-  WireFrame(string name, list<Coordinate*> Coordinates);
+  WireFrame(string name, list<Coordinate*> coordinates);
   ~WireFrame();
   virtual list<Coordinate*> getCoordinates();
   virtual string getType();
