@@ -122,8 +122,8 @@ void TransformObjectWindow::on_button_scale()
 {
   std::string sx_string = scale_sx_field.get_text().raw();
   std::string sy_string = scale_sy_field.get_text().raw();
-  int sx = atoi(sx_string.c_str());
-  int sy = atoi(sy_string.c_str());
+  float sx = atof(sx_string.c_str());
+  float sy = atof(sy_string.c_str());
 
   scale_service.scale(this->object, sx, sy);
 

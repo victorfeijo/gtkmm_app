@@ -8,7 +8,7 @@ ScaleObjectService::~ScaleObjectService()
 {
 }
 
-void ScaleObjectService::scale(DrawableObject* object, int sx, int sy)
+void ScaleObjectService::scale(DrawableObject* object, double sx, double sy)
 {
   Coordinate* center_cord = object->getCenter();
   translate_service.translate(object, center_cord->getx()*-1, center_cord->gety()*-1);
@@ -18,18 +18,18 @@ void ScaleObjectService::scale(DrawableObject* object, int sx, int sy)
   std::list<Coordinate*>::iterator it;
   for(it = cord_list.begin(); it!=cord_list.end(); ++it)
   {
-    Matrix<int> object_bitmap(1, 2);
-    Matrix<int> scale_bitmap(2, 2);
+    Matrix<double> object_bitmap(1, 3);
+    Matrix<double> scale_bitmap(3, 3);
 
     object_bitmap.set(0, 0, (*it)->getx());
     object_bitmap.set(0, 1, (*it)->gety());
+    object_bitmap.set(0, 2, (*it)->getz());
 
     scale_bitmap.set(0, 0, sx);
-    scale_bitmap.set(0, 1, 0);
-    scale_bitmap.set(1, 0, 0);
     scale_bitmap.set(1, 1, sy);
+    scale_bitmap.set(1, 1, 1);
 
-    Matrix<int> new_bitmap = object_bitmap * scale_bitmap;
+    Matrix<double> new_bitmap = object_bitmap * scale_bitmap;
     Coordinate* new_cord = new Coordinate(new_bitmap.get(0, 0), new_bitmap.get(0, 1));
     new_cord_list.push_front(new_cord);
   }
