@@ -10,8 +10,8 @@ ScaleObjectService::~ScaleObjectService()
 
 void ScaleObjectService::scale(DrawableObject* object, double sx, double sy)
 {
-  Coordinate* center_cord = object->getCenter();
-  translate_service.translate(object, center_cord->getx()*-1, center_cord->gety()*-1);
+  Coordinate center_cord = object->getCenter();
+  translate_service.translate(object, center_cord.getx() *- 1, center_cord.gety() *- 1);
 
   std::list<Coordinate*> new_cord_list;
   std::list<Coordinate*> cord_list = object->getCoordinates();
@@ -34,5 +34,5 @@ void ScaleObjectService::scale(DrawableObject* object, double sx, double sy)
     new_cord_list.push_front(new_cord);
   }
   object->setCoordinates(new_cord_list);
-  translate_service.translate(object, center_cord->getx(), center_cord->gety());
+  translate_service.translate(object, center_cord.getx(), center_cord.gety());
 }

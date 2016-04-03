@@ -12,6 +12,16 @@ DrawableObject::DrawableObject(string name, list<Coordinate*> coordinates)
 
 DrawableObject::~DrawableObject()
 {
+  this->destroyList();
+}
+
+void DrawableObject::destroyList()
+{
+  while(!coordinates.empty())
+  {
+    delete coordinates.front();
+    coordinates.pop_front();
+  }
 }
 
 std::string DrawableObject::getName()
@@ -21,10 +31,11 @@ std::string DrawableObject::getName()
 
 void DrawableObject::setCoordinates(list<Coordinate*> coordinates)
 {
+  this->destroyList();
   this->coordinates = coordinates;
 }
 
-Coordinate* DrawableObject::getCenter()
+Coordinate DrawableObject::getCenter()
 {
   long int xSum, ySum, zSum, xAvg, yAvg, zAvg;
   int count = 0;
@@ -43,6 +54,5 @@ Coordinate* DrawableObject::getCenter()
   yAvg = ySum / count;
   zAvg = zSum / count;
 
-  Coordinate *center_cord = new Coordinate(xAvg, yAvg, zAvg);
-  return center_cord;
+  return Coordinate(xAvg, yAvg, zAvg);
 }

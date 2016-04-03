@@ -27,13 +27,8 @@ public:
 
 protected:
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
-  Gtk::Allocation* allocation;
-  ViewWindow* viewWindow = NULL;
+  ViewWindow* viewWindow;
   int Xvpmin, Yvpmin, Xvpmax, Yvpmax;
-  // MOVER PARA VIEWPORT_SERVICES
-    // void updateAllocation(Gtk::Allocation allocation);
-    // Coordinate convertCoordinateFromWindow(Coordinate cord);
-    // void drawViewport(Viewport* viewport, const Cairo::RefPtr<Cairo::Context>& cr);
 
 };
 

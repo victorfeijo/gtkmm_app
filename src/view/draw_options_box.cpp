@@ -18,7 +18,9 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
       button_close("Close"),
       button_list_objects("List Objects"),
       entry_move_length(),
-      entry_zoom_scale()
+      entry_zoom_scale(),
+      add_object_window(nullptr),
+      list_objects_window(nullptr)
 {
   Gtk::ButtonBox* bbox = Gtk::manage( new Gtk::ButtonBox(Gtk::ORIENTATION_VERTICAL) );
   bbox->set_border_width(10);
@@ -166,16 +168,32 @@ void DrawOptionsBox::on_button_zoom_out()
 
 DrawOptionsBox::~DrawOptionsBox()
 {
+  if (add_object_window != nullptr)
+  {
+    delete add_object_window;
+  }
+  if (list_objects_window != nullptr)
+  {
+    delete list_objects_window;
+  }
 }
 
 void DrawOptionsBox::on_button_add_object()
 {
+  if (add_object_window != nullptr)
+  {
+    delete add_object_window;
+  }
   add_object_window = new AddObjectWindow(this->mainWindow);
   add_object_window->show();
 }
 
 void DrawOptionsBox::on_button_list_objects()
 {
+  if (list_objects_window != nullptr)
+  {
+    delete list_objects_window;
+  }
   list_objects_window = new ListObjectsWindow(this->mainWindow);
   list_objects_window->show();
 }

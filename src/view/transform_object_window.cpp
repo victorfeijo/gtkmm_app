@@ -97,7 +97,7 @@ TransformObjectWindow::~TransformObjectWindow()
 
 void TransformObjectWindow::on_button_close()
 {
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_translate()
@@ -115,7 +115,7 @@ void TransformObjectWindow::on_button_translate()
       this->object->getType() + " named [" + this->object->getName() + "] was translated in ("
       + to_string(dx) + ", " + to_string(dy) + ")\n"
   );
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_scale()
@@ -127,14 +127,13 @@ void TransformObjectWindow::on_button_scale()
 
   scale_service.scale(this->object, sx, sy);
 
-  this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(this->object);
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getType() + " named [" + this->object->getName() + "] was scaled in ("
       + to_string(sx) + ", " + to_string(sy) + ")\n"
   );
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_rotate()
@@ -154,7 +153,7 @@ void TransformObjectWindow::on_button_rotate()
       this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around (" + to_string(dx) + ", " + to_string(dy) + ")\n"
   );
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_rotate_world()
@@ -170,7 +169,7 @@ void TransformObjectWindow::on_button_rotate_world()
       this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around world center\n"
   );
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_rotate_object()
@@ -186,5 +185,5 @@ void TransformObjectWindow::on_button_rotate_object()
       this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around its center\n"
   );
-  close();
+  hide();
 }

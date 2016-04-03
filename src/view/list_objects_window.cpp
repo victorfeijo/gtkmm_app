@@ -7,7 +7,8 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
       m_grid(),
       button_transform("Trasform"),
       button_delete("Delete"),
-      button_close("Close")
+      button_close("Close"),
+      transform_object_window(nullptr)
 {
 
   std::list<std::string> names = this->mainWindow->getViewport()->getViewWindow()
@@ -43,6 +44,10 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
 
 ListObjectsWindow::~ListObjectsWindow()
 {
+  if (transform_object_window != nullptr)
+  {
+    delete transform_object_window;
+  }
 }
 
 void ListObjectsWindow::on_button_delete()
@@ -66,6 +71,10 @@ void ListObjectsWindow::on_button_transform()
   {
     DrawableObject* object = this->mainWindow->getViewport()->getViewWindow()->
         getDisplayFile()->getObjectByName((string) name);
+    if (transform_object_window != nullptr)
+    {
+      delete transform_object_window;
+    }
     transform_object_window = new TransformObjectWindow(this->mainWindow, object);
     transform_object_window->show();
     hide();
