@@ -11,10 +11,16 @@ DisplayFile::~DisplayFile()
 
 void DisplayFile::addObject(DrawableObject* object)
 {
-  // delete object if exists
   if (this->objectsMap.count(object->getName()))
   {
-    removeObjectByName(object->getName());
+    if (this->objectsMap.find(object->getName())->second == object)
+    {  // same object
+      return;
+    }
+    else
+    {  // delete older object with same
+      removeObjectByName(object->getName());
+    }
   }
   this->objectsMap[object->getName()] = object;
 }
