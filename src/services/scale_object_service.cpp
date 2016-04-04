@@ -27,10 +27,10 @@ void ScaleObjectService::scale(DrawableObject* object, double sx, double sy)
 
     scale_bitmap.set(0, 0, sx);
     scale_bitmap.set(1, 1, sy);
-    scale_bitmap.set(1, 1, 1);
+    scale_bitmap.set(2, 2, 1);
 
     Matrix<double> new_bitmap = object_bitmap * scale_bitmap;
-    Coordinate* new_cord = new Coordinate(new_bitmap.get(0, 0), new_bitmap.get(0, 1));
+    Coordinate* new_cord = new Coordinate(new_bitmap.get(0, 0), new_bitmap.get(0, 1), new_bitmap.get(0, 2));
     new_cord_list.push_front(new_cord);
   }
   object->setCoordinates(new_cord_list);

@@ -3,20 +3,20 @@
 TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObject* object)
     : mainWindow(mainWindow),
       object(object),
-      m_vbox(Gtk::ORIENTATION_VERTICAL),
-      button_close("Close"),
       label_translation_x("Translate x : "),
       label_translation_y("Translate y : "),
-      button_add_translation("Translate"),
       label_scale_sx("Scale Sx : "),
       label_scale_sy("Scale Sy : "),
-      button_add_scale("Scale"),
-      label_rotate_degree("Angle to rotate : "),
       label_rotate_x("Rotate point x : "),
       label_rotate_y("Rotate point y : "),
+      label_rotate_degree("Angle to rotate : "),
+      m_vbox(Gtk::ORIENTATION_VERTICAL),
+      button_close("Close"),
+      button_add_translation("Translate"),
+      button_add_scale("Scale"),
       button_add_rotate("Rotate around point"),
-      button_rotate_world("Around world center"),
-      button_rotate_object("Around object center")
+      button_rotate_object("Around object center"),
+      button_rotate_world("Around world center")
 {
   set_title("Transform Object");
   set_border_width(12);

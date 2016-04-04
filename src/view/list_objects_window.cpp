@@ -44,10 +44,7 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
 
 ListObjectsWindow::~ListObjectsWindow()
 {
-  if (transform_object_window != nullptr)
-  {
-    delete transform_object_window;
-  }
+  delete transform_object_window;
 }
 
 void ListObjectsWindow::on_button_delete()
@@ -71,10 +68,7 @@ void ListObjectsWindow::on_button_transform()
   {
     DrawableObject* object = this->mainWindow->getViewport()->getViewWindow()->
         getDisplayFile()->getObjectByName((string) name);
-    if (transform_object_window != nullptr)
-    {
-      delete transform_object_window;
-    }
+    delete transform_object_window;
     transform_object_window = new TransformObjectWindow(this->mainWindow, object);
     transform_object_window->show();
     hide();
