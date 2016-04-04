@@ -10,8 +10,8 @@ ScaleObjectService::~ScaleObjectService()
 
 void ScaleObjectService::scale(DrawableObject* object, double sx, double sy)
 {
-  Coordinate* center_cord = object->getCenter();
-  translate_service.translate(object, center_cord->getx()*-1, center_cord->gety()*-1);
+  Coordinate center_cord = object->getCenter();
+  translate_service.translate(object, center_cord.getx() *- 1, center_cord.gety() *- 1);
 
   std::list<Coordinate*> new_cord_list;
   std::list<Coordinate*> cord_list = object->getCoordinates();
@@ -27,12 +27,12 @@ void ScaleObjectService::scale(DrawableObject* object, double sx, double sy)
 
     scale_bitmap.set(0, 0, sx);
     scale_bitmap.set(1, 1, sy);
-    scale_bitmap.set(1, 1, 1);
+    scale_bitmap.set(2, 2, 1);
 
     Matrix<double> new_bitmap = object_bitmap * scale_bitmap;
-    Coordinate* new_cord = new Coordinate(new_bitmap.get(0, 0), new_bitmap.get(0, 1));
+    Coordinate* new_cord = new Coordinate(new_bitmap.get(0, 0), new_bitmap.get(0, 1), new_bitmap.get(0, 2));
     new_cord_list.push_front(new_cord);
   }
   object->setCoordinates(new_cord_list);
-  translate_service.translate(object, center_cord->getx(), center_cord->gety());
+  translate_service.translate(object, center_cord.getx(), center_cord.gety());
 }

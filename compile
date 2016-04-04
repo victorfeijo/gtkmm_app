@@ -3,16 +3,25 @@
 declare source='main.cpp src/services/*.cpp src/elements/*.cpp src/structures/*.cpp src/view/*.cpp'
 declare -a include=('include/services' 'include/elements' 'include/structures' 'include/view')
 
+# check parameters:
+[ "$1" == "debug" ] || [ "$2" == "debug" ] || [ "$3" == "debug" ] && declare debug=1
+[ "$1" == "fast" ] || [ "$2" == "fast" ] || [ "$3" == "fast" ] && declare fast=1
+[ "$1" == "run" ] || [ "$2" == "run" ] || [ "$3" == "run" ] && declare run=1
+
+# gdb friendly if parameter `debug` was passed, otherwise optmize compilation:
+declare extra="-O2 -w -g0"
+[ $debug ] && extra="-Og -ggdb3 -Wall" && unset fast
+
 # join cpp files to compile faster if parameter `fast` was passed:
-([ "$1" == "fast" ] || [ "$2" == "fast" ]) && cat $source > join.cpp && source='join.cpp'
+[ $fast ] && cat $source > join.cpp && source='join.cpp'
 
 # compile:
-g++ $source -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -std=c++11 -w \
+g++ $source -o app.o $(pkg-config gtkmm-3.0 --cflags --libs) -std=c++11 $extra \
     $(for i in "${include[@]}"; do echo "-I$i"; done)
-[ $? -ne 0 ] && error=1
+[ $? -ne 0 ] && declare error=1
 
 # remove joined cpp if exists:
 [ -e "join.cpp" ] && rm join.cpp
 
 # run app if compilation was successful and parameter `run` was passed:
-[ ! $error ] && ([ "$1" == "run" ] || [ "$2" == "run" ]) && ./app.o
+[ ! $error ] && [ $run ] && ./app.o

@@ -3,7 +3,6 @@
 WireFrame::WireFrame(string name, list<Coordinate*> coordinates)
     : DrawableObject(name, coordinates)
 {
-  //nothing for while
 }
 
 WireFrame::~WireFrame()

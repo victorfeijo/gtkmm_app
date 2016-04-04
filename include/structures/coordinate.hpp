@@ -5,7 +5,7 @@ class Coordinate
 {
 public:
   Coordinate(long int x, long int y)
-      : cord_x(x), cord_y(y), cord_z(0) {}
+      : cord_x(x), cord_y(y), cord_z(1) {}
   Coordinate(long int x, long int y, long int z)
       : cord_x(x), cord_y(y), cord_z(z) {}
   ~Coordinate() {}

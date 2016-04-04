@@ -17,6 +17,8 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
       button_zoom_out("-"),
       button_close("Close"),
       button_list_objects("List Objects"),
+      add_object_window(nullptr),
+      list_objects_window(nullptr),
       entry_move_length(),
       entry_zoom_scale()
 {
@@ -166,16 +168,20 @@ void DrawOptionsBox::on_button_zoom_out()
 
 DrawOptionsBox::~DrawOptionsBox()
 {
+  delete add_object_window;
+  delete list_objects_window;
 }
 
 void DrawOptionsBox::on_button_add_object()
 {
+  delete add_object_window;
   add_object_window = new AddObjectWindow(this->mainWindow);
   add_object_window->show();
 }
 
 void DrawOptionsBox::on_button_list_objects()
 {
+  delete list_objects_window;
   list_objects_window = new ListObjectsWindow(this->mainWindow);
   list_objects_window->show();
 }

@@ -61,8 +61,8 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int ang
 
 void RotateObjectService::rotateCenterObject(DrawableObject *object, int angle)
 {
-  Coordinate *center = object->getCenter();
-  rotate(object, center->getx(), center->gety(), angle);
+  Coordinate center = object->getCenter();
+  rotate(object, center.getx(), center.gety(), angle);
 }
 
 void RotateObjectService::rotateCenterWorld(DrawableObject *object, int angle)

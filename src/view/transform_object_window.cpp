@@ -3,20 +3,20 @@
 TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObject* object)
     : mainWindow(mainWindow),
       object(object),
-      m_vbox(Gtk::ORIENTATION_VERTICAL),
-      button_close("Close"),
       label_translation_x("Translate x : "),
       label_translation_y("Translate y : "),
-      button_add_translation("Translate"),
       label_scale_sx("Scale Sx : "),
       label_scale_sy("Scale Sy : "),
-      button_add_scale("Scale"),
-      label_rotate_degree("Angle to rotate : "),
       label_rotate_x("Rotate point x : "),
       label_rotate_y("Rotate point y : "),
+      label_rotate_degree("Angle to rotate : "),
+      m_vbox(Gtk::ORIENTATION_VERTICAL),
+      button_close("Close"),
+      button_add_translation("Translate"),
+      button_add_scale("Scale"),
       button_add_rotate("Rotate around point"),
-      button_rotate_world("Around world center"),
-      button_rotate_object("Around object center")
+      button_rotate_object("Around object center"),
+      button_rotate_world("Around world center")
 {
   set_title("Transform Object");
   set_border_width(12);
@@ -97,7 +97,7 @@ TransformObjectWindow::~TransformObjectWindow()
 
 void TransformObjectWindow::on_button_close()
 {
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_translate()
@@ -115,7 +115,7 @@ void TransformObjectWindow::on_button_translate()
       this->object->getType() + " named [" + this->object->getName() + "] was translated in ("
       + to_string(dx) + ", " + to_string(dy) + ")\n"
   );
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_scale()
@@ -127,14 +127,13 @@ void TransformObjectWindow::on_button_scale()
 
   scale_service.scale(this->object, sx, sy);
 
-  this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(this->object);
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getType() + " named [" + this->object->getName() + "] was scaled in ("
       + to_string(sx) + ", " + to_string(sy) + ")\n"
   );
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_rotate()
@@ -154,7 +153,7 @@ void TransformObjectWindow::on_button_rotate()
       this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around (" + to_string(dx) + ", " + to_string(dy) + ")\n"
   );
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_rotate_world()
@@ -170,7 +169,7 @@ void TransformObjectWindow::on_button_rotate_world()
       this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around world center\n"
   );
-  close();
+  hide();
 }
 
 void TransformObjectWindow::on_button_rotate_object()
@@ -186,5 +185,5 @@ void TransformObjectWindow::on_button_rotate_object()
       this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around its center\n"
   );
-  close();
+  hide();
 }
