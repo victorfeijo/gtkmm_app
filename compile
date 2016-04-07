@@ -9,7 +9,7 @@ declare -a include=('include/services' 'include/elements' 'include/structures' '
 [ "$1" == "run" ] || [ "$2" == "run" ] || [ "$3" == "run" ] && declare run=1
 
 # gdb friendly if parameter `debug` was passed, otherwise optmize compilation:
-declare extra="-O2 -w -g0"
+declare extra="-O0 -w -g0"
 [ $debug ] && extra="-Og -ggdb3 -Wall" && unset fast
 
 # join cpp files to compile faster if parameter `fast` was passed:

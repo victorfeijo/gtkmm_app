@@ -8,9 +8,11 @@
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/grid.h>
+#include <string>
 #include "main_window.hpp"
 #include "view_window.hpp"
 #include "add_object_window.hpp"
+#include "choose_file_window.hpp"
 #include "list_objects_window.hpp"
 
 #define DEFAULT_MOVE_LENGTH "10"
@@ -29,15 +31,18 @@ public:
 
 protected:
   MainWindow* mainWindow;
-  Gtk::Button button_add_object, button_move_up, button_move_down,
-              button_move_left, button_move_right, button_zoom_in,
-              button_zoom_out, button_close, button_list_objects;
+  Gtk::Button button_add_object, button_open_object, button_move_up,
+              button_move_down, button_move_left, button_move_right,
+              button_zoom_in, button_zoom_out, button_close,
+              button_list_objects;
   Gtk::Grid grid_move, grid_zoom;
   AddObjectWindow* add_object_window;
+  ChooseFileWindow* choose_file_window;
   ListObjectsWindow* list_objects_window;
   Gtk::Entry entry_move_length, entry_zoom_scale;
 
   void on_button_add_object();
+  void on_button_open_object();
   void on_button_list_objects();
   void on_button_move_up();
   void on_button_move_down();
