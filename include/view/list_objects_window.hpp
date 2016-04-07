@@ -20,10 +20,11 @@ protected:
   std::string selected_object;
   Gtk::ComboBoxText objects_list;
   Gtk::Grid m_grid;
-  Gtk::Button button_transform, button_delete, button_close;
+  Gtk::Button button_transform, button_save, button_delete, button_close;
   TransformObjectWindow* transform_object_window;
 
   void on_button_transform();
+  void on_button_save();
   void on_button_delete();
   void on_button_close();
 

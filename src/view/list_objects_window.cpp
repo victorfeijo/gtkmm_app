@@ -6,6 +6,7 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
       objects_list(),
       m_grid(),
       button_transform("Trasform"),
+      button_save("Save"),
       button_delete("Delete"),
       button_close("Close"),
       transform_object_window(nullptr)
@@ -26,13 +27,16 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
 
   // objects_list.set_border_width(10);
   m_grid.set_row_spacing(10);
-  m_grid.attach(objects_list, 1, 1, 3, 1);
+  m_grid.attach(objects_list, 1, 1, 4, 1);
   m_grid.attach(button_transform, 1, 3, 1, 1);
-  m_grid.attach(button_delete, 2, 3, 1, 1);
-  m_grid.attach(button_close, 3, 3, 1, 1);
+  m_grid.attach(button_save, 2, 3, 1, 1);
+  m_grid.attach(button_delete, 3, 3, 1, 1);
+  m_grid.attach(button_close, 4, 3, 1, 1);
 
   button_transform.signal_clicked().connect(sigc::mem_fun(*this,
       &ListObjectsWindow::on_button_transform) );
+  button_save.signal_clicked().connect(sigc::mem_fun(*this,
+      &ListObjectsWindow::on_button_save));
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
       &ListObjectsWindow::on_button_close) );
   button_delete.signal_clicked().connect(sigc::mem_fun(*this,
@@ -78,4 +82,9 @@ void ListObjectsWindow::on_button_transform()
 void ListObjectsWindow::on_button_close()
 {
   hide();
+}
+
+void ListObjectsWindow::on_button_save()
+{
+
 }
