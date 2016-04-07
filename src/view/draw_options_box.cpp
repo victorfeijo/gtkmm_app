@@ -9,6 +9,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
     : Gtk::Frame(title),
       mainWindow(mainWindow),
       button_add_object("Add Object"),
+      button_open_object("Open Object"),
       button_move_up("\u2227"),
       button_move_down("\u2228"),
       button_move_left("<"),
@@ -63,11 +64,15 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
   bbox->add(grid_zoom);
 
   bbox->add(button_add_object);
+  bbox->add(button_open_object);
   bbox->add(button_list_objects);
   bbox->add(button_close);
 
   button_add_object.signal_clicked().connect(sigc::mem_fun(*this,
     &DrawOptionsBox::on_button_add_object));
+
+  button_open_object.signal_clicked().connect(sigc::mem_fun(*this,
+    &DrawOptionsBox::on_button_open_object));
 
   button_list_objects.signal_clicked().connect(sigc::mem_fun(*this,
     &DrawOptionsBox::on_button_list_objects));
@@ -177,6 +182,13 @@ void DrawOptionsBox::on_button_add_object()
   delete add_object_window;
   add_object_window = new AddObjectWindow(this->mainWindow);
   add_object_window->show();
+}
+
+void DrawOptionsBox::on_button_open_object()
+{
+  choose_file_window = new ChooseFileWindow(this->mainWindow);
+  choose_file_window->show();
+  std::string file_path = choose_file_window->get_file_path();
 }
 
 void DrawOptionsBox::on_button_list_objects()
