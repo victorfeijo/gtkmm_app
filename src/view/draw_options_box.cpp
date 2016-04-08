@@ -213,6 +213,7 @@ void DrawOptionsBox::on_button_save_object()
   delete list_objects_window;
   list_objects_window = new ListObjectsWindow(this->mainWindow);
   std::list<DrawableObject*> objects_list = list_objects_window->get_drawable_objects();
-  std::string file_path("temp_test.txt");
+  std::string file_path("saved_objects.obj");
   rw_object_service.write(objects_list, file_path);
+  mainWindow->getLogTextView()->add_log_line("Sucessfull saved the objects on [" + file_path + "]\n");
 }
