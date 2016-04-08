@@ -1,0 +1,7 @@
+# Starting the file objects
+
+o Myname
+
+v 55.0 55.0 1.0
+v 111.0 111.0 1.0
+v 5555.0 555.0 1.0

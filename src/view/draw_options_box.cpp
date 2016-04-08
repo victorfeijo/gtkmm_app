@@ -18,6 +18,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
       button_zoom_out("-"),
       button_close("Close"),
       button_list_objects("List Objects"),
+      button_save_object("Save Object"),
       add_object_window(nullptr),
       list_objects_window(nullptr),
       entry_move_length(),
@@ -65,6 +66,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
 
   bbox->add(button_add_object);
   bbox->add(button_open_object);
+  bbox->add(button_save_object);
   bbox->add(button_list_objects);
   bbox->add(button_close);
 
@@ -79,6 +81,9 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
 
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
     &DrawOptionsBox::on_button_close));
+
+  button_save_object.signal_clicked().connect(sigc::mem_fun(*this,
+      &DrawOptionsBox::on_button_save_object));
 }
 
 void DrawOptionsBox::on_button_move_up()
@@ -201,4 +206,13 @@ void DrawOptionsBox::on_button_list_objects()
 void DrawOptionsBox::on_button_close()
 {
   exit(0);
+}
+
+void DrawOptionsBox::on_button_save_object()
+{
+  delete list_objects_window;
+  list_objects_window = new ListObjectsWindow(this->mainWindow);
+  std::list<DrawableObject*> objects_list = list_objects_window->get_drawable_objects();
+  std::string file_path("temp_test.txt");
+  rw_object_service.write(objects_list, file_path);
 }
