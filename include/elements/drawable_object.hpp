@@ -14,17 +14,21 @@ class DrawableObject
 {
 public:
   DrawableObject(string name);
-  DrawableObject(string name, list<Coordinate*> coordinates);
+  DrawableObject(string name, list<Coordinate> coordinates);
   ~DrawableObject();
   std::string getName();
-  virtual list<Coordinate*> getCoordinates() = 0;
+  list<Coordinate> getCoordinatesWorld();
+  list<Coordinate> getCoordinatesWindow();
   virtual string getType() = 0;
-  void setCoordinates(list<Coordinate*> coordinates);
-  Coordinate getCenter();
+  void setCoordinatesWorld(list<Coordinate> coordinates);
+  void setCoordinatesWindow(list<Coordinate> coordinates);
+  Coordinate getCenterOnWorld();
+  void copyFromWorldToWindow();
 
 protected:
   string name;
-  list<Coordinate*> coordinates;
-  void destroyList();
+  list<Coordinate> coordinatesWorld;
+  list<Coordinate> coordinatesWindow;
+  void destroyList(list<Coordinate> coordinates);
 };
 #endif // GTKMM_APP_DRAWABLE_OBJECT

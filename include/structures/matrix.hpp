@@ -11,7 +11,7 @@ public:
   ~Matrix();
 
   void set(int row, int column, T value);
-  int get(int row, int column);
+  T get(int row, int column);
   int getRows();
   int getColumns();
 

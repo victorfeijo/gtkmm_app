@@ -13,8 +13,8 @@ MainWindow::MainWindow()
 {
   set_border_width(15);
   set_title("Main Window");
-  set_default_size(700, 550);
-  // set_resizable(false);
+  set_default_size(700, 575);
+  
   add(main_box);
 
   main_box.pack_start(drawable_box, Gtk::PACK_EXPAND_WIDGET);

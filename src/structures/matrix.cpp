@@ -39,7 +39,7 @@ void Matrix<T>::set(int row, int column, T value)
 }
 
 template <typename T>
-int Matrix<T>::get(int row, int column)
+T Matrix<T>::get(int row, int column)
 {
   if (column >= this->columns || row >= this->rows)
   {

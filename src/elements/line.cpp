@@ -1,19 +1,15 @@
 #include "line.hpp"
 
-Line::Line(string name, Coordinate* line_cord1, Coordinate* line_cord2)
-: DrawableObject(name)
+Line::Line(string name, Coordinate line_cord1, Coordinate line_cord2)
+  : DrawableObject(name)
 {
-  coordinates.push_back(line_cord1);
-  coordinates.push_back(line_cord2);
+  coordinatesWorld.push_back(line_cord1);
+  coordinatesWorld.push_back(line_cord2);
+  this->copyFromWorldToWindow();
 }
 
 Line::~Line()
 {
-}
-
-list<Coordinate*> Line::getCoordinates()
-{
-  return coordinates;
 }
 
 string Line::getType()
