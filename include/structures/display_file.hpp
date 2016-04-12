@@ -5,6 +5,7 @@
 #include <list>
 #include <string>
 #include "drawable_object.hpp"
+#include "line.hpp"
 
 class DisplayFile
 {

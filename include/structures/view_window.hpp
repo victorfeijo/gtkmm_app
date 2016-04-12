@@ -2,6 +2,7 @@
 #define GTKMM_APP_VIEW_WINDOW
 
 #include "display_file.hpp"
+#include "rotate_object_service.hpp"
 
 #define MIN_WIDTH 15
 #define MIN_HEIGHT 15
@@ -14,26 +15,31 @@ class ViewWindow
 public:
   ViewWindow(int Xwmin, int Ywmin, int Xwmax, int Ywmax);
   virtual ~ViewWindow();
-  void zoom_in(float scale = 1.5);
-  void zoom_out(float scale = 1.5);
+  void zoom_in(double scale = 1.5);
+  void zoom_out(double scale = 1.5);
   void move_up(int length = 10);
   void move_down(int length = 10);
   void move_left(int length = 10);
   void move_right(int length = 10);
   DisplayFile* getDisplayFile();
-  float getXwmin();
-  float getYwmin();
-  float getXwmax();
-  float getYwmax();
-  void setXwmin(float Xwmin);
-  void setYwmin(float Ywmin);
-  void setXwmax(float Xwmax);
-  void setYwmax(float Ywmax);
+  double getXwmin();
+  double getYwmin();
+  double getXwmax();
+  double getYwmax();
+  void setXwmin(double Xwmin);
+  void setYwmin(double Ywmin);
+  void setXwmax(double Xwmax);
+  void setYwmax(double Ywmax);
+  Coordinate getCenter();
+  void rotate(int angle);
+  int getRotation();
 
 protected:
   DisplayFile displayFile;
-  float Xwmin, Ywmin, Xwmax, Ywmax;
-
+  double Xwmin, Ywmin, Xwmax, Ywmax;
+  int rotationAngle;
+  Coordinate viewUp();
+  RotateObjectService rotateService;
 };
 
 #endif

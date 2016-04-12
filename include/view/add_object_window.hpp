@@ -28,7 +28,7 @@ protected:
   /* Add here any components or frames
    */
   MainWindow* mainWindow;
-  std::list<Coordinate*> wire_cord_list;
+  std::list<Coordinate> wire_cord_list;
   Gtk::Grid point_grid, line_grid, wire_grid;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;

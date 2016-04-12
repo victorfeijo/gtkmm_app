@@ -17,6 +17,8 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
       button_zoom_in("+"),
       button_zoom_out("-"),
       button_close("Close"),
+      button_rotate_anticlock("\u21BA"),
+      button_rotate_clock("\u21BB"),
       button_list_objects("List Objects"),
       button_save_object("Save Object"),
       add_object_window(nullptr),
@@ -29,7 +31,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
   add(*bbox);
 
   bbox->set_layout(layout);
-  bbox->set_spacing(spacing);
+  bbox->set_spacing(5);
 
   button_move_up.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_up));
   button_move_down.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_move_down));
@@ -64,6 +66,19 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
 
   bbox->add(grid_zoom);
 
+  button_rotate_anticlock.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_rotate_anticlock));
+  button_rotate_clock.signal_clicked().connect(sigc::mem_fun(*this, &DrawOptionsBox::on_button_rotate_clock));
+
+  entry_rotation_angle.set_width_chars(1);
+  entry_rotation_angle.set_text("10");
+
+  grid_rotation.set_column_homogeneous(true);
+  grid_rotation.attach(button_rotate_anticlock, 1, 1, 1, 1);
+  grid_rotation.attach(entry_rotation_angle, 2, 1, 1, 1);
+  grid_rotation.attach(button_rotate_clock, 3, 1, 1, 1);
+
+  bbox->add(grid_rotation);
+
   bbox->add(button_add_object);
   bbox->add(button_open_object);
   bbox->add(button_save_object);
@@ -84,6 +99,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
 
   button_save_object.signal_clicked().connect(sigc::mem_fun(*this,
       &DrawOptionsBox::on_button_save_object));
+
 }
 
 void DrawOptionsBox::on_button_move_up()
@@ -175,6 +191,33 @@ void DrawOptionsBox::on_button_zoom_out()
     this->mainWindow->getViewport()->queue_draw();
   }
 }
+
+void DrawOptionsBox::on_button_rotate_anticlock()
+{
+  float rotation_angle = atoi(entry_rotation_angle.get_text().raw().c_str());
+  if (rotation_angle == 0)
+  {
+    entry_zoom_scale.set_text("10");
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->rotate(rotation_angle);
+    this->mainWindow->getViewport()->queue_draw();
+  }
+}
+
+void DrawOptionsBox::on_button_rotate_clock()
+{
+  float rotation_angle = atoi(entry_rotation_angle.get_text().raw().c_str());
+  if (rotation_angle == 0)
+  {
+    entry_zoom_scale.set_text("10");
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->rotate(-1*rotation_angle);
+    this->mainWindow->getViewport()->queue_draw();
+  }}
 
 DrawOptionsBox::~DrawOptionsBox()
 {

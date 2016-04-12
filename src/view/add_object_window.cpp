@@ -109,14 +109,14 @@ void AddObjectWindow::on_button_save_point()
   std::string y_string = point_y_field.get_text().raw();
   int x_cord = atoi(x_string.c_str());
   int y_cord = atoi(y_string.c_str());
-  Coordinate *point_cord = new Coordinate(x_cord, y_cord);
+  Coordinate point_cord = Coordinate(x_cord, y_cord);
   Point *point = new Point(name, point_cord);
   this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(point);
   this->mainWindow->getViewport()->queue_draw();
 
   mainWindow->getLogTextView()->add_log_line(
     "Point named [" + name + "] was added with ("
-        + to_string(x_cord) + ", " + to_string(y_cord) + ")\n"
+        + to_string((int)x_cord) + ", " + to_string((int)y_cord) + ")\n"
   );
 
   close();
@@ -138,16 +138,16 @@ void AddObjectWindow::on_button_save_line()
   int y1_cord = atoi(y1_string.c_str());
   int x2_cord = atoi(x2_string.c_str());
   int y2_cord = atoi(y2_string.c_str());
-  Coordinate *point_cord1 = new Coordinate(x1_cord, y1_cord);
-  Coordinate *point_cord2 = new Coordinate(x2_cord, y2_cord);
+  Coordinate point_cord1 = Coordinate(x1_cord, y1_cord);
+  Coordinate point_cord2 = Coordinate(x2_cord, y2_cord);
   Line *line = new Line(name, point_cord1, point_cord2);
   this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(line);
   this->mainWindow->getViewport()->queue_draw();
 
   mainWindow->getLogTextView()->add_log_line(
-    "Line named [" + name + "] was added with (" + to_string(x1_cord)+ ", "
-        + to_string(y1_cord) + ") and " + "(" + to_string(x2_cord) + ", "
-        + to_string(y2_cord) + ")\n"
+    "Line named [" + name + "] was added with (" + to_string((int)x1_cord)+ ", "
+        + to_string((int)y1_cord) + ") and " + "(" + to_string((int)x2_cord) + ", "
+        + to_string((int)y2_cord) + ")\n"
   );
 
   close();
@@ -170,10 +170,10 @@ void AddObjectWindow::on_button_save_polygon()
     std::string polygon_string_cord = "";
     while(!wire_cord_list.empty())
     {
-      Coordinate* cord = wire_cord_list.back();
+      Coordinate cord = wire_cord_list.back();
       wire_cord_list.pop_back();
-      polygon_string_cord += "(" + to_string(cord->getx()) + ", " +
-          to_string(cord->gety()) + ") ";
+      polygon_string_cord += "(" + to_string((int)cord.getx()) + ", " +
+          to_string((int)cord.gety()) + ") ";
     }
 
     mainWindow->getLogTextView()->add_log_line(
@@ -194,7 +194,7 @@ void AddObjectWindow::on_button_add_coordinate()
   std::string y_string = wire_y_field.get_text().raw();
   int x_cord = atoi(x_string.c_str());
   int y_cord = atoi(y_string.c_str());
-  Coordinate *wire_cord = new Coordinate(x_cord, y_cord);
+  Coordinate wire_cord = Coordinate(x_cord, y_cord);
   wire_cord_list.push_back(wire_cord);
 
   wire_x_field.set_text("");

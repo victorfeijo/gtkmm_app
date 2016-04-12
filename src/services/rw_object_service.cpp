@@ -13,7 +13,7 @@ list<DrawableObject*> RwObjectService::read(string file_path)
   list<DrawableObject*> objects_list;
   string line;
   ifstream myfile(file_path);
-  list<Coordinate*> cord_list;
+  list<Coordinate> cord_list;
   string name;
   if(myfile.is_open())
   {
@@ -35,7 +35,7 @@ list<DrawableObject*> RwObjectService::read(string file_path)
         {
           cord = new Coordinate(atof(sep[1].c_str()), atof(sep[2].c_str()));
         }
-        cord_list.push_back(cord);
+        cord_list.push_back(*cord);
       }
       if (line.front() == 'f')
       {
@@ -46,8 +46,8 @@ list<DrawableObject*> RwObjectService::read(string file_path)
         }
         else if (cord_list.size() == 2)
         {
-          Coordinate* cord_x = cord_list.front();
-          Coordinate* cord_y = cord_list.back();
+          Coordinate cord_x = cord_list.front();
+          Coordinate cord_y = cord_list.back();
           object = new Line(name, cord_x, cord_y);
         }
         else
@@ -55,7 +55,7 @@ list<DrawableObject*> RwObjectService::read(string file_path)
           object = new WireFrame(name, cord_list);
         }
         objects_list.push_back(object);
-        cord_list = * new list<Coordinate*>;
+        cord_list = * new list<Coordinate>;
       }
     }
     myfile.close();
@@ -72,16 +72,16 @@ void RwObjectService::write(list<DrawableObject*> objects_list, string file_path
         it_obj != objects_list.end(); ++it_obj)
   {
     myfile << "o " + (*it_obj)->getName() + "\n\n";
-    list<Coordinate*> objectCoordinates = (*it_obj)->getCoordinates();
-    for (std::list<Coordinate*>::iterator it_cord = objectCoordinates.begin();
+    list<Coordinate> objectCoordinates = (*it_obj)->getCoordinatesWorld();
+    for (std::list<Coordinate>::iterator it_cord = objectCoordinates.begin();
           it_cord != objectCoordinates.end(); ++it_cord)
     {
-      string line_cord = "v " + to_string((*it_cord)->getx()) + " " + to_string((*it_cord)->gety())
-      + " " + to_string((*it_cord)->getz()) + "\n";
+      string line_cord = "v " + to_string((*it_cord).getx()) + " " + to_string((*it_cord).gety())
+      + " " + to_string((*it_cord).getz()) + "\n";
       myfile << line_cord;
     }
     myfile << "\nf ";
-    for (int i = 1; i < objectCoordinates.size()+1; i++)
+    for (unsigned int i = 1; i < objectCoordinates.size()+1; i++)
     {
       myfile << to_string(i) + " ";
     }

@@ -8,21 +8,27 @@ RotateObjectService::~RotateObjectService()
 {
 }
 
-void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int angleDegree)
+void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int angleDegree, transform_type type)
 {
-  translate_service.translate(object, -dx, -dy);
-
-  std::list<Coordinate*> new_cord_list;
-  std::list<Coordinate*> cord_list = object->getCoordinates();
-  std::list<Coordinate*>::iterator it;
+  translate_service.translate(object, -dx, -dy, 0, type);
+  std::list<Coordinate> new_cord_list;
+  std::list<Coordinate> cord_list;
+  switch (type) {
+    case transform_type::ON_WORLD:
+      cord_list = object->getCoordinatesWorld();
+    break;
+    case transform_type::ON_WINDOW:
+      cord_list = object->getCoordinatesWindow();
+    break;
+  }
+  std::list<Coordinate>::iterator it;
   for(it = cord_list.begin(); it!=cord_list.end(); ++it)
   {
 
-    Coordinate* cord = (*it);
     Matrix<double> point(1,3);
-    point.set(0, 0, cord->getx());
-    point.set(0, 1, cord->gety());
-    point.set(0, 2, cord->getz());
+    point.set(0, 0, it->getx());
+    point.set(0, 1, it->gety());
+    point.set(0, 2, it->getz());
 
     Matrix<double> offset1(3,3);
     offset1.set(0, 0, 1);
@@ -31,7 +37,7 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int ang
     offset1.set(2, 0, -1*dx);
     offset1.set(2, 1, -1*dy);
 
-    double angleRad = angleDegree * pi / 180;
+    double angleRad = angleDegree * M_PI / 180;
 
     Matrix<double> angle(3,3);
     angle.set(0, 0, cos(angleRad));
@@ -49,19 +55,25 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int ang
 
     Matrix<double> pointRotated = point * angle;
 
-    Coordinate* new_cord = new Coordinate(pointRotated.get(0, 0),
+    Coordinate new_cord = Coordinate(pointRotated.get(0, 0),
                              pointRotated.get(0, 1),  pointRotated.get(0,2));
 
     new_cord_list.push_front(new_cord);
   }
-  object->setCoordinates(new_cord_list);
-
-  translate_service.translate(object, dx, dy);
+  switch (type) {
+    case transform_type::ON_WORLD:
+      object->setCoordinatesWorld(new_cord_list);
+    break;
+    case transform_type::ON_WINDOW:
+      object->setCoordinatesWindow(new_cord_list);
+    break;
+  }
+  translate_service.translate(object, dx, dy, 0, type);
 }
 
 void RotateObjectService::rotateCenterObject(DrawableObject *object, int angle)
 {
-  Coordinate center = object->getCenter();
+  Coordinate center = object->getCenterOnWorld();
   rotate(object, center.getx(), center.gety(), angle);
 }
 
