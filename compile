@@ -1,7 +1,7 @@
 # Bash script to compile the application
 
 declare source='main.cpp src/services/*.cpp src/elements/*.cpp src/structures/*.cpp src/view/*.cpp'
-declare -a include=('include/services' 'include/elements' 'include/structures' 'include/view')
+declare -a include=('include/services' 'include/elements' 'include/structures' 'include/view' 'include/enumerations')
 
 # check parameters:
 [ "$1" == "debug" ] || [ "$2" == "debug" ] || [ "$3" == "debug" ] && declare debug=1
@@ -10,7 +10,7 @@ declare -a include=('include/services' 'include/elements' 'include/structures' '
 
 # gdb friendly if parameter `debug` was passed, otherwise optmize compilation:
 declare extra="-O0 -w -g0"
-[ $debug ] && extra="-Og -ggdb3 -Wall" && unset fast
+[ $debug ] && extra="-O0 -ggdb3 -Wall" && unset fast
 
 # join cpp files to compile faster if parameter `fast` was passed:
 [ $fast ] && cat $source > join.cpp && source='join.cpp'

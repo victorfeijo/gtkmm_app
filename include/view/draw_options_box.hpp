@@ -33,13 +33,13 @@ protected:
   MainWindow* mainWindow;
   Gtk::Button button_add_object, button_open_object, button_move_up,
               button_move_down, button_move_left, button_move_right,
-              button_zoom_in, button_zoom_out, button_close,
-              button_list_objects;
-  Gtk::Grid grid_move, grid_zoom;
+              button_zoom_in, button_zoom_out, button_rotate_anticlock,
+              button_rotate_clock, button_close, button_list_objects;
+  Gtk::Grid grid_move, grid_zoom, grid_rotation;
   AddObjectWindow* add_object_window;
   ChooseFileWindow* choose_file_window;
   ListObjectsWindow* list_objects_window;
-  Gtk::Entry entry_move_length, entry_zoom_scale;
+  Gtk::Entry entry_move_length, entry_zoom_scale, entry_rotation_angle;
 
   void on_button_add_object();
   void on_button_open_object();
@@ -50,6 +50,8 @@ protected:
   void on_button_move_right();
   void on_button_zoom_in();
   void on_button_zoom_out();
+  void on_button_rotate_anticlock();
+  void on_button_rotate_clock();
   void on_button_close();
 };
 #endif // GTKMM_APP_DRAW_OPTIONS_BOX

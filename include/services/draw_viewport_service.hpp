@@ -4,6 +4,7 @@
 #include <cairomm/context.h>
 #include <gtkmm/drawingarea.h>
 #include "coordinate.hpp"
+#include "rotate_object_service.hpp"
 
 class Viewport;
 
@@ -16,6 +17,7 @@ public:
 private:
   Coordinate convertFromWindowToViewport(Coordinate cord, Viewport* viewport);
   void updateViewportAllocation(Gtk::Allocation newAllocation, Viewport* viewport);
+  RotateObjectService rotate_service;
 };
 
 #endif
