@@ -10,7 +10,57 @@ RwObjectService::~RwObjectService()
 
 list<DrawableObject*> RwObjectService::read(string file_path)
 {
-
+  list<DrawableObject*> objects_list;
+  string line;
+  ifstream myfile(file_path);
+  list<Coordinate*> cord_list;
+  string name;
+  if(myfile.is_open())
+  {
+    while(getline(myfile, line))
+    {
+      if (line.front() == 'o')
+      {
+        name = line.substr(2, line.length());
+      }
+      if (line.front() == 'v')
+      {
+        vector<string> sep = split(line, ' ');
+        Coordinate* cord;
+        if (sep.size() > 3)
+        {
+          cord = new Coordinate(atof(sep[1].c_str()), atof(sep[2].c_str()), atof(sep[3].c_str()));
+        }
+        else
+        {
+          cord = new Coordinate(atof(sep[1].c_str()), atof(sep[2].c_str()));
+        }
+        cord_list.push_back(cord);
+      }
+      if (line.front() == 'f')
+      {
+        DrawableObject *object;
+        if (cord_list.size() == 1)
+        {
+          object = new Point(name, cord_list.front());
+        }
+        else if (cord_list.size() == 2)
+        {
+          Coordinate* cord_x = cord_list.front();
+          Coordinate* cord_y = cord_list.back();
+          object = new Line(name, cord_x, cord_y);
+        }
+        else
+        {
+          object = new WireFrame(name, cord_list);
+        }
+        objects_list.push_back(object);
+        cord_list = * new list<Coordinate*>;
+      }
+    }
+    myfile.close();
+  }
+  return objects_list;
 }
 
 void RwObjectService::write(list<DrawableObject*> objects_list, string file_path)
@@ -38,4 +88,17 @@ void RwObjectService::write(list<DrawableObject*> objects_list, string file_path
     myfile << "\n\n";
   }
   myfile.close();
+}
+
+vector<string> RwObjectService::split(string str, char delimiter)
+{
+  vector<string> internal;
+  stringstream ss(str); // Turn the string into a stream.
+  string tok;
+
+  while(getline(ss, tok, delimiter)) {
+    internal.push_back(tok);
+  }
+
+  return internal;
 }

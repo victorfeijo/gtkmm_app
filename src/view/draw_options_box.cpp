@@ -191,9 +191,16 @@ void DrawOptionsBox::on_button_add_object()
 
 void DrawOptionsBox::on_button_open_object()
 {
-  choose_file_window = new ChooseFileWindow(this->mainWindow);
+  choose_file_window = new ChooseFileWindow(this->mainWindow, Gtk::FILE_CHOOSER_ACTION_OPEN);
   choose_file_window->show();
   std::string file_path = choose_file_window->get_file_path();
+  std::list<DrawableObject*> objects_list = rw_object_service.read(file_path);
+  for (DrawableObject* object : objects_list)
+  {
+    this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(object);
+  }
+  this->mainWindow->getViewport()->queue_draw();
+  mainWindow->getLogTextView()->add_log_line("Sucessfull opened the objects from [" + file_path + "]\n");
 }
 
 void DrawOptionsBox::on_button_list_objects()
@@ -210,10 +217,12 @@ void DrawOptionsBox::on_button_close()
 
 void DrawOptionsBox::on_button_save_object()
 {
+  choose_file_window = new ChooseFileWindow(this->mainWindow, Gtk::FILE_CHOOSER_ACTION_SAVE);
+  choose_file_window->show();
+  std::string file_path = choose_file_window->get_file_path();
   delete list_objects_window;
   list_objects_window = new ListObjectsWindow(this->mainWindow);
   std::list<DrawableObject*> objects_list = list_objects_window->get_drawable_objects();
-  std::string file_path("saved_objects.obj");
   rw_object_service.write(objects_list, file_path);
   mainWindow->getLogTextView()->add_log_line("Sucessfull saved the objects on [" + file_path + "]\n");
 }

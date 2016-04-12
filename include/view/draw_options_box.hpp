@@ -29,6 +29,7 @@ public:
                  MainWindow* mainWindow
                );
   virtual ~DrawOptionsBox();
+  void save_object(std::string file_path);
 
 protected:
   MainWindow* mainWindow;
