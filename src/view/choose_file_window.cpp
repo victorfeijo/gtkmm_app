@@ -1,7 +1,7 @@
 #include "choose_file_window.hpp"
 
-ChooseFileWindow::ChooseFileWindow(MainWindow* mainWindow)
-: Gtk::FileChooserDialog("Choose a wavefront file", Gtk::FILE_CHOOSER_ACTION_OPEN),
+ChooseFileWindow::ChooseFileWindow(MainWindow* mainWindow, Gtk::FileChooserAction file_chooser_action)
+: Gtk::FileChooserDialog("Choose a wavefront file", file_chooser_action),
   mainWindow(mainWindow),
   selected_path("No file selected")
 {
