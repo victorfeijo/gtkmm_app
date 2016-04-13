@@ -197,7 +197,7 @@ void DrawOptionsBox::on_button_rotate_anticlock()
   float rotation_angle = atoi(entry_rotation_angle.get_text().raw().c_str());
   if (rotation_angle == 0)
   {
-    entry_zoom_scale.set_text("10");
+    entry_rotation_angle.set_text("10");
   }
   else
   {
@@ -211,13 +211,14 @@ void DrawOptionsBox::on_button_rotate_clock()
   float rotation_angle = atoi(entry_rotation_angle.get_text().raw().c_str());
   if (rotation_angle == 0)
   {
-    entry_zoom_scale.set_text("10");
+    entry_rotation_angle.set_text("10");
   }
   else
   {
     this->mainWindow->getViewport()->getViewWindow()->rotate(-1*rotation_angle);
     this->mainWindow->getViewport()->queue_draw();
-  }}
+  }
+}
 
 DrawOptionsBox::~DrawOptionsBox()
 {
