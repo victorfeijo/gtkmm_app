@@ -9,7 +9,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
     : Gtk::Frame(title),
       mainWindow(mainWindow),
       button_add_object("Add Object"),
-      button_open_object("Open Object"),
+      button_open_object("Open Objects"),
       button_move_up("\u2227"),
       button_move_down("\u2228"),
       button_move_left("<"),
@@ -20,7 +20,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
       button_rotate_anticlock("\u21BA"),
       button_rotate_clock("\u21BB"),
       button_list_objects("List Objects"),
-      button_save_object("Save Object"),
+      button_save_object("Save Objects"),
       add_object_window(nullptr),
       list_objects_window(nullptr),
       entry_move_length(),
@@ -244,7 +244,7 @@ void DrawOptionsBox::on_button_open_object()
     this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(object);
   }
   this->mainWindow->getViewport()->queue_draw();
-  mainWindow->getLogTextView()->add_log_line("Sucessfull opened the objects from [" + file_path + "]\n");
+  mainWindow->getLogTextView()->add_log_line("Sucessfully opened the objects from [" + file_path + "]\n");
 }
 
 void DrawOptionsBox::on_button_list_objects()
@@ -268,5 +268,5 @@ void DrawOptionsBox::on_button_save_object()
   list_objects_window = new ListObjectsWindow(this->mainWindow);
   std::list<DrawableObject*> objects_list = list_objects_window->get_drawable_objects();
   rw_object_service.write(objects_list, file_path);
-  mainWindow->getLogTextView()->add_log_line("Sucessfull saved the objects on [" + file_path + "]\n");
+  mainWindow->getLogTextView()->add_log_line("Sucessfully saved the objects to [" + file_path + "]\n");
 }

@@ -38,6 +38,7 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
   for (std::list<DrawableObject*>::iterator it_obj = objects.begin();
         it_obj != objects.end(); ++it_obj)
   {
+    cr->begin_new_sub_path();
     (*it_obj)->copyFromWorldToWindow();
     rotate_service.rotate(*it_obj, windowCenter.getx(), windowCenter.gety(),
                           windowAngle, transform_type::ON_WINDOW);
@@ -59,7 +60,15 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
                                                                viewport);
         cr->line_to(cordConverted.getx(),cordConverted.gety());
       }
-      cr->line_to(firstCordConverted.getx(),firstCordConverted.gety());
+      if (objectCoordinates.size() > 2) // wireframe case
+      {
+        cr->close_path();
+        // fill polygon
+        cr->fill_preserve();
+        cr->restore();
+        cr->stroke_preserve();
+        cr->clip();
+      }
     }
   }
   cr->stroke();
