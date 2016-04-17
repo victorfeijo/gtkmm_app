@@ -21,17 +21,8 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
   cr->line_to(viewport->getXvpmax(),viewport->getYvpmax());
   cr->line_to(viewport->getXvpmin(),viewport->getYvpmax());
   cr->close_path();
-  cr->fill_preserve();
-
-  // draw viewport corners
-  cr->set_line_width(2);
-  cr->set_source_rgb(RED);
-  cr->move_to(viewport->getXvpmin(),viewport->getYvpmin());
-  cr->line_to(viewport->getXvpmax(),viewport->getYvpmin());
-  cr->line_to(viewport->getXvpmax(),viewport->getYvpmax());
-  cr->line_to(viewport->getXvpmin(),viewport->getYvpmax());
-  cr->close_path();
-  cr->stroke();
+  cr->stroke_preserve();
+  cr->fill();
 
   // set color as black:
   cr->set_source_rgb(BLACK);
@@ -44,7 +35,6 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
 
   for (DrawableObject* object : objectsList)
   {
-    cr->begin_new_sub_path();
     rotate_service.rotate(object, windowCenter.getx(), windowCenter.gety(),
                           windowAngle, transform_type::ON_WINDOW);
     clipping_service.clip(viewport->getViewWindow(), object);
@@ -67,14 +57,24 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
       if (objectCoordinates.size() > 2) // wireframe case
       {
         cr->close_path();
-        // fill polygon
-        cr->fill_preserve();
-        cr->restore();
         cr->stroke_preserve();
-        cr->clip();
+        cr->fill();
+      }
+      else
+      {
+        cr->stroke();
       }
     }
   }
+
+  // draw viewport corners
+  cr->set_line_width(2);
+  cr->set_source_rgb(RED);
+  cr->move_to(viewport->getXvpmin(),viewport->getYvpmin());
+  cr->line_to(viewport->getXvpmax(),viewport->getYvpmin());
+  cr->line_to(viewport->getXvpmax(),viewport->getYvpmax());
+  cr->line_to(viewport->getXvpmin(),viewport->getYvpmax());
+  cr->close_path();
   cr->stroke();
 }
 
