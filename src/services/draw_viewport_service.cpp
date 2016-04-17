@@ -15,20 +15,21 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
   updateViewportAllocation(viewport->get_allocation(), viewport);
 
   // paint white background
-  cr->set_source_rgb(1, 1, 1);
+  cr->set_source_rgb(WHITE);
   cr->paint();
 
-  // draw viewport corners (red)
-  cr->set_source_rgb(0.8, 0, 0);
-  cr->move_to(0,0);
-  cr->line_to(viewport->getXvpmax(),0);
+  // draw viewport corners
+  cr->set_line_width(2);
+  cr->set_source_rgb(RED);
+  cr->move_to(viewport->getXvpmin(),viewport->getYvpmin());
+  cr->line_to(viewport->getXvpmax(),viewport->getYvpmin());
   cr->line_to(viewport->getXvpmax(),viewport->getYvpmax());
-  cr->line_to(0,viewport->getYvpmax());
-  cr->line_to(0,0);
+  cr->line_to(viewport->getXvpmin(),viewport->getYvpmax());
+  cr->close_path();
   cr->stroke();
 
   // set color as black:
-  cr->set_source_rgb(0, 0, 0);
+  cr->set_source_rgb(BLACK);
 
   // draw displayfile objects
   DisplayFile* displayFile = viewport->getViewWindow()->getDisplayFile();
@@ -83,7 +84,7 @@ Coordinate DrawViewportService::convertFromWindowToViewport(Coordinate cord, Vie
             * (double)(Xw - viewWindow->getXwmin()) + viewport->getXvpmin());
 
   long int Yw = cord.gety();
-  long int Yvp = (viewport->getYvpmax() - viewport->getYvpmin()) -
+  long int Yvp = (viewport->getYvpmax() + viewport->getYvpmin()) -
             (long int)(((double)(viewport->getYvpmax() - viewport->getYvpmin()) /
             (double)(viewWindow->getYwmax() - viewWindow->getYwmin()))
             * (double)(Yw - viewWindow->getYwmin()) + viewport->getYvpmin());
@@ -93,12 +94,14 @@ Coordinate DrawViewportService::convertFromWindowToViewport(Coordinate cord, Vie
 
 void DrawViewportService::updateViewportAllocation(Gtk::Allocation allocation, Viewport* viewport)
 {
+  viewport->setXvpmin(BORDER);
+  viewport->setYvpmin(BORDER);
 
   if (viewport->getXvpmax() != allocation.get_width() ||
       viewport->getYvpmax() != allocation.get_height())
   {
-    int widthDiff = allocation.get_width() - (viewport->getXvpmax() - viewport->getXvpmin());
-    int heightDiff = allocation.get_height() - (viewport->getYvpmax() - viewport->getYvpmin());
+    int widthDiff = allocation.get_width()-2*BORDER - (viewport->getXvpmax() - viewport->getXvpmin());
+    int heightDiff = allocation.get_height()-2*BORDER - (viewport->getYvpmax() - viewport->getYvpmin());
 
     ViewWindow* viewWindow = viewport->getViewWindow();
 
@@ -113,7 +116,7 @@ void DrawViewportService::updateViewportAllocation(Gtk::Allocation allocation, V
     }
     else
     {
-      viewWindow->setXwmax(widthDiff*2);
+      viewWindow->setXwmax(widthDiff*DEFAULT_ZOOM);
     }
 
     if (viewport->getYvpmax() != 0)
@@ -127,11 +130,13 @@ void DrawViewportService::updateViewportAllocation(Gtk::Allocation allocation, V
     }
     else
     {
-      viewWindow->setYwmax(heightDiff*2);
+      viewWindow->setYwmax(heightDiff*DEFAULT_ZOOM);
     }
     viewport->setXvpmax(viewport->getXvpmax() + widthDiff);
     viewport->setYvpmax(viewport->getYvpmax() + heightDiff);
 
   }
+
+  viewport->set_allocation(allocation);
 
 }

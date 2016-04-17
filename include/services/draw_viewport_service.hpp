@@ -1,6 +1,12 @@
 #ifndef GTKMM_APP_DRAW_VIEWPORT_SERVICE
 #define GTKMM_APP_DRAW_VIEWPORT_SERVICE
 
+#define BORDER 10
+#define DEFAULT_ZOOM 2
+#define RED 0.8, 0, 0
+#define BLACK 0, 0, 0
+#define WHITE 1, 1, 1
+
 #include <cairomm/context.h>
 #include <gtkmm/drawingarea.h>
 #include "coordinate.hpp"
