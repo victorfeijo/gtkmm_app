@@ -81,16 +81,16 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
 Coordinate DrawViewportService::convertFromWindowToViewport(Coordinate cord, Viewport* viewport)
 {
   ViewWindow* viewWindow = viewport->getViewWindow();
-  long int Xw = cord.getx();
-  long int Xvp = (long int)(((double)(viewport->getXvpmax() - viewport->getXvpmin()) /
-            (double)(viewWindow->getXwmax() - viewWindow->getXwmin()))
-            * (double)(Xw - viewWindow->getXwmin()) + viewport->getXvpmin());
+  double Xw = cord.getx();
+  double Xvp = (((viewport->getXvpmax() - viewport->getXvpmin()) /
+            (viewWindow->getXwmax() - viewWindow->getXwmin()))
+            * (Xw - viewWindow->getXwmin()) + viewport->getXvpmin());
 
-  long int Yw = cord.gety();
-  long int Yvp = (viewport->getYvpmax() + viewport->getYvpmin()) -
-            (long int)(((double)(viewport->getYvpmax() - viewport->getYvpmin()) /
-            (double)(viewWindow->getYwmax() - viewWindow->getYwmin()))
-            * (double)(Yw - viewWindow->getYwmin()) + viewport->getYvpmin());
+  double Yw = cord.gety();
+  double Yvp = (viewport->getYvpmax() + viewport->getYvpmin()) -
+                (((viewport->getYvpmax() - viewport->getYvpmin()) /
+                (viewWindow->getYwmax() - viewWindow->getYwmin()))
+                * (Yw - viewWindow->getYwmin()) + viewport->getYvpmin());
 
   return Coordinate(Xvp, Yvp);
 }
@@ -111,10 +111,10 @@ void DrawViewportService::updateViewportAllocation(Gtk::Allocation allocation, V
     if (viewport->getXvpmax() != 0)
     {
       viewWindow->setXwmax(viewWindow->getXwmax() +
-                           (float)(viewWindow->getXwmax()
+                           (viewWindow->getXwmax()
                             - viewWindow->getXwmin())
-                           * (float)widthDiff
-                           / (float)(viewport->getXvpmax()
+                           * widthDiff
+                           / (viewport->getXvpmax()
                             - viewport->getXvpmin()));
     }
     else
@@ -125,10 +125,10 @@ void DrawViewportService::updateViewportAllocation(Gtk::Allocation allocation, V
     if (viewport->getYvpmax() != 0)
     {
       viewWindow->setYwmin(viewWindow->getYwmin() -
-                           (float)(viewWindow->getYwmax()
+                           (viewWindow->getYwmax()
                             - viewWindow->getYwmin())
-                           * (float)heightDiff
-                           / (float)(viewport->getYvpmax()
+                           * heightDiff
+                           / (viewport->getYvpmax()
                             - viewport->getYvpmin()));
     }
     else

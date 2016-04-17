@@ -2,7 +2,6 @@
 #define GTKMM_APP_TRANSLATE_OBJECT_SERVICE
 
 #include <list>
-#include <iostream>
 #include "drawable_object.hpp"
 #include "matrix.hpp"
 #include "transform_type.hpp"

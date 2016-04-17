@@ -12,7 +12,6 @@
 #include <gtkmm/notebook.h>
 #include <gtkmm/box.h>
 #include <string>
-#include <iostream>
 #include "point.hpp"
 #include "line.hpp"
 #include "wireframe.hpp"

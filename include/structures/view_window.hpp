@@ -9,6 +9,7 @@
 #define MIN_HEIGHT 15
 #define MAX_HEIGHT 50000000
 #define MAX_WIDTH 50000000
+#define DEFAULT_CLIPPING POINT_LB_SH
 
 class ViewWindow
 {
@@ -44,7 +45,7 @@ protected:
   Coordinate viewUp();
   RotateObjectService rotateService;
   clipping_type clippingType;
-  
+
 };
 
 #endif

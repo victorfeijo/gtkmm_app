@@ -17,19 +17,19 @@ public:
   Viewport();
   virtual ~Viewport();
   ViewWindow * getViewWindow();
-  int getXvpmin();
-  int getYvpmin();
-  int getXvpmax();
-  int getYvpmax();
-  void setXvpmin(int Xvpmin);
-  void setYvpmin(int Yvpmin);
-  void setXvpmax(int Xvpmax);
-  void setYvpmax(int Yvpmax);
+  double getXvpmin();
+  double getYvpmin();
+  double getXvpmax();
+  double getYvpmax();
+  void setXvpmin(double Xvpmin);
+  void setYvpmin(double Yvpmin);
+  void setXvpmax(double Xvpmax);
+  void setYvpmax(double Yvpmax);
 
 protected:
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
   ViewWindow* viewWindow;
-  int Xvpmin, Yvpmin, Xvpmax, Yvpmax;
+  double Xvpmin, Yvpmin, Xvpmax, Yvpmax;
 
 };
 
