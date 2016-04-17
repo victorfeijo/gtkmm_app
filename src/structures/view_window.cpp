@@ -5,7 +5,8 @@ ViewWindow::ViewWindow(int Xwmin, int Ywmin, int Xwmax, int Ywmax)
       Ywmin(Ywmin),
       Xwmax(Xwmax),
       Ywmax(Ywmax),
-      rotationAngle(0)
+      rotationAngle(0),
+      clippingType(clipping_type::POINT)
 {
 }
 
@@ -181,4 +182,13 @@ Coordinate ViewWindow::viewUp()
   Matrix<double> upRotated = up * angle;
 
   return Coordinate(upRotated.get(0,0), upRotated.get(0,1));
+}
+
+clipping_type ViewWindow::getClippingType()
+{
+  return clippingType;
+}
+void ViewWindow::setClippingType(clipping_type clippingType)
+{
+  this->clippingType = clippingType;
 }

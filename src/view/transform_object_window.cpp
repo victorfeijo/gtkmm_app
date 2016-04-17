@@ -88,6 +88,10 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
   m_notebook.append_page(scale_grid, "Scale");
   m_notebook.append_page(rotate_grid, "Rotate");
 
+  set_type_hint(Gdk::WINDOW_TYPE_HINT_DIALOG);
+  set_modal();
+  set_transient_for(*mainWindow);
+  
   show_all_children();
 }
 

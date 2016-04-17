@@ -44,10 +44,9 @@ void DisplayFile::removeObjectByName(string name)
 std::list<string> DisplayFile::getNamesList()
 {
   std::list<string> list;
-  for(std::map<string, DrawableObject*>::iterator it = objectsMap.begin();
-      it != objectsMap.end(); it++)
+  for(auto &key : objectsMap)
   {
-    list.push_back(it->first);
+    list.push_back(key.first);
   }
   return list;
 

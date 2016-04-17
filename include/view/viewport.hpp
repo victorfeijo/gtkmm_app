@@ -8,6 +8,7 @@
 #include "view_window.hpp"
 #include "coordinate.hpp"
 #include "draw_viewport_service.hpp"
+#include "clipping_type.hpp"
 
 class Viewport : public Gtk::DrawingArea
 {

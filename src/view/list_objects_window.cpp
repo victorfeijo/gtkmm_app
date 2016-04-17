@@ -13,9 +13,9 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
 
   std::list<std::string> names = this->mainWindow->getViewport()->getViewWindow()
                                  ->getDisplayFile()->getNamesList();
-  for(std::list<std::string>::iterator it = names.begin(); it != names.end(); ++it)
+  for(string name : names)
   {
-    this->objects_list.append(*it);
+    this->objects_list.append(name);
   }
 
   set_title("List Objects");
@@ -39,6 +39,11 @@ ListObjectsWindow::ListObjectsWindow(MainWindow* mainWindow)
       &ListObjectsWindow::on_button_delete));
 
   add(m_grid);
+
+  set_type_hint(Gdk::WINDOW_TYPE_HINT_DIALOG);
+  set_modal();
+  set_transient_for(*mainWindow);
+
   show_all_children();
 }
 

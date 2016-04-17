@@ -19,9 +19,11 @@ public:
   std::string getName();
   list<Coordinate> getCoordinatesWorld();
   list<Coordinate> getCoordinatesWindow();
+  list<Coordinate> getCoordinatesClipped();
   virtual string getType() = 0;
   void setCoordinatesWorld(list<Coordinate> coordinates);
   void setCoordinatesWindow(list<Coordinate> coordinates);
+  void setCoordinatesClipped(list<Coordinate> coordinates);
   Coordinate getCenterOnWorld();
   void copyFromWorldToWindow();
 
@@ -29,6 +31,7 @@ protected:
   string name;
   list<Coordinate> coordinatesWorld;
   list<Coordinate> coordinatesWindow;
+  list<Coordinate> coordinatesClipped;
   void destroyList(list<Coordinate> coordinates);
 };
 #endif // GTKMM_APP_DRAWABLE_OBJECT

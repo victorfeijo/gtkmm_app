@@ -21,8 +21,10 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
       button_rotate_clock("\u21BB"),
       button_list_objects("List Objects"),
       button_save_object("Save Objects"),
+      button_settings("Settings"),
       add_object_window(nullptr),
       list_objects_window(nullptr),
+      settings_window(nullptr),
       entry_move_length(),
       entry_zoom_scale()
 {
@@ -83,6 +85,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
   bbox->add(button_open_object);
   bbox->add(button_save_object);
   bbox->add(button_list_objects);
+  bbox->add(button_settings);
   bbox->add(button_close);
 
   button_add_object.signal_clicked().connect(sigc::mem_fun(*this,
@@ -99,6 +102,9 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
 
   button_save_object.signal_clicked().connect(sigc::mem_fun(*this,
       &DrawOptionsBox::on_button_save_object));
+
+  button_settings.signal_clicked().connect(sigc::mem_fun(*this,
+      &DrawOptionsBox::on_button_settings));
 
 }
 
@@ -231,6 +237,13 @@ void DrawOptionsBox::on_button_add_object()
   delete add_object_window;
   add_object_window = new AddObjectWindow(this->mainWindow);
   add_object_window->show();
+}
+
+void DrawOptionsBox::on_button_settings()
+{
+  delete settings_window;
+  settings_window = new SettingsWindow(this->mainWindow);
+  settings_window->show();
 }
 
 void DrawOptionsBox::on_button_open_object()

@@ -68,16 +68,14 @@ void RwObjectService::write(list<DrawableObject*> objects_list, string file_path
   ofstream myfile;
   myfile.open(file_path);
   myfile << "# Starting the file objects\n\n";
-  for (list<DrawableObject*>::iterator it_obj = objects_list.begin();
-        it_obj != objects_list.end(); ++it_obj)
+  for (DrawableObject* obj : objects_list)
   {
-    myfile << "o " + (*it_obj)->getName() + "\n\n";
-    list<Coordinate> objectCoordinates = (*it_obj)->getCoordinatesWorld();
-    for (std::list<Coordinate>::iterator it_cord = objectCoordinates.begin();
-          it_cord != objectCoordinates.end(); ++it_cord)
+    myfile << "o " + obj->getName() + "\n\n";
+    list<Coordinate> objectCoordinates = obj->getCoordinatesWorld();
+    for (Coordinate cord : objectCoordinates)
     {
-      string line_cord = "v " + to_string((*it_cord).getx()) + " " + to_string((*it_cord).gety())
-      + " " + to_string((*it_cord).getz()) + "\n";
+      string line_cord = "v " + to_string(cord.getx()) + " " + to_string(cord.gety())
+      + " " + to_string(cord.getz()) + "\n";
       myfile << line_cord;
     }
     myfile << "\nf ";

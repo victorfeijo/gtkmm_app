@@ -11,10 +11,11 @@ ChooseFileWindow::ChooseFileWindow(MainWindow* mainWindow, Gtk::FileChooserActio
 
   set_transient_for(*mainWindow);
 
-  auto filter_any = Gtk::FileFilter::create();
-  filter_any->set_name("Any files");
-  filter_any->add_pattern("*");
-  add_filter(filter_any);
+  auto filter_obj = Gtk::FileFilter::create();
+  filter_obj->set_name("Wavefront .obj files");
+  filter_obj->add_pattern("*.obj");
+  filter_obj->add_pattern("*.OBJ");
+  add_filter(filter_obj);
 
   int result = run();
 
