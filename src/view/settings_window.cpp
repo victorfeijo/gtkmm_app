@@ -7,8 +7,12 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
       button_close("Close"),
       m_vbox(Gtk::ORIENTATION_VERTICAL)
 {
+  // MUST BE IN THE SAME ORDER THAN THE ENUMERATOR:
   this->clipping_options.append("None");
   this->clipping_options.append("Point");
+  this->clipping_options.append("Cohen-Sutherland");
+  this->clipping_options.append("Point + Cohen-Sutherland");
+  
   this->clipping_options.set_active(this->mainWindow->getViewport()->
                                     getViewWindow()->getClippingType());
 
