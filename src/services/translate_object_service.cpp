@@ -20,15 +20,14 @@ void TranslateObjectService::translate(DrawableObject* object, int dx, int dy, i
       cord_list = object->getCoordinatesWindow();
     break;
   }
-  std::list<Coordinate>::iterator it;
-  for(it = cord_list.begin(); it!=cord_list.end(); ++it)
+  for(Coordinate cord : cord_list)
   {
     Matrix<int> object_bitmap(1, 3);
     Matrix<int> translate_bitmap(1, 3);
 
-    object_bitmap.set(0, 0, (it)->getx());
-    object_bitmap.set(0, 1, (it)->gety());
-    object_bitmap.set(0, 2, (it)->getz());
+    object_bitmap.set(0, 0, cord.getx());
+    object_bitmap.set(0, 1, cord.gety());
+    object_bitmap.set(0, 2, cord.getz());
 
     translate_bitmap.set(0, 0, dx);
     translate_bitmap.set(0, 1, dy);

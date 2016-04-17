@@ -16,7 +16,12 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
 
   // paint white background
   cr->set_source_rgb(WHITE);
-  cr->paint();
+  cr->move_to(viewport->getXvpmin(),viewport->getYvpmin());
+  cr->line_to(viewport->getXvpmax(),viewport->getYvpmin());
+  cr->line_to(viewport->getXvpmax(),viewport->getYvpmax());
+  cr->line_to(viewport->getXvpmin(),viewport->getYvpmax());
+  cr->close_path();
+  cr->fill_preserve();
 
   // draw viewport corners
   cr->set_line_width(2);
@@ -35,30 +40,28 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
   DisplayFile* displayFile = viewport->getViewWindow()->getDisplayFile();
   Coordinate windowCenter = viewport->getViewWindow()->getCenter();
   int windowAngle = viewport->getViewWindow()->getRotation();
-  std::list<DrawableObject*> objects = displayFile->getObjects();
-  for (std::list<DrawableObject*>::iterator it_obj = objects.begin();
-        it_obj != objects.end(); ++it_obj)
+  std::list<DrawableObject*> objectsList = displayFile->getObjects();
+
+  for (DrawableObject* object : objectsList)
   {
     cr->begin_new_sub_path();
-    (*it_obj)->copyFromWorldToWindow();
-    rotate_service.rotate(*it_obj, windowCenter.getx(), windowCenter.gety(),
+    rotate_service.rotate(object, windowCenter.getx(), windowCenter.gety(),
                           windowAngle, transform_type::ON_WINDOW);
-    list<Coordinate> objectCoordinates = (*it_obj)->getCoordinatesWindow();
+    clipping_service.clip(viewport->getViewWindow(), object);
+    list<Coordinate> objectCoordinates = object->getCoordinatesClipped();
     Coordinate firstCordConverted = convertFromWindowToViewport(
                                       *(objectCoordinates.begin()), viewport);
-    cr->move_to(firstCordConverted.getx(),firstCordConverted.gety());
 
+    cr->move_to(firstCordConverted.getx(),firstCordConverted.gety());
     if (objectCoordinates.size() == 1)  // point case
     {
       cr->line_to(firstCordConverted.getx()+1,firstCordConverted.gety()+1);
     }
     else
     {
-      for (std::list<Coordinate>::iterator it_cord = objectCoordinates.begin();
-            it_cord != objectCoordinates.end(); ++it_cord)
+      for (Coordinate coordinate : objectCoordinates)
       {
-        Coordinate cordConverted = convertFromWindowToViewport(*it_cord,
-                                                               viewport);
+        Coordinate cordConverted = convertFromWindowToViewport(coordinate, viewport);
         cr->line_to(cordConverted.getx(),cordConverted.gety());
       }
       if (objectCoordinates.size() > 2) // wireframe case

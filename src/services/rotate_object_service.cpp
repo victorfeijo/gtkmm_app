@@ -10,6 +10,7 @@ RotateObjectService::~RotateObjectService()
 
 void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int angleDegree, transform_type type)
 {
+  object->copyFromWorldToWindow();
   translate_service.translate(object, -dx, -dy, 0, type);
   std::list<Coordinate> new_cord_list;
   std::list<Coordinate> cord_list;
@@ -21,14 +22,13 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int ang
       cord_list = object->getCoordinatesWindow();
     break;
   }
-  std::list<Coordinate>::iterator it;
-  for(it = cord_list.begin(); it!=cord_list.end(); ++it)
-  {
 
+  for(Coordinate cord : cord_list)
+  {
     Matrix<double> point(1,3);
-    point.set(0, 0, it->getx());
-    point.set(0, 1, it->gety());
-    point.set(0, 2, it->getz());
+    point.set(0, 0, cord.getx());
+    point.set(0, 1, cord.gety());
+    point.set(0, 2, cord.getz());
 
     Matrix<double> offset1(3,3);
     offset1.set(0, 0, 1);

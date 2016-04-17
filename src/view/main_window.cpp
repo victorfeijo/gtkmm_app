@@ -13,7 +13,7 @@ MainWindow::MainWindow()
 {
   set_border_width(15);
   set_title("Main Window");
-  set_default_size(700, 575);
+  set_default_size(750, 600);
 
   add(main_box);
 

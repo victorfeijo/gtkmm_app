@@ -21,7 +21,6 @@ void DrawableObject::destroyList(list<Coordinate> coordinates)
 {
   while(!coordinates.empty())
   {
-    // delete coordinates.front();
     coordinates.pop_front();
   }
 }
@@ -34,6 +33,11 @@ std::string DrawableObject::getName()
 list<Coordinate> DrawableObject::getCoordinatesWorld()
 {
   return this->coordinatesWorld;
+}
+
+list<Coordinate> DrawableObject::getCoordinatesClipped()
+{
+  return this->coordinatesClipped;
 }
 
 list<Coordinate> DrawableObject::getCoordinatesWindow()
@@ -51,6 +55,12 @@ void DrawableObject::setCoordinatesWindow(list<Coordinate> coordinates)
 {
   this->destroyList(coordinatesWindow);
   this->coordinatesWindow = coordinates;
+}
+
+void DrawableObject::setCoordinatesClipped(list<Coordinate> coordinates)
+{
+  this->destroyList(coordinatesClipped);
+  this->coordinatesClipped = coordinates;
 }
 
 Coordinate DrawableObject::getCenterOnWorld()

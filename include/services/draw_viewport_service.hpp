@@ -11,6 +11,7 @@
 #include <gtkmm/drawingarea.h>
 #include "coordinate.hpp"
 #include "rotate_object_service.hpp"
+#include "clipping_service.hpp"
 
 class Viewport;
 
@@ -24,6 +25,7 @@ private:
   Coordinate convertFromWindowToViewport(Coordinate cord, Viewport* viewport);
   void updateViewportAllocation(Gtk::Allocation newAllocation, Viewport* viewport);
   RotateObjectService rotate_service;
+  ClippingService clipping_service;
 };
 
 #endif

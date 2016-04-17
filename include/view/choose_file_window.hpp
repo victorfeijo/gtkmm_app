@@ -14,7 +14,7 @@ public:
   ChooseFileWindow(MainWindow* mainWindow, Gtk::FileChooserAction file_chooser_action);
   virtual ~ChooseFileWindow();
   std::string get_file_path();
-  
+
 protected:
   MainWindow* mainWindow;
   std::string selected_path;

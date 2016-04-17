@@ -3,6 +3,7 @@
 
 #include "display_file.hpp"
 #include "rotate_object_service.hpp"
+#include "clipping_type.hpp"
 
 #define MIN_WIDTH 15
 #define MIN_HEIGHT 15
@@ -33,6 +34,8 @@ public:
   Coordinate getCenter();
   void rotate(int angle);
   int getRotation();
+  clipping_type getClippingType();
+  void setClippingType(clipping_type clippingType);
 
 protected:
   DisplayFile displayFile;
@@ -40,6 +43,8 @@ protected:
   int rotationAngle;
   Coordinate viewUp();
   RotateObjectService rotateService;
+  clipping_type clippingType;
+  
 };
 
 #endif
