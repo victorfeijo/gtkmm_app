@@ -19,8 +19,8 @@ public:
   void clip(ViewWindow* window, DrawableObject *object);
   void clipPoint(ViewWindow* window, DrawableObject *object);
   void clipCohenSutherland(ViewWindow* window, DrawableObject *object);
+  void clipLiangBarsky(ViewWindow* window, DrawableObject *object);
   int calcRegionCode(ViewWindow* window, Coordinate cord);
-  bool isCordOnWindow(Coordinate cord, ViewWindow *window);
 };
 
 #endif

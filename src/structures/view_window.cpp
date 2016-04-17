@@ -6,7 +6,7 @@ ViewWindow::ViewWindow(int Xwmin, int Ywmin, int Xwmax, int Ywmax)
       Xwmax(Xwmax),
       Ywmax(Ywmax),
       rotationAngle(0),
-      clippingType(clipping_type::POINT_CS)
+      clippingType(clipping_type::POINT_LB)
 {
 }
 

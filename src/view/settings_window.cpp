@@ -10,9 +10,11 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
   // MUST BE IN THE SAME ORDER THAN THE ENUMERATOR:
   this->clipping_options.append("None");
   this->clipping_options.append("Point");
-  this->clipping_options.append("Cohen-Sutherland");
-  this->clipping_options.append("Point + Cohen-Sutherland");
-  
+  this->clipping_options.append("Cohen-Sutherland (line)");
+  this->clipping_options.append("Liang-Barsky (line)");
+  this->clipping_options.append("Point + Cohen-Sutherland (line)");
+  this->clipping_options.append("Point + Liang-Barsky (line)");
+
   this->clipping_options.set_active(this->mainWindow->getViewport()->
                                     getViewWindow()->getClippingType());
 
@@ -44,6 +46,9 @@ void SettingsWindow::on_clipping_changed()
 {
   clipping_type selected = (clipping_type)clipping_options.get_active_row_number();
   this->mainWindow->getViewport()->getViewWindow()->setClippingType(selected);
+  this->mainWindow->getViewport()->queue_draw();
+  this->mainWindow->getLogTextView()->add_log_line("Clipping set to " +
+      (string)clipping_options.get_active_text() + "\n");
 }
 
 SettingsWindow::~SettingsWindow()
@@ -53,5 +58,4 @@ SettingsWindow::~SettingsWindow()
 void SettingsWindow::on_button_close()
 {
   hide();
-  this->mainWindow->getViewport()->queue_draw();
 }

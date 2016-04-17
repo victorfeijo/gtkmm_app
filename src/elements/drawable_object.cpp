@@ -70,12 +70,11 @@ Coordinate DrawableObject::getCenterOnWorld()
   xSum = 0;
   ySum = 0;
   zSum = 0;
-  for (std::list<Coordinate>::iterator it = coordinatesWorld.begin();
-        it != coordinatesWorld.end(); ++it)
+  for (Coordinate cord : coordinatesWorld)
   {
-    xSum += (*it).getx();
-    ySum += (*it).gety();
-    zSum += (*it).getz();
+    xSum += cord.getx();
+    ySum += cord.gety();
+    zSum += cord.getz();
     count++;
   }
   xAvg = xSum / count;
