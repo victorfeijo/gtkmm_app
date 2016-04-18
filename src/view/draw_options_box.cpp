@@ -1,5 +1,4 @@
 #include "draw_options_box.hpp"
-#include <iostream>
 
 DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
                                gint spacing,

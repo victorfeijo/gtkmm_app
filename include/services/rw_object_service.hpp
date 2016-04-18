@@ -4,7 +4,6 @@
 #include <list>
 #include <string>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 #include <vector>
 #include "drawable_object.hpp"

@@ -17,38 +17,76 @@ void ClippingService::clip(ViewWindow* window, DrawableObject *object)
 
   switch (size) {
     case 1:  // point
-      switch(type) {
+    {
+      switch(type)
+      {
         case POINT:
         case POINT_CS:
         case POINT_LB:
+        case POINT_CS_SH:
+        case POINT_LB_SH:
+        case POINT_SH:
+        {
           clipPoint(window, object);
           break;
+        }
         default:
-          goto USE_SAME_COORDINATES;
-          break;
+        {
+          goto DO_NOT_CLIP;
+        }
       }
       break;
+    }
     case 2:  // line
-      switch (type) {
+    {
+      switch (type)
+      {
         case CS:
         case POINT_CS:
+        case POINT_CS_SH:
+        case CS_SH:
+        {
           clipCohenSutherland(window, object);
           break;
+        }
         case LB:
         case POINT_LB:
+        case POINT_LB_SH:
+        case LB_SH:
+        {
           clipLiangBarsky(window, object);
           break;
+        }
         default:
-          goto USE_SAME_COORDINATES;
-          break;
+        {
+          goto DO_NOT_CLIP;
+        }
       }
       break;
+    }
     default:  // wireframe
-      goto USE_SAME_COORDINATES;
-      break;
+    {
+      switch (type)
+      {
+        case SH:
+        case POINT_CS_SH:
+        case POINT_LB_SH:
+        case POINT_SH:
+        case CS_SH:
+        case LB_SH:
+        {
+          clipSutherlandHodgman(window, object);
+          break;
+        }
+        default:
+        {
+          goto DO_NOT_CLIP;
+        }
+      }
+    }
   }
   return;
-  USE_SAME_COORDINATES:
+  DO_NOT_CLIP:
   object->setCoordinatesClipped(object->getCoordinatesWindow());
 }
 
@@ -59,7 +97,7 @@ void ClippingService::clipPoint(ViewWindow* window, DrawableObject *object)
     throw 30;
   }
   std::list<Coordinate> windowCordList;
-  if (calcRegionCode(window, windowCordList.front()) == INSIDE)
+  if (calcRegionCode(window, object->getCoordinatesWindow().front()) == INSIDE)
   {
     windowCordList = object->getCoordinatesWindow();
   }
@@ -73,7 +111,7 @@ void ClippingService::clipCohenSutherland(ViewWindow* window, DrawableObject *ob
     throw 31;
   }
   Coordinate p1 = object->getCoordinatesWindow().front();
-  Coordinate p2 = *(--object->getCoordinatesWindow().end());
+  Coordinate p2 = object->getCoordinatesWindow().back();
   int regionCode1 = calcRegionCode(window, p1);
   int regionCode2 = calcRegionCode(window, p2);
   bool draw;
@@ -101,35 +139,13 @@ void ClippingService::clipCohenSutherland(ViewWindow* window, DrawableObject *ob
         regionCodeOutside = regionCode2;
       }
 
-      double x, y;
-      if (regionCodeOutside & TOP)
-      {
-        x = p1.getx() + (p2.getx() - p1.getx()) * (window->getYwmax() -
-            p1.gety()) / (p2.gety() - p1.gety());
-        y = window->getYwmax();
-      }
-      else if (regionCodeOutside & BOTTOM)
-      {
-        x = p1.getx() + (p2.getx() - p1.getx()) * (window->getYwmin() -
-            p1.gety()) / (p2.gety() - p1.gety());
-        y = window->getYwmin();
-      }
-      else if (regionCodeOutside & RIGHT)
-      {
-        y = p1.gety() + (p2.gety() - p1.gety()) * (window->getXwmax() - p1.getx()) / (p2.getx() - p1.getx());
-        x = window->getXwmax();
-      }
-      else if (regionCodeOutside & LEFT)
-      {
-        y = p1.gety() + (p2.gety() - p1.gety()) * (window->getXwmin() - p1.getx()) / (p2.getx() - p1.getx());
-        x = window->getXwmin();
-      }
+      Coordinate intersection = calcIntersection(p1, p2, window, regionCodeOutside);
 
       if (regionCodeOutside == regionCode1) {
-        p1 = Coordinate(x, y);
+        p1 = intersection;
         regionCode1 = calcRegionCode(window, p1);
       } else {
-        p2 = Coordinate(x, y);
+        p2 = intersection;
         regionCode2 = calcRegionCode(window, p2);
       }
     }
@@ -168,7 +184,7 @@ void ClippingService::clipLiangBarsky(ViewWindow* window, DrawableObject *object
     throw 32;
   }
   Coordinate p1 = object->getCoordinatesWindow().front();
-  Coordinate p2 = *(--object->getCoordinatesWindow().end());
+  Coordinate p2 = object->getCoordinatesWindow().back();
   double u1 = 0.0;
   double u2 = 1.0;
   double xDelta = p2.getx() - p1.getx();
@@ -181,21 +197,29 @@ void ClippingService::clipLiangBarsky(ViewWindow* window, DrawableObject *object
     switch (i)
     {
       case 0:
+      {
         p = -1 * xDelta;
         q = -1 * (window->getXwmin() - p1.getx());
         break;
+      }
       case 1:
+      {
         p = xDelta;
         q = (window->getXwmax() - p1.getx());
         break;
+      }
       case 2:
+      {
         p = -1 * yDelta;
         q = -1 * (window->getYwmin() - p1.gety());
         break;
+      }
       case 3:
+      {
         p = yDelta;
         q = (window->getYwmax() - p1.gety());
         break;
+      }
     }
 
     r = q / p;
@@ -227,4 +251,100 @@ void ClippingService::clipLiangBarsky(ViewWindow* window, DrawableObject *object
   }
   object->setCoordinatesClipped(clippedCoordinates);
 
+}
+
+void ClippingService::clipSutherlandHodgman(ViewWindow *window, DrawableObject *object)
+{
+  std::list<Coordinate> output = object->getCoordinatesWindow();
+
+  for (int i = 0; i < 4; i++)  // for each edge in window
+  {
+    int edge_code = pow(2, i);  // LEFT // RIGHT // BOTTOM // TOP //
+    std::list<Coordinate> input = output;
+    output.clear();
+    Coordinate last = input.back();
+
+    for (Coordinate cord : input)
+    {
+      int last_code = calcRegionCode(window, last);
+      int cord_code = calcRegionCode(window, cord);
+      if (!(cord_code & edge_code))  // if cord.isInside(edge)
+      {
+        if (last_code & edge_code)  // if not last.isInside(edge)
+        {
+          output.push_back(calcIntersection(last, cord, window, edge_code));
+        }
+        output.push_back(cord);
+      }
+      else if (!(last_code && edge_code)) // else if last.isInside(edge)
+      {
+        output.push_back(calcIntersection(last, cord, window, edge_code));
+      }
+      else if (last_code & edge_code)  // both points outside and line does not pass through the window
+      {
+        output.push_back(alignToEdge(last, window, edge_code));
+        output.push_back(alignToEdge(cord, window, edge_code));
+      }
+      else
+      {
+        Coordinate intersection = calcIntersection(last, cord, window, edge_code);
+        output.push_back(intersection);
+      }
+      last = cord;
+    }
+  }
+  object->setCoordinatesClipped(output);
+}
+
+Coordinate ClippingService::calcIntersection(Coordinate cord1, Coordinate cord2, ViewWindow *window, int regionCode)
+{
+  double x, y;
+  if (regionCode & TOP)
+  {
+    x = cord1.getx() + (cord2.getx() - cord1.getx()) * (window->getYwmax() -
+        cord1.gety()) / (cord2.gety() - cord1.gety());
+    y = window->getYwmax();
+  }
+  else if (regionCode & BOTTOM)
+  {
+    x = cord1.getx() + (cord2.getx() - cord1.getx()) * (window->getYwmin() -
+        cord1.gety()) / (cord2.gety() - cord1.gety());
+    y = window->getYwmin();
+  }
+  else if (regionCode & RIGHT)
+  {
+    y = cord1.gety() + (cord2.gety() - cord1.gety()) * (window->getXwmax() -
+        cord1.getx()) / (cord2.getx() - cord1.getx());
+    x = window->getXwmax();
+  }
+  else if (regionCode & LEFT)
+  {
+    y = cord1.gety() + (cord2.gety() - cord1.gety()) * (window->getXwmin() -
+        cord1.getx()) / (cord2.getx() - cord1.getx());
+    x = window->getXwmin();
+  }
+  return Coordinate(x, y);
+}
+
+Coordinate ClippingService::alignToEdge(Coordinate cord, ViewWindow *window, int regionCode)
+{
+  double x = cord.getx();
+  double y = cord.gety();
+  if (regionCode & TOP)
+  {
+    y = window->getYwmax();
+  }
+  if (regionCode & BOTTOM)
+  {
+    y = window->getYwmin();
+  }
+  if (regionCode & RIGHT)
+  {
+    x = window->getXwmax();
+  }
+  if (regionCode & LEFT)
+  {
+    x = window->getXwmin();
+  }
+  return Coordinate(x, y);
 }

@@ -6,8 +6,14 @@ enum clipping_type {
   POINT = 1,
   CS = 2,  // Cohen-Sutherland
   LB = 3,  // Liang-Barsky
-  POINT_CS = 4,
-  POINT_LB = 5
+  SH = 4,  // Sutherland–Hodgman
+  POINT_CS = 5,
+  POINT_LB = 6,
+  POINT_CS_SH = 7,
+  POINT_LB_SH = 8,
+  POINT_SH = 9,
+  CS_SH = 10,
+  LB_SH = 11
 };
 
 #endif

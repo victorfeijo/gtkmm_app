@@ -22,35 +22,35 @@ ViewWindow * Viewport::getViewWindow()
   return this->viewWindow;
 }
 
-int Viewport::getXvpmin()
+double Viewport::getXvpmin()
 {
   return this->Xvpmin;
 }
-int Viewport::getYvpmin()
+double Viewport::getYvpmin()
 {
   return this->Yvpmin;
 }
-int Viewport::getXvpmax()
+double Viewport::getXvpmax()
 {
   return this->Xvpmax;
 }
-int Viewport::getYvpmax()
+double Viewport::getYvpmax()
 {
   return this->Yvpmax;
 }
-void Viewport::setXvpmin(int Xvpmin)
+void Viewport::setXvpmin(double Xvpmin)
 {
   this->Xvpmin = Xvpmin;
 }
-void Viewport::setYvpmin(int Yvpmin)
+void Viewport::setYvpmin(double Yvpmin)
 {
   this->Yvpmin = Yvpmin;
 }
-void Viewport::setXvpmax(int Xvpmax)
+void Viewport::setXvpmax(double Xvpmax)
 {
   this->Xvpmax = Xvpmax;
 }
-void Viewport::setYvpmax(int Yvpmax)
+void Viewport::setYvpmax(double Yvpmax)
 {
   this->Yvpmax = Yvpmax;
 }
