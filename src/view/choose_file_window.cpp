@@ -1,14 +1,16 @@
 #include "choose_file_window.hpp"
 
 ChooseFileWindow::ChooseFileWindow(MainWindow* mainWindow, Gtk::FileChooserAction file_chooser_action)
-: Gtk::FileChooserDialog("Choose a wavefront file", file_chooser_action),
-  mainWindow(mainWindow),
-  selected_path("No file selected")
+    : Gtk::FileChooserDialog("Select a wavefront file", file_chooser_action),
+      mainWindow(mainWindow),
+      selected_path("")
 {
 
   add_button("_Cancel", Gtk::RESPONSE_CANCEL);
   add_button("Select", Gtk::RESPONSE_OK);
 
+  set_type_hint(Gdk::WINDOW_TYPE_HINT_DIALOG);
+  set_modal();
   set_transient_for(*mainWindow);
 
   auto filter_obj = Gtk::FileFilter::create();
@@ -16,32 +18,6 @@ ChooseFileWindow::ChooseFileWindow(MainWindow* mainWindow, Gtk::FileChooserActio
   filter_obj->add_pattern("*.obj");
   filter_obj->add_pattern("*.OBJ");
   add_filter(filter_obj);
-
-  int result = run();
-
-  switch(result)
-  {
-    case(Gtk::RESPONSE_OK):
-    {
-      this->selected_path = get_filename();
-      mainWindow->getLogTextView()->add_log_line(
-        "The file : [ " + this->selected_path + " ] was selected.\n"
-      );
-      close();
-      break;
-    }
-    case(Gtk::RESPONSE_CANCEL):
-    {
-      mainWindow->getLogTextView()->add_log_line("Canceled the file select.\n");
-      close();
-      break;
-    }
-    default:
-    {
-      mainWindow->getLogTextView()->add_log_line("Unexpected button clicked.\n");
-      break;
-    }
-  }
 }
 
 ChooseFileWindow::~ChooseFileWindow()
@@ -50,5 +26,39 @@ ChooseFileWindow::~ChooseFileWindow()
 
 std::string ChooseFileWindow::get_file_path()
 {
-  return this->selected_path;
+  if (get_action() == Gtk::FILE_CHOOSER_ACTION_SAVE)
+  {
+    set_create_folders();
+    signal_selection_changed().connect(sigc::mem_fun(
+        *this, &ChooseFileWindow::on_change_filename));
+  }
+  int result = run();
+  switch(result)
+  {
+    case(Gtk::RESPONSE_OK):
+    {
+      hide();
+      return this->get_filename();
+    }
+    default:
+    {
+      hide();
+      return "";
+    }
+  }
+}
+
+void ChooseFileWindow::on_change_filename()
+{
+  string filename = (string) get_current_name();
+  if (!(ends_with(filename, ".obj") || ends_with(filename, ".OBJ")))
+  {
+    set_current_name(filename + ".obj");
+  }
+}
+
+bool ChooseFileWindow::ends_with(std::string str, std::string end)
+{
+    return (str.length() >= end.length() &&
+           str.substr(str.length() - end.length()).compare(end) == 0);
 }

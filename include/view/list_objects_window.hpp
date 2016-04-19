@@ -15,7 +15,7 @@ class ListObjectsWindow : public Gtk::Window
 public:
   ListObjectsWindow(MainWindow* mainWindow);
   ~ListObjectsWindow();
-  std::list<DrawableObject*> get_drawable_objects();
+
 protected:
   MainWindow* mainWindow;
   std::string selected_object;
