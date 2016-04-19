@@ -22,6 +22,7 @@ DrawOptionsBox::DrawOptionsBox(const Glib::ustring& title,
       button_save_object("Save Objects"),
       button_settings("Settings"),
       add_object_window(nullptr),
+      choose_file_window(nullptr),
       list_objects_window(nullptr),
       settings_window(nullptr),
       entry_move_length(),
@@ -247,16 +248,23 @@ void DrawOptionsBox::on_button_settings()
 
 void DrawOptionsBox::on_button_open_object()
 {
+  delete choose_file_window;
   choose_file_window = new ChooseFileWindow(this->mainWindow, Gtk::FILE_CHOOSER_ACTION_OPEN);
-  choose_file_window->show();
   std::string file_path = choose_file_window->get_file_path();
-  std::list<DrawableObject*> objects_list = rw_object_service.read(file_path);
-  for (DrawableObject* object : objects_list)
+  if (file_path.length() > 0)
   {
-    this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(object);
+    std::list<DrawableObject*> objects_list = rw_object_service.read(file_path);
+    for (DrawableObject* object : objects_list)
+    {
+      this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(object);
+    }
+    this->mainWindow->getViewport()->queue_draw();
+    mainWindow->getLogTextView()->add_log_line("Objects loaded from [" + file_path + "]\n");
   }
-  this->mainWindow->getViewport()->queue_draw();
-  mainWindow->getLogTextView()->add_log_line("Sucessfully opened the objects from [" + file_path + "]\n");
+  else
+  {
+    mainWindow->getLogTextView()->add_log_line("No file selected\n");
+  }
 }
 
 void DrawOptionsBox::on_button_list_objects()
@@ -273,12 +281,19 @@ void DrawOptionsBox::on_button_close()
 
 void DrawOptionsBox::on_button_save_object()
 {
+  delete choose_file_window;
   choose_file_window = new ChooseFileWindow(this->mainWindow, Gtk::FILE_CHOOSER_ACTION_SAVE);
-  choose_file_window->show();
+  choose_file_window->set_do_overwrite_confirmation();
   std::string file_path = choose_file_window->get_file_path();
-  delete list_objects_window;
-  list_objects_window = new ListObjectsWindow(this->mainWindow);
-  std::list<DrawableObject*> objects_list = list_objects_window->get_drawable_objects();
-  rw_object_service.write(objects_list, file_path);
-  mainWindow->getLogTextView()->add_log_line("Sucessfully saved the objects to [" + file_path + "]\n");
+  if (file_path.length() > 0)
+  {
+    std::list<DrawableObject*> objects_list = this->mainWindow->getViewport()->
+                               getViewWindow()->getDisplayFile()->getObjects();
+    rw_object_service.write(objects_list, file_path);
+    mainWindow->getLogTextView()->add_log_line("Objects saved to [" + file_path + "]\n");
+  }
+  else
+  {
+    mainWindow->getLogTextView()->add_log_line("No file selected\n");
+  }
 }

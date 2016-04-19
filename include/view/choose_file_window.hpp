@@ -18,6 +18,8 @@ public:
 protected:
   MainWindow* mainWindow;
   std::string selected_path;
+  void on_change_filename();
+  bool ends_with(std::string str, std::string end);
 };
 
 #endif //GTKMM_CHOOSE_FILE_WINDOW_H

@@ -2,6 +2,7 @@
 
 RwObjectService::RwObjectService()
 {
+  setlocale(LC_NUMERIC, "en_US.UTF-8");
 }
 
 RwObjectService::~RwObjectService()
@@ -10,52 +11,68 @@ RwObjectService::~RwObjectService()
 
 list<DrawableObject*> RwObjectService::read(string file_path)
 {
+  list<Coordinate> cord_list;
   list<DrawableObject*> objects_list;
   string line;
   ifstream myfile(file_path);
-  list<Coordinate> cord_list;
-  string name;
+  string groupname = "#";
+  int groupfaces = 0;
   if(myfile.is_open())
   {
     while(getline(myfile, line))
     {
-      if (line.front() == 'o')
+      char* content = const_cast<char*>(line.c_str());
+      char* tag = strtok(content, " /t/r");
+      if (tag == NULL)  // empty line
       {
-        name = line.substr(2, line.length());
+        continue;
       }
-      if (line.front() == 'v')
+      else if (strcmp(tag, "v") == 0)
       {
-        vector<string> sep = split(line, ' ');
-        Coordinate* cord;
-        if (sep.size() > 3)
-        {
-          cord = new Coordinate(atof(sep[1].c_str()), atof(sep[2].c_str()), atof(sep[3].c_str()));
-        }
-        else
-        {
-          cord = new Coordinate(atof(sep[1].c_str()), atof(sep[2].c_str()));
-        }
-        cord_list.push_back(*cord);
+        double x, y, z;
+        istringstream(strtok(NULL, " /t/r")) >> x;
+        istringstream(strtok(NULL, " /t/r")) >> y;
+        istringstream(strtok(NULL, " /t/r")) >> z;
+        cord_list.push_back(Coordinate(x, y, z));
       }
-      if (line.front() == 'f')
+      else if (strcmp(tag, "g") == 0)
       {
+        groupfaces = 0;
+        int pos = line.find(tag);
+        groupname = line.substr(pos+2, line.length());
+      }
+      else if (strcmp(tag, "f") == 0)
+      {
+        string facename = groupname;
+        if (groupfaces != 0)
+        {
+          facename += "#" + to_string(groupfaces);
+        }
+        groupfaces++;
+        list<Coordinate> current_cord_list;
+        for (char *cord_index = strtok(NULL, " /t/r"); cord_index != NULL;
+            cord_index = strtok(NULL, " /t/r"))
+        {
+          list<Coordinate>::iterator it = cord_list.begin();
+          advance(it, atoi(cord_index)-1);
+          current_cord_list.push_back(*it);
+        }
         DrawableObject *object;
-        if (cord_list.size() == 1)
+        if (current_cord_list.size() == 1)
         {
-          object = new Point(name, cord_list.front());
+          object = new Point(facename, current_cord_list.front());
         }
         else if (cord_list.size() == 2)
         {
-          Coordinate cord_x = cord_list.front();
-          Coordinate cord_y = cord_list.back();
-          object = new Line(name, cord_x, cord_y);
+          Coordinate cord_x = current_cord_list.front();
+          Coordinate cord_y = current_cord_list.back();
+          object = new Line(facename, cord_x, cord_y);
         }
         else
         {
-          object = new WireFrame(name, cord_list);
+          object = new WireFrame(facename, current_cord_list);
         }
         objects_list.push_back(object);
-        cord_list = * new list<Coordinate>;
       }
     }
     myfile.close();
@@ -67,36 +84,25 @@ void RwObjectService::write(list<DrawableObject*> objects_list, string file_path
 {
   ofstream myfile;
   myfile.open(file_path);
-  myfile << "# Starting the file objects\n\n";
+  myfile << "# List of vertices\n";
   for (DrawableObject* obj : objects_list)
   {
-    myfile << "o " + obj->getName() + "\n\n";
-    list<Coordinate> objectCoordinates = obj->getCoordinatesWorld();
-    for (Coordinate cord : objectCoordinates)
+    for (Coordinate cord : obj->getCoordinatesWorld())
     {
-      string line_cord = "v " + to_string(cord.getx()) + " " + to_string(cord.gety())
-      + " " + to_string(cord.getz()) + "\n";
-      myfile << line_cord;
+      myfile << "v " << std::fixed << cord.getx() << " " << cord.gety() << " "
+          << cord.getz() << "\n";
     }
-    myfile << "\nf ";
-    for (unsigned int i = 1; i < objectCoordinates.size()+1; i++)
+  }
+  myfile << "\n# List of objects\n";
+  int current_vertice = 1;
+  for (DrawableObject* obj : objects_list)
+  {
+    myfile << "g " + obj->getName() + "\nf";
+    for (Coordinate cord : obj->getCoordinatesWorld())
     {
-      myfile << to_string(i) + " ";
+      myfile << " " + to_string(current_vertice++);
     }
-    myfile << "\n\n";
+    myfile << "\n";
   }
   myfile.close();
-}
-
-vector<string> RwObjectService::split(string str, char delimiter)
-{
-  vector<string> internal;
-  stringstream ss(str); // Turn the string into a stream.
-  string tok;
-
-  while(getline(ss, tok, delimiter)) {
-    internal.push_back(tok);
-  }
-
-  return internal;
 }

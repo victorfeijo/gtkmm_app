@@ -84,18 +84,3 @@ void ListObjectsWindow::on_button_close()
 {
   hide();
 }
-
-std::list<DrawableObject*> ListObjectsWindow::get_drawable_objects()
-{
-  std::list<DrawableObject*> drawable_objects;
-  std::list<std::string> names = this->mainWindow->getViewport()->getViewWindow()
-                                 ->getDisplayFile()->getNamesList();
-  while (!(names.empty()))
-  {
-    DrawableObject* object = this->mainWindow->getViewport()->getViewWindow()->
-        getDisplayFile()->getObjectByName(names.front());
-    names.pop_front();
-    drawable_objects.push_back(object);
-  }
-  return drawable_objects;
-}
