@@ -64,7 +64,7 @@ void ClippingService::clip(ViewWindow* window, DrawableObject *object)
       }
       break;
     }
-    default:  // wireframe
+    default:  // wireframe / curve2d
     {
       switch (type)
       {
@@ -268,6 +268,10 @@ void ClippingService::clipSutherlandHodgman(ViewWindow *window, DrawableObject *
     std::list<Coordinate> input = output;
     output.clear();
     Coordinate last = input.back();
+    if (object->getType() == CURVE2D)
+    {
+      last = input.front();
+    }
 
     for (Coordinate cord : input)
     {
@@ -281,19 +285,9 @@ void ClippingService::clipSutherlandHodgman(ViewWindow *window, DrawableObject *
         }
         output.push_back(cord);
       }
-      else if (!(last_code && edge_code)) // else if last.isInside(edge)
+      else if (!(last_code & edge_code)) // else if last.isInside(edge)
       {
         output.push_back(calcIntersection(last, cord, window, edge_code));
-      }
-      else if (last_code & edge_code)  // both points outside and line does not pass through the window
-      {
-        output.push_back(alignToEdge(last, window, edge_code));
-        output.push_back(alignToEdge(cord, window, edge_code));
-      }
-      else
-      {
-        Coordinate intersection = calcIntersection(last, cord, window, edge_code);
-        output.push_back(intersection);
       }
       last = cord;
     }
