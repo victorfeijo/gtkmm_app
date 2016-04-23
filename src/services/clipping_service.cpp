@@ -20,12 +20,12 @@ void ClippingService::clip(ViewWindow* window, DrawableObject *object)
     {
       switch(type)
       {
-        case POINT:
-        case POINT_CS:
-        case POINT_LB:
-        case POINT_CS_SH:
-        case POINT_LB_SH:
-        case POINT_SH:
+        case PC:
+        case PC_CS:
+        case PC_LB:
+        case PC_CS_SH:
+        case PC_LB_SH:
+        case PC_SH:
         {
           clipPoint(window, object);
           break;
@@ -42,16 +42,16 @@ void ClippingService::clip(ViewWindow* window, DrawableObject *object)
       switch (type)
       {
         case CS:
-        case POINT_CS:
-        case POINT_CS_SH:
+        case PC_CS:
+        case PC_CS_SH:
         case CS_SH:
         {
           clipCohenSutherland(window, object);
           break;
         }
         case LB:
-        case POINT_LB:
-        case POINT_LB_SH:
+        case PC_LB:
+        case PC_LB_SH:
         case LB_SH:
         {
           clipLiangBarsky(window, object);
@@ -69,9 +69,9 @@ void ClippingService::clip(ViewWindow* window, DrawableObject *object)
       switch (type)
       {
         case SH:
-        case POINT_CS_SH:
-        case POINT_LB_SH:
-        case POINT_SH:
+        case PC_CS_SH:
+        case PC_LB_SH:
+        case PC_SH:
         case CS_SH:
         case LB_SH:
         {
@@ -255,6 +255,11 @@ void ClippingService::clipLiangBarsky(ViewWindow* window, DrawableObject *object
 
 void ClippingService::clipSutherlandHodgman(ViewWindow *window, DrawableObject *object)
 {
+  if (object->getCoordinatesWindow().size() < 3)
+  {
+    throw 33;
+  }
+
   std::list<Coordinate> output = object->getCoordinatesWindow();
 
   for (int i = 0; i < 4; i++)  // for each edge in window

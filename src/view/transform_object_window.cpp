@@ -91,7 +91,7 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
   set_type_hint(Gdk::WINDOW_TYPE_HINT_DIALOG);
   set_modal();
   set_transient_for(*mainWindow);
-  
+
   show_all_children();
 }
 
@@ -116,7 +116,7 @@ void TransformObjectWindow::on_button_translate()
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
-      this->object->getType() + " named [" + this->object->getName() + "] was translated in ("
+      this->object->getTypeName() + " named [" + this->object->getName() + "] was translated in ("
       + to_string(dx) + ", " + to_string(dy) + ")\n"
   );
   hide();
@@ -134,7 +134,7 @@ void TransformObjectWindow::on_button_scale()
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
-      this->object->getType() + " named [" + this->object->getName() + "] was scaled in ("
+      this->object->getTypeName() + " named [" + this->object->getName() + "] was scaled in ("
       + to_string(sx) + ", " + to_string(sy) + ")\n"
   );
   hide();
@@ -154,7 +154,7 @@ void TransformObjectWindow::on_button_rotate()
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
-      this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
+      this->object->getTypeName() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around (" + to_string(dx) + ", " + to_string(dy) + ")\n"
   );
   hide();
@@ -170,7 +170,7 @@ void TransformObjectWindow::on_button_rotate_world()
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
-      this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
+      this->object->getTypeName() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around world center\n"
   );
   hide();
@@ -186,7 +186,7 @@ void TransformObjectWindow::on_button_rotate_object()
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
-      this->object->getType() + " named [" + this->object->getName() + "] was rotated in "
+      this->object->getTypeName() + " named [" + this->object->getName() + "] was rotated in "
       + to_string(angle) + "º around its center\n"
   );
   hide();

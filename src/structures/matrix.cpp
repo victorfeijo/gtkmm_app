@@ -83,6 +83,12 @@ Matrix<T> Matrix<T>::operator+(Matrix another)
 }
 
 template <typename T>
+Matrix<T> Matrix<T>::operator-(Matrix another)
+{
+  return *this + (another * -1);
+}
+
+template <typename T>
 Matrix<T> Matrix<T>::operator*(Matrix<T> another)
 {
   if (this->columns != another.rows)
@@ -103,7 +109,7 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> another)
 }
 
 template <typename T>
-Matrix<T> Matrix<T>::operator*(int n)
+Matrix<T> Matrix<T>::operator*(double n)
 {
   Matrix mult = Matrix<T>(rows, columns);
   for (int i = 0; i < rows; i++)
@@ -120,8 +126,8 @@ void f1()
   // INSERT TEMPLATE VARIATIONS THAT WILL BE USED AND CALL EVERY FUNCTION
   // int
   Matrix<int> m1(1,1);
-  m1.getRows(); m1.getColumns(); m1.get(0,0); m1.set(0,0,0); m1+m1; m1*m1; m1*1;
+  m1.getRows(); m1.getColumns(); m1.get(0,0); m1.set(0,0,0); m1+m1; m1-m1; m1*m1; m1*1;
   // double
   Matrix<double> m2(1,1);
-  m2.getRows(); m2.getColumns(); m2.get(0,0); m2.set(0,0,0); m2+m2; m2*m2; m2*1;
+  m2.getRows(); m2.getColumns(); m2.get(0,0); m2.set(0,0,0); m2+m2; m2-m2; m2*m2; m2*1;
 }

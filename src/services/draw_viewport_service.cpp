@@ -54,7 +54,7 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
         Coordinate cordConverted = convertFromWindowToViewport(coordinate, viewport);
         cr->line_to(cordConverted.getx(),cordConverted.gety());
       }
-      if (objectCoordinates.size() > 2) // wireframe case
+      if (object->getType() == object_type::WIREFRAME) // wireframe case
       {
         cr->close_path();
         cr->stroke_preserve();

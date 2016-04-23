@@ -30,7 +30,7 @@ void ScaleObjectService::scale(DrawableObject* object, double sx, double sy)
 
     Matrix<double> new_bitmap = object_bitmap * scale_bitmap;
     Coordinate new_cord = Coordinate(new_bitmap.get(0, 0), new_bitmap.get(0, 1), new_bitmap.get(0, 2));
-    new_cord_list.push_front(new_cord);
+    new_cord_list.push_back(new_cord);
   }
   object->setCoordinatesWorld(new_cord_list);
   translate_service.translate(object, center_cord.getx(), center_cord.gety());

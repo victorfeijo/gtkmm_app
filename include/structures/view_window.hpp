@@ -9,7 +9,7 @@
 #define MIN_HEIGHT 15
 #define MAX_HEIGHT 50000000
 #define MAX_WIDTH 50000000
-#define DEFAULT_CLIPPING POINT_LB_SH
+#define DEFAULT_CLIPPING PC_LB_SH
 
 class ViewWindow
 {

@@ -11,6 +11,8 @@ class Line : public DrawableObject
 public:
   Line(string name, Coordinate line_cord1, Coordinate line_cord2);
   ~Line();
-  virtual string getType();
+  virtual string getTypeName();
+  virtual object_type getType();
+  virtual void resetWindowCoordinates();
 };
 #endif // GTKMM_APP_RECT

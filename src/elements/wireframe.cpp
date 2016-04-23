@@ -9,7 +9,17 @@ WireFrame::~WireFrame()
 {
 }
 
-string WireFrame::getType()
+string WireFrame::getTypeName()
 {
   return "Polygon";
+}
+
+object_type WireFrame::getType()
+{
+  return object_type::WIREFRAME;
+}
+
+void WireFrame::resetWindowCoordinates()
+{
+  coordinatesWindow = coordinatesWorld;
 }

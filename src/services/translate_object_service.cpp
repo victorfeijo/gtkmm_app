@@ -22,8 +22,8 @@ void TranslateObjectService::translate(DrawableObject* object, int dx, int dy, i
   }
   for(Coordinate cord : cord_list)
   {
-    Matrix<int> object_bitmap(1, 3);
-    Matrix<int> translate_bitmap(1, 3);
+    Matrix<double> object_bitmap(1, 3);
+    Matrix<double> translate_bitmap(1, 3);
 
     object_bitmap.set(0, 0, cord.getx());
     object_bitmap.set(0, 1, cord.gety());
@@ -33,11 +33,11 @@ void TranslateObjectService::translate(DrawableObject* object, int dx, int dy, i
     translate_bitmap.set(0, 1, dy);
     translate_bitmap.set(0, 2, dy);
 
-    Matrix<int> new_bitmap = object_bitmap + translate_bitmap;
+    Matrix<double> new_bitmap = object_bitmap + translate_bitmap;
 
     Coordinate new_cord = Coordinate(new_bitmap.get(0, 0),
                             new_bitmap.get(0, 1), new_bitmap.get(0,2));
-    new_cord_list.push_front(new_cord);
+    new_cord_list.push_back(new_cord);
   }
   switch (type) {
     case transform_type::ON_WORLD:

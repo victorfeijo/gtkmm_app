@@ -16,8 +16,9 @@ public:
   int getColumns();
 
   Matrix operator+(Matrix another);
+  Matrix operator-(Matrix another);
   Matrix operator*(Matrix<T> another);
-  Matrix operator*(int n);
+  Matrix operator*(double n);
 
 protected:
   int rows, columns;

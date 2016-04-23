@@ -10,7 +10,7 @@ RotateObjectService::~RotateObjectService()
 
 void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int angleDegree, transform_type type)
 {
-  object->copyFromWorldToWindow();
+  object->resetWindowCoordinates();
   translate_service.translate(object, -dx, -dy, 0, type);
   std::list<Coordinate> new_cord_list;
   std::list<Coordinate> cord_list;
@@ -58,7 +58,7 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int ang
     Coordinate new_cord = Coordinate(pointRotated.get(0, 0),
                              pointRotated.get(0, 1),  pointRotated.get(0,2));
 
-    new_cord_list.push_front(new_cord);
+    new_cord_list.push_back(new_cord);
   }
   switch (type) {
     case transform_type::ON_WORLD:
