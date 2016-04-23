@@ -24,25 +24,10 @@ std::list<Coordinate> BezierCurve::blend()
 {
   std::list<Coordinate> cord_list;
 
-  Matrix<double> p1(1,3);
-  p1.set(0, 0, vector1.getBegin().getx());
-  p1.set(0, 1, vector1.getBegin().gety());
-  p1.set(0, 2, vector1.getBegin().getz());
-
-  Matrix<double> p2(1,3);
-  p2.set(0, 0, vector1.getEnd().getx());
-  p2.set(0, 1, vector1.getEnd().gety());
-  p2.set(0, 2, vector1.getEnd().getz());
-
-  Matrix<double> p3(1,3);
-  p3.set(0, 0, vector2.getEnd().getx());
-  p3.set(0, 1, vector2.getEnd().gety());
-  p3.set(0, 2, vector2.getEnd().getz());
-
-  Matrix<double> p4(1,3);
-  p4.set(0, 0, vector2.getBegin().getx());
-  p4.set(0, 1, vector2.getBegin().gety());
-  p4.set(0, 2, vector2.getBegin().getz());
+  Matrix<double> p1 = vector1.getBegin().toMatrix();
+  Matrix<double> p2 = vector1.getEnd().toMatrix();
+  Matrix<double> p3 = vector2.getEnd().toMatrix();
+  Matrix<double> p4 = vector2.getBegin().toMatrix();
 
   for(double t = 0; t <= 1; t += DELTA)
   {
@@ -54,8 +39,7 @@ std::list<Coordinate> BezierCurve::blend()
     Matrix<double> p32 = p21 + ((p31 - p21) * t);
 
     Matrix<double> p33 = p22 + ((p32 - p22) * t);
-    Coordinate cord(p33.get(0,0), p33.get(0,1), p33.get(0,2));
-    cord_list.push_back(cord);
+    cord_list.push_back(Coordinate(p33));
   }
   return cord_list;
 }

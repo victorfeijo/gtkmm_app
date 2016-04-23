@@ -64,7 +64,7 @@ void DrawableObject::setCoordinatesClipped(list<Coordinate> coordinates)
 
 Coordinate DrawableObject::getCenterOnWorld()
 {
-  long int xSum, ySum, zSum, xAvg, yAvg, zAvg;
+  double xSum, ySum, zSum, xAvg, yAvg, zAvg;
   int count = 0;
   xSum = 0;
   ySum = 0;

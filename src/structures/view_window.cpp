@@ -166,12 +166,9 @@ int ViewWindow::getRotation()
 
 Coordinate ViewWindow::viewUp()
 {
-  Matrix<double> up(1,3);
-  up.set(0, 0, 0);
-  up.set(0, 1, 1);
-  up.set(0, 2, 0);
-
+  Matrix<double> up = Coordinate(0,1,0).toMatrix();
   double angleRad = -this->rotationAngle * M_PI / 180;
+
   Matrix<double> angle(3,3);
   angle.set(0, 0, cos(angleRad));
   angle.set(0, 1, -sin(angleRad));
@@ -180,8 +177,7 @@ Coordinate ViewWindow::viewUp()
   angle.set(2, 2, 1);
 
   Matrix<double> upRotated = up * angle;
-
-  return Coordinate(upRotated.get(0,0), upRotated.get(0,1));
+  return Coordinate(upRotated);
 }
 
 clipping_type ViewWindow::getClippingType()

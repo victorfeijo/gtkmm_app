@@ -17,20 +17,15 @@ void ScaleObjectService::scale(DrawableObject* object, double sx, double sy)
   std::list<Coordinate> cord_list = object->getCoordinatesWorld();
   for(Coordinate cord : cord_list)
   {
-    Matrix<double> object_bitmap(1, 3);
+    Matrix<double> object_bitmap = cord.toMatrix();
+
     Matrix<double> scale_bitmap(3, 3);
-
-    object_bitmap.set(0, 0, cord.getx());
-    object_bitmap.set(0, 1, cord.gety());
-    object_bitmap.set(0, 2, cord.getz());
-
     scale_bitmap.set(0, 0, sx);
     scale_bitmap.set(1, 1, sy);
     scale_bitmap.set(2, 2, 1);
 
     Matrix<double> new_bitmap = object_bitmap * scale_bitmap;
-    Coordinate new_cord = Coordinate(new_bitmap.get(0, 0), new_bitmap.get(0, 1), new_bitmap.get(0, 2));
-    new_cord_list.push_back(new_cord);
+    new_cord_list.push_back(Coordinate(new_bitmap));
   }
   object->setCoordinatesWorld(new_cord_list);
   translate_service.translate(object, center_cord.getx(), center_cord.gety());

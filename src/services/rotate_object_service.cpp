@@ -25,10 +25,7 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int ang
 
   for(Coordinate cord : cord_list)
   {
-    Matrix<double> point(1,3);
-    point.set(0, 0, cord.getx());
-    point.set(0, 1, cord.gety());
-    point.set(0, 2, cord.getz());
+    Matrix<double> point = cord.toMatrix();
 
     Matrix<double> offset1(3,3);
     offset1.set(0, 0, 1);
@@ -54,11 +51,7 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int ang
     offset2.set(2, 1, dy);
 
     Matrix<double> pointRotated = point * angle;
-
-    Coordinate new_cord = Coordinate(pointRotated.get(0, 0),
-                             pointRotated.get(0, 1),  pointRotated.get(0,2));
-
-    new_cord_list.push_back(new_cord);
+    new_cord_list.push_back(Coordinate(pointRotated));
   }
   switch (type) {
     case transform_type::ON_WORLD:
