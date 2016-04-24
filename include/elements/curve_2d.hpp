@@ -12,6 +12,7 @@ class Curve2D : public DrawableObject
 {
 public:
   Curve2D(string name, std::list<Vector> vectors);
+  Curve2D(string name, std::list<Coordinate> coordinates);
   ~Curve2D();
   virtual string getTypeName();
   virtual object_type getType();

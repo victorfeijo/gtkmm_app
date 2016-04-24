@@ -13,6 +13,8 @@ mkdir $upfolder
 # copy static files
 cp ./static/moodle_compile.sh $upfolder/compile.sh
 cp ./static/moodle_readme.txt $upfolder/README.txt
+cp ../LICENSE $upfolder/LICENSE
+cp ../test.obj $upfolder/test.obj
 
 
 # copy headers
