@@ -11,6 +11,7 @@
 #include "point.hpp"
 #include "line.hpp"
 #include "wireframe.hpp"
+#include "curve_2d.hpp"
 
 using namespace std;
 

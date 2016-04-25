@@ -14,6 +14,12 @@ Curve2D::Curve2D(string name, std::list<Vector> vectors)
   }
 }
 
+Curve2D::Curve2D(string name, std::list<Coordinate> coordinates)
+    : DrawableObject(name)
+{
+  this->coordinatesWorld = coordinates;
+}
+
 Curve2D::~Curve2D()
 {
 }

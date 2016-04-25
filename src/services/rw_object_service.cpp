@@ -22,7 +22,7 @@ list<DrawableObject*> RwObjectService::read(string file_path)
     while(getline(myfile, line))
     {
       char* content = const_cast<char*>(line.c_str());
-      char* tag = strtok(content, " /t/r");
+      char* tag = strtok(content, " \t\r");
       if (tag == NULL)  // empty line
       {
         continue;
@@ -30,9 +30,9 @@ list<DrawableObject*> RwObjectService::read(string file_path)
       else if (strcmp(tag, "v") == 0)
       {
         double x, y, z;
-        istringstream(strtok(NULL, " /t/r")) >> x;
-        istringstream(strtok(NULL, " /t/r")) >> y;
-        istringstream(strtok(NULL, " /t/r")) >> z;
+        istringstream(strtok(NULL, " \t\r")) >> x;
+        istringstream(strtok(NULL, " \t\r")) >> y;
+        istringstream(strtok(NULL, " \t\r")) >> z;
         cord_list.push_back(Coordinate(x, y, z));
       }
       else if (strcmp(tag, "g") == 0)
@@ -41,7 +41,7 @@ list<DrawableObject*> RwObjectService::read(string file_path)
         int pos = line.find(tag);
         groupname = line.substr(pos+2, line.length());
       }
-      else if (strcmp(tag, "f") == 0)
+      else if (strcmp(tag, "f") == 0 || strcmp(tag, "curv2") == 0)
       {
         string facename = groupname;
         if (groupfaces != 0)
@@ -50,8 +50,8 @@ list<DrawableObject*> RwObjectService::read(string file_path)
         }
         groupfaces++;
         list<Coordinate> current_cord_list;
-        for (char *cord_index = strtok(NULL, " /t/r"); cord_index != NULL;
-            cord_index = strtok(NULL, " /t/r"))
+        for (char *cord_index = strtok(NULL, " \t\r"); cord_index != NULL;
+            cord_index = strtok(NULL, " \t\r"))
         {
           list<Coordinate>::iterator it = cord_list.begin();
           advance(it, atoi(cord_index)-1);
@@ -70,7 +70,14 @@ list<DrawableObject*> RwObjectService::read(string file_path)
         }
         else
         {
-          object = new WireFrame(facename, current_cord_list);
+          if (strcmp(tag, "curv2") == 0)
+          {
+            object = new Curve2D(facename, current_cord_list);
+          }
+          else
+          {
+            object = new WireFrame(facename, current_cord_list);
+          }
         }
         objects_list.push_back(object);
       }
@@ -97,7 +104,15 @@ void RwObjectService::write(list<DrawableObject*> objects_list, string file_path
   int current_vertice = 1;
   for (DrawableObject* obj : objects_list)
   {
-    myfile << "g " + obj->getName() + "\nf";
+    myfile << "g " + obj->getName() + "\n";
+    if (obj->getType() == CURVE2D)
+    {
+      myfile << "curv2";
+    }
+    else
+    {
+      myfile << "f";
+    }
     for (Coordinate cord : obj->getCoordinatesWorld())
     {
       myfile << " " + to_string(current_vertice++);

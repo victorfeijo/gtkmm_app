@@ -1,5 +1,4 @@
 #include "display_file.hpp"
-#include "curve_2d.hpp"
 
 DisplayFile::DisplayFile()
 {
@@ -7,14 +6,6 @@ DisplayFile::DisplayFile()
   this->addObject(new Line(string("origin_x"), Coordinate(-10,0), Coordinate(10,0)));
   this->addObject(new Line(string("origin_y"), Coordinate(0,-10), Coordinate(0,10)));
   // this->addObject(new Line(string("origin_z"), Coordinate(0,0,-10), Coordinate(0,0,10)));
-
-  //TEST 2D CURVE
-  std::list<Vector> veclist;
-  veclist.push_back(Vector(Coordinate(31,17), Coordinate(30,299)));
-  veclist.push_back(Vector(Coordinate(401,296), Coordinate(398,403)));
-  veclist.push_back(Vector(Coordinate(444,21), Coordinate(370,115)));
-  this->addObject(new Curve2D("Curve", veclist));
-
 }
 
 DisplayFile::~DisplayFile()
