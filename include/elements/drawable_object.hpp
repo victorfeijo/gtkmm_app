@@ -8,6 +8,7 @@
 #include <list>
 #include <string>
 #include "coordinate.hpp"
+#include "object_type.hpp"
 using namespace std;
 
 class DrawableObject
@@ -20,12 +21,13 @@ public:
   list<Coordinate> getCoordinatesWorld();
   list<Coordinate> getCoordinatesWindow();
   list<Coordinate> getCoordinatesClipped();
-  virtual string getType() = 0;
+  virtual string getTypeName() = 0;
+  virtual object_type getType() = 0;
   void setCoordinatesWorld(list<Coordinate> coordinates);
   void setCoordinatesWindow(list<Coordinate> coordinates);
   void setCoordinatesClipped(list<Coordinate> coordinates);
   Coordinate getCenterOnWorld();
-  void copyFromWorldToWindow();
+  virtual void resetWindowCoordinates() = 0;
 
 protected:
   string name;

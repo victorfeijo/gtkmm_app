@@ -11,6 +11,8 @@ class Point : public DrawableObject
 public:
   Point(string name, Coordinate point_cord);
   ~Point();
-  virtual string getType();
+  virtual string getTypeName();
+  virtual object_type getType();
+  virtual void resetWindowCoordinates();
 };
 #endif // GTKMM_APP_POINT

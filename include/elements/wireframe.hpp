@@ -11,6 +11,8 @@ class WireFrame : public DrawableObject
 public:
   WireFrame(string name, list<Coordinate> coordinates);
   ~WireFrame();
-  virtual string getType();
+  virtual string getTypeName();
+  virtual object_type getType();
+  virtual void resetWindowCoordinates();
 };
 #endif // GTKMM_APP_WIREFRAME

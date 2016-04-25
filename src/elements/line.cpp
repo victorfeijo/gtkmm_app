@@ -5,14 +5,23 @@ Line::Line(string name, Coordinate line_cord1, Coordinate line_cord2)
 {
   coordinatesWorld.push_back(line_cord1);
   coordinatesWorld.push_back(line_cord2);
-  this->copyFromWorldToWindow();
 }
 
 Line::~Line()
 {
 }
 
-string Line::getType()
+string Line::getTypeName()
 {
   return "Line";
+}
+
+object_type Line::getType()
+{
+  return object_type::LINE;
+}
+
+void Line::resetWindowCoordinates()
+{
+  coordinatesWindow = coordinatesWorld;
 }

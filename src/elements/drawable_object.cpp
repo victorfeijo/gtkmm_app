@@ -8,7 +8,6 @@ DrawableObject::DrawableObject(string name)
 DrawableObject::DrawableObject(string name, list<Coordinate> coordinates)
     : name(name), coordinatesWorld(coordinates)
 {
-  this->copyFromWorldToWindow();
 }
 
 DrawableObject::~DrawableObject()
@@ -65,7 +64,7 @@ void DrawableObject::setCoordinatesClipped(list<Coordinate> coordinates)
 
 Coordinate DrawableObject::getCenterOnWorld()
 {
-  long int xSum, ySum, zSum, xAvg, yAvg, zAvg;
+  double xSum, ySum, zSum, xAvg, yAvg, zAvg;
   int count = 0;
   xSum = 0;
   ySum = 0;
@@ -82,9 +81,4 @@ Coordinate DrawableObject::getCenterOnWorld()
   zAvg = zSum / count;
 
   return Coordinate(xAvg, yAvg, zAvg);
-}
-
-void DrawableObject::copyFromWorldToWindow()
-{
-  coordinatesWindow = coordinatesWorld;
 }
