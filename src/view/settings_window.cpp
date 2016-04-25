@@ -12,7 +12,7 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
   this->clipping_options.append("Point");
   this->clipping_options.append("Cohen-Sutherland (line)");
   this->clipping_options.append("Liang-Barsky (line)");
-  this->clipping_options.append("Sutherland–Hodgman (polygon)");
+  this->clipping_options.append("Sutherland–Hodgman (polygon/curve)");
   this->clipping_options.append("Point + Cohen-Sutherland");
   this->clipping_options.append("Point + Liang-Barsky");
   this->clipping_options.append("Point + Cohen-Sutherland + Sutherland–Hodgman");
