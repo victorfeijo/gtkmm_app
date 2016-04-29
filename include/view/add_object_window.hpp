@@ -28,11 +28,11 @@ protected:
    */
   MainWindow* mainWindow;
   std::list<Coordinate> wire_cord_list;
-  Gtk::Grid point_grid, line_grid, wire_grid;
+  Gtk::Grid point_grid, line_grid, wire_grid, curve_grid;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
   Gtk::Button button_add_coordenate, button_save_line, button_save_wire,
-              button_save_point, button_close;
+              button_save_point, button_save_curve, button_close;
   Gtk::Entry point_name_field, point_x_field, point_y_field;
   Gtk::Entry line_name_field, line_x1_field, line_x2_field, line_y1_field, line_y2_field;
   Gtk::Entry wire_name_field, wire_x_field, wire_y_field;
@@ -45,5 +45,6 @@ protected:
   void on_button_save_point();
   void on_button_save_line();
   void on_button_save_polygon();
+  void on_button_save_curve();
 };
 #endif //GTKMM_APP_ADD_OBJECT_WINDOW

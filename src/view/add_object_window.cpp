@@ -7,6 +7,7 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
       button_save_line("Save Line"),
       button_save_wire("Save Polygon"),
       button_save_point("Save Point"),
+      button_save_curve("Save Curve"),
       button_close("Close"),
       point_x_label("Coordinate X: "),
       point_y_label("Coordinate Y: "),
@@ -71,6 +72,12 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   wire_grid.attach(button_save_wire, 2, 4, 1, 1);
   wire_grid.set_border_width(10);
 
+  //Add curve grid
+  curve_grid.set_column_homogeneous(true);
+  curve_grid.set_row_spacing(10);
+  curve_grid.set_column_spacing(10);
+  curve_grid.attach(button_save_curve, 1, 1, 1, 1);
+
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
     &AddObjectWindow::on_button_close) );
 
@@ -86,9 +93,13 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   button_save_wire.signal_clicked().connect(sigc::mem_fun(*this,
     &AddObjectWindow::on_button_save_polygon) );
 
+  button_save_curve.signal_clicked().connect(sigc::mem_fun(*this,
+    &AddObjectWindow::on_button_save_curve) );
+
   m_notebook.append_page(point_grid, "Point");
   m_notebook.append_page(line_grid, "Line");
   m_notebook.append_page(wire_grid, "Polygon");
+  m_notebook.append_page(curve_grid, "Curve");
 
   set_type_hint(Gdk::WINDOW_TYPE_HINT_DIALOG);
   set_modal();
@@ -206,6 +217,11 @@ void AddObjectWindow::on_button_add_coordinate()
 
   info_label.set_text("Added X : " + std::to_string(x_cord) +
                       " Y : " + std::to_string(y_cord));
+}
+
+void AddObjectWindow::on_button_save_curve()
+{
+  //TODO
 }
 
 void AddObjectWindow::on_button_close()
