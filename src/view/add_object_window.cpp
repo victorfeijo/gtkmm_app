@@ -304,7 +304,7 @@ void AddObjectWindow::on_button_save_curve()
     }
 
     mainWindow->getLogTextView()->add_log_line(
-      "A polygon named [" + name + "] was added with " + curve_string_cord + "\n"
+      "A curve named [" + name + "] was added with " + curve_string_cord + "\n"
     );
 
     close();
