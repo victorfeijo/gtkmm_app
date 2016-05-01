@@ -1,4 +1,5 @@
 # Bash script to compile the application
+#!/bin/bash
 
 declare source='main.cpp src/services/*.cpp src/elements/*.cpp src/structures/*.cpp src/view/*.cpp'
 declare -a include=('include/services' 'include/elements' 'include/structures' 'include/view' 'include/enumerations')

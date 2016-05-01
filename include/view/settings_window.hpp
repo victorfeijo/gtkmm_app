@@ -19,12 +19,13 @@ public:
 protected:
   MainWindow* mainWindow;
   Gtk::Notebook m_notebook;
-  Gtk::ComboBoxText clipping_options;
+  Gtk::ComboBoxText clipping_options, curve_options;
   Gtk::Button button_close;
-  Gtk::Box m_vbox;
+  Gtk::Box settings_vbox;
 
   void on_button_close();
   void on_clipping_changed();
+  void on_curve_changed();
 
 };
 #endif

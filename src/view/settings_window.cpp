@@ -4,8 +4,9 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
     : mainWindow(mainWindow),
       m_notebook(),
       clipping_options(),
+      curve_options(),
       button_close("Close"),
-      m_vbox(Gtk::ORIENTATION_VERTICAL)
+      settings_vbox(Gtk::ORIENTATION_VERTICAL)
 {
   // MUST BE IN THE SAME ORDER THAN THE ENUMERATOR:
   this->clipping_options.append("None");
@@ -24,20 +25,26 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
   this->clipping_options.set_active(this->mainWindow->getViewport()->
                                     getViewWindow()->getClippingType());
 
+  this->curve_options.append("None");
+
   set_title("Settings");
   set_border_width(10);
   set_resizable(false);
 
   clipping_options.set_border_width(10);
+  curve_options.set_border_width(10);
   m_notebook.append_page(clipping_options, "Clipping");
+  m_notebook.append_page(curve_options, "Curve");
 
-  m_vbox.pack_start(m_notebook);
-  m_vbox.pack_start(button_close, Gtk::PACK_SHRINK);
+  settings_vbox.pack_start(m_notebook);
+  settings_vbox.pack_start(button_close, Gtk::PACK_SHRINK);
 
-  add(m_vbox);
+  add(settings_vbox);
 
   clipping_options.signal_changed().connect(
       sigc::mem_fun(*this, &SettingsWindow::on_clipping_changed));
+  curve_options.signal_changed().connect(
+      sigc::mem_fun(*this, &SettingsWindow::on_curve_changed));
   button_close.signal_clicked().connect(
       sigc::mem_fun(*this, &SettingsWindow::on_button_close));
 
@@ -55,6 +62,11 @@ void SettingsWindow::on_clipping_changed()
   this->mainWindow->getViewport()->queue_draw();
   this->mainWindow->getLogTextView()->add_log_line("Clipping set to " +
       (string)clipping_options.get_active_text() + "\n");
+}
+
+void SettingsWindow::on_curve_changed()
+{
+  //one day this will be needed..
 }
 
 SettingsWindow::~SettingsWindow()

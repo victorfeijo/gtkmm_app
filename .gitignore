@@ -38,3 +38,6 @@ logs/
 
 # Auto-generated ctags files
 .tags*
+
+# My vim config
+.syntastic_cpp_config
