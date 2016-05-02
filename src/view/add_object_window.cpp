@@ -338,7 +338,7 @@ void AddObjectWindow::on_button_save_curve()
   }
   else 
   {
-   info_curve_label.set_text("You need at least 2 vector's"); 
+   info_curve_label.set_text("You need at least 2 vectors"); 
   }
 }
 
@@ -372,7 +372,7 @@ void AddObjectWindow::on_button_save_spline()
   }
   else 
   {
-    info_spline_label.set_text("You need at least 4 cordinate's"); 
+    info_spline_label.set_text("You need at least 4 cordinates"); 
   }
 }
 
