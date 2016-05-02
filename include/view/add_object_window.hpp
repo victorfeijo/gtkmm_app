@@ -13,6 +13,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/checkbutton.h>
 #include <string>
+#include "curve_2d.hpp"
 #include "point.hpp"
 #include "line.hpp"
 #include "wireframe.hpp"
