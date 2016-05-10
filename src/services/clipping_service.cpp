@@ -268,7 +268,7 @@ void ClippingService::clipSutherlandHodgman(ViewWindow *window, DrawableObject *
     std::list<Coordinate> input = output;
     output.clear();
     Coordinate last = input.back();
-    if (object->getType() == CURVE2D)
+    if (object->getType() == BEZIER2D || object->getType() == BSPLINE2D)
     {
       last = input.front();
     }

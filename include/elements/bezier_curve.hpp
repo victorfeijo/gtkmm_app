@@ -5,8 +5,6 @@
 #include "vector.hpp"
 #include "matrix.hpp"
 
-#define DELTA 0.008
-
 using namespace std;
 
 class BezierCurve

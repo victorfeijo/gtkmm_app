@@ -37,9 +37,9 @@ protected:
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
   Gtk::CheckButton check_type_of_vector;
-  Gtk::Button button_add_wire_coordinate, button_save_line, button_save_wire,
-              button_save_point, button_save_curve, button_save_spline, 
-              button_add_vector, button_add_spline_coordinate, button_close;
+  Gtk::Button button_add_wire_coordinate, button_add_vector,
+      button_add_spline_coordinate,  button_save_line, button_save_wire,
+      button_save_point, button_save_curve, button_save_spline, button_close;
   Gtk::Entry point_name_field, point_x_field, point_y_field;
   Gtk::Entry line_name_field, line_x1_field, line_x2_field, line_y1_field, line_y2_field;
   Gtk::Entry wire_name_field, wire_x_field, wire_y_field;

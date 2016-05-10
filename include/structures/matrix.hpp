@@ -12,6 +12,7 @@ public:
 
   void set(int row, int column, T value);
   T get(int row, int column);
+  Matrix<T> getRow(int row);
   int getRows();
   int getColumns();
 

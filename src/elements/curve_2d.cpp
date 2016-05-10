@@ -3,6 +3,7 @@
 Curve2D::Curve2D(string name, std::list<Vector> vectors)
     : DrawableObject(name)
 {
+  this->type = object_type::BEZIER2D;
   if (vectors.size() < 2)
   {
     throw 40;
@@ -14,10 +15,13 @@ Curve2D::Curve2D(string name, std::list<Vector> vectors)
   }
 }
 
-Curve2D::Curve2D(string name, std::list<Coordinate> coordinates)
-    : DrawableObject(name)
+Curve2D::Curve2D(string name, std::list<Coordinate> coordinates, object_type type)
+    : DrawableObject(name, coordinates), type(type)
 {
-  this->coordinatesWorld = coordinates;
+  if (coordinates.size() < 4 || (type != BEZIER2D && type != BSPLINE2D))
+  {
+    throw 41;
+  }
 }
 
 Curve2D::~Curve2D()
@@ -26,15 +30,22 @@ Curve2D::~Curve2D()
 
 string Curve2D::getTypeName()
 {
-  return "2D Curve";
+  if (type == object_type::BEZIER2D)
+  {
+    return "2D Bezier Curve";
+  }
+  else
+  {
+    return "2D B-Spline";
+  }
 }
 
 object_type Curve2D::getType()
 {
-  return object_type::CURVE2D;
+  return type;
 }
 
-std::list<BezierCurve> Curve2D::getSubCurves()
+std::list<BezierCurve> Curve2D::getSubBezierCurves()
 {
   std::list<BezierCurve> subcurves;
   int k = 1;
@@ -63,9 +74,20 @@ std::list<BezierCurve> Curve2D::getSubCurves()
 void Curve2D::resetWindowCoordinates()
 {
   coordinatesWindow.clear();
-  for (BezierCurve curve : getSubCurves())
+  if (type == object_type::BEZIER2D)
   {
-    for (Coordinate cord : curve.blend())
+    for (BezierCurve curve : getSubBezierCurves())
+    {
+      for (Coordinate cord : curve.blend())
+      {
+        coordinatesWindow.push_back(cord);
+      }
+    }
+  }
+  else
+  {
+    BSpline spline(this->coordinatesWorld);
+    for (Coordinate cord : spline.blend())
     {
       coordinatesWindow.push_back(cord);
     }

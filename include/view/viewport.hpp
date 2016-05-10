@@ -25,11 +25,14 @@ public:
   void setYvpmin(double Yvpmin);
   void setXvpmax(double Xvpmax);
   void setYvpmax(double Yvpmax);
+  bool getFill();
+  void setFill(bool fill);
 
 protected:
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
   ViewWindow* viewWindow;
   double Xvpmin, Yvpmin, Xvpmax, Yvpmax;
+  bool fillPolygon;
 
 };
 

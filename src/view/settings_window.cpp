@@ -2,9 +2,6 @@
 
 SettingsWindow::SettingsWindow(MainWindow* mainWindow)
     : mainWindow(mainWindow),
-      m_notebook(),
-      clipping_options(),
-      curve_options(),
       button_close("Close"),
       settings_vbox(Gtk::ORIENTATION_VERTICAL)
 {
@@ -25,16 +22,19 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
   this->clipping_options.set_active(this->mainWindow->getViewport()->
                                     getViewWindow()->getClippingType());
 
-  this->curve_options.append("None");
+  this->fill_options.append("None");
+  this->fill_options.append("Fill");
+
+  this->fill_options.set_active(this->mainWindow->getViewport()->getFill());
 
   set_title("Settings");
   set_border_width(10);
   set_resizable(false);
 
   clipping_options.set_border_width(10);
-  curve_options.set_border_width(10);
+  fill_options.set_border_width(10);
   m_notebook.append_page(clipping_options, "Clipping");
-  m_notebook.append_page(curve_options, "Curve");
+  m_notebook.append_page(fill_options, "Polygon");
 
   settings_vbox.pack_start(m_notebook);
   settings_vbox.pack_start(button_close, Gtk::PACK_SHRINK);
@@ -43,8 +43,8 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
 
   clipping_options.signal_changed().connect(
       sigc::mem_fun(*this, &SettingsWindow::on_clipping_changed));
-  curve_options.signal_changed().connect(
-      sigc::mem_fun(*this, &SettingsWindow::on_curve_changed));
+  fill_options.signal_changed().connect(
+      sigc::mem_fun(*this, &SettingsWindow::on_fill_changed));
   button_close.signal_clicked().connect(
       sigc::mem_fun(*this, &SettingsWindow::on_button_close));
 
@@ -64,9 +64,11 @@ void SettingsWindow::on_clipping_changed()
       (string)clipping_options.get_active_text() + "\n");
 }
 
-void SettingsWindow::on_curve_changed()
+void SettingsWindow::on_fill_changed()
 {
-  //one day this will be needed..
+  bool fill = (bool) fill_options.get_active_row_number();
+  this->mainWindow->getViewport()->setFill(fill);
+  this->mainWindow->getViewport()->queue_draw();
 }
 
 SettingsWindow::~SettingsWindow()

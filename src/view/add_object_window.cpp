@@ -21,14 +21,14 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
       line_y2_label("Coordinate Y\u2082: "),
       wire_x_label("Coordinate X: "),
       wire_y_label("Coordinate Y: "),
-      spline_x_label("Coordinate X: "),
-      spline_y_label("Coordinate Y: "),
       info_wire_label("Insert a Coordinate:"),
       curve_x1_label("Vector X1: "),
-      curve_x2_label("Vector X2: "),
       curve_y1_label("Vector Y1: "),
+      curve_x2_label("Vector X2: "),
       curve_y2_label("Vector Y2: "),
       info_curve_label("Insert a Vector:"),
+      spline_x_label("Coordinate X: "),
+      spline_y_label("Coordinate Y: "),
       info_spline_label("Insert a Coordinate:")
 {
   set_title("Add Object");
@@ -149,8 +149,8 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   m_notebook.append_page(point_grid, "Point");
   m_notebook.append_page(line_grid, "Line");
   m_notebook.append_page(wire_grid, "Polygon");
-  m_notebook.append_page(curve_grid, "Curve");
-  m_notebook.append_page(spline_grid, "Spline");
+  m_notebook.append_page(curve_grid, "Bezier Curve");
+  m_notebook.append_page(spline_grid, "B-Spline");
 
   set_type_hint(Gdk::WINDOW_TYPE_HINT_DIALOG);
   set_modal();
@@ -288,7 +288,7 @@ void AddObjectWindow::on_button_add_vector()
     Vector vector(begin, end);
     curve_vector_list.push_back(vector);
   }
-  else 
+  else
   {
     Vector vector(begin, x2_cord, y2_cord);
     curve_vector_list.push_back(vector);
@@ -300,7 +300,7 @@ void AddObjectWindow::on_button_add_vector()
   curve_y2_field.set_text("");
 
   info_curve_label.set_text("Added X1 : " + std::to_string(x1_cord) +
-                      " Y1 : " + std::to_string(y1_cord) + 
+                      " Y1 : " + std::to_string(y1_cord) +
                       " X2 : " + std::to_string(x2_cord) +
                       " Y2 : " + std::to_string(y2_cord));
 }
@@ -323,22 +323,22 @@ void AddObjectWindow::on_button_save_curve()
     std::string curve_string_cord = "";
     while(!curve_vector_list.empty())
     {
-      Vector vec = curve_vector_list.back();
-      curve_vector_list.pop_back();
+      Vector vec = curve_vector_list.front();
+      curve_vector_list.pop_front();
       curve_string_cord += "(" + to_string((int)vec.getBegin().getx()) + ", " +
           to_string((int)vec.getBegin().gety()) + ") " + "(" + to_string((int)vec.getEnd().getx()) +
           ", " + to_string((int)vec.getEnd().gety()) + ") ";
     }
 
     mainWindow->getLogTextView()->add_log_line(
-      "A curve named [" + name + "] was added with " + curve_string_cord + "\n"
+      "A Bezier curve named [" + name + "] was added with " + curve_string_cord + "\n"
     );
 
     close();
   }
-  else 
+  else
   {
-   info_curve_label.set_text("You need at least 2 vectors"); 
+   info_curve_label.set_text("You need at least 2 vectors");
   }
 }
 
@@ -368,11 +368,30 @@ void AddObjectWindow::on_button_save_spline()
       spline_name_field.grab_focus();
       return;
     }
-    //TODO CREATE THE SPLINES CURVE AND SEND TO DISPLAY_FILE
+
+    Curve2D *curve = new Curve2D(name, spline_cord_list, BSPLINE2D);
+    this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(curve);
+    this->mainWindow->getViewport()->queue_draw();
+
+    std::string curve_string_cord = "";
+    while(!spline_cord_list.empty())
+    {
+      Coordinate cord = spline_cord_list.front();
+      spline_cord_list.pop_front();
+      curve_string_cord += "(" + to_string((int)cord.getx()) + ", " +
+          to_string((int)cord.gety()) + ") ";
+    }
+
+    mainWindow->getLogTextView()->add_log_line(
+      "A B-Spline curve named [" + name + "] was added with " + curve_string_cord + "\n"
+    );
+
+    close();
+
   }
-  else 
+  else
   {
-    info_spline_label.set_text("You need at least 4 cordinates"); 
+    info_spline_label.set_text("You need at least 4 coordinates");
   }
 }
 

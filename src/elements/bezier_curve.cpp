@@ -1,5 +1,7 @@
 #include "bezier_curve.hpp"
 
+#define DELTA 0.008
+
 BezierCurve::BezierCurve(Vector vector1, Vector vector2)
     : vector1(vector1),
       vector2(vector2)

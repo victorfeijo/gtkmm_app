@@ -5,7 +5,8 @@ Viewport::Viewport()
       Xvpmin(0),
       Yvpmin(0),
       Xvpmax(0),
-      Yvpmax(0)
+      Yvpmax(0),
+      fillPolygon(true)
 {
 }
 
@@ -55,7 +56,15 @@ void Viewport::setYvpmax(double Yvpmax)
   this->Yvpmax = Yvpmax;
 }
 
+bool Viewport::getFill()
+{
+  return fillPolygon;
+}
 
+void Viewport::setFill(bool fill)
+{
+  this->fillPolygon = fill;
+}
 
 Viewport::~Viewport()
 {
