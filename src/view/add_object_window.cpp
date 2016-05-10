@@ -332,7 +332,7 @@ void AddObjectWindow::on_button_add_vector()
 
   curve_x1_field.set_text("");
   curve_x2_field.set_text("");
-  curve_z2_field.set_text("");
+  curve_z1_field.set_text("");
   curve_y1_field.set_text("");
   curve_y2_field.set_text("");
   curve_z2_field.set_text("");
@@ -365,9 +365,10 @@ void AddObjectWindow::on_button_save_curve()
     {
       Vector vec = curve_vector_list.front();
       curve_vector_list.pop_front();
-      curve_string_cord += "(" + to_string((int)vec.getBegin().getx()) + ", " +
-          to_string((int)vec.getBegin().gety()) + ") " + "(" + to_string((int)vec.getEnd().getx()) +
-          ", " + to_string((int)vec.getEnd().gety()) + ") ";
+      curve_string_cord += "(" + to_string((int)vec.getBegin().getx()) + ", "
+          + to_string((int)vec.getBegin().gety()) + ", " + to_string((int)vec.getBegin().getz())+ ") "
+          + "(" + to_string((int)vec.getEnd().getx()) + ", " + to_string((int)vec.getEnd().gety()) 
+          + ", " + to_string((int)vec.getEnd().getz())  + ") ";
     }
 
     mainWindow->getLogTextView()->add_log_line(
@@ -386,16 +387,19 @@ void AddObjectWindow::on_button_add_spline_coordinate()
 {
   string x_string = spline_x_field.get_text().raw();
   string y_string = spline_y_field.get_text().raw();
+  string z_string = spline_z_field.get_text().raw();
   int x_cord = atoi(x_string.c_str());
   int y_cord = atoi(y_string.c_str());
-  Coordinate spline_cord = Coordinate(x_cord, y_cord);
+  int z_cord = atoi(z_string.c_str());
+  Coordinate spline_cord = Coordinate(x_cord, y_cord, z_cord);
   spline_cord_list.push_back(spline_cord);
 
   spline_x_field.set_text("");
   spline_y_field.set_text("");
+  spline_z_field.set_text("");
 
   info_spline_label.set_text("Added X : " + to_string(x_cord) +
-                      " Y : " + to_string(y_cord));
+                      " Y : " + to_string(y_cord) + " Z : " + to_string(z_cord));
 }
 
 void AddObjectWindow::on_button_save_spline()
@@ -419,7 +423,7 @@ void AddObjectWindow::on_button_save_spline()
       Coordinate cord = spline_cord_list.front();
       spline_cord_list.pop_front();
       curve_string_cord += "(" + to_string((int)cord.getx()) + ", " +
-          to_string((int)cord.gety()) + ") ";
+          to_string((int)cord.gety()) + ", " + to_string((int)cord.getz()) + ") ";
     }
 
     mainWindow->getLogTextView()->add_log_line(
