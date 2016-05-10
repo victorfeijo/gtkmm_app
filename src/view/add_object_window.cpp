@@ -15,20 +15,27 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
       button_close("Close"),
       point_x_label("Coordinate X: "),
       point_y_label("Coordinate Y: "),
+      point_z_label("Coordinate Z: "),
       line_x1_label("Coordinate X\u2081: "),
       line_x2_label("Coordinate X\u2082: "),
       line_y1_label("Coordinate Y\u2081: "),
       line_y2_label("Coordinate Y\u2082: "),
+      line_z1_label("Coordinate Z\u2081: "),
+      line_z2_label("Coordinate Z\u2082: "),
       wire_x_label("Coordinate X: "),
       wire_y_label("Coordinate Y: "),
+      wire_z_label("Coordinate Z: "),
       info_wire_label("Insert a Coordinate:"),
       curve_x1_label("Vector X1: "),
       curve_y1_label("Vector Y1: "),
+      curve_z1_label("Vector Z1: "),
       curve_x2_label("Vector X2: "),
       curve_y2_label("Vector Y2: "),
+      curve_z2_label("Vector Z2: "),
       info_curve_label("Insert a Vector:"),
       spline_x_label("Coordinate X: "),
       spline_y_label("Coordinate Y: "),
+      spline_z_label("Coordinate Z: "),
       info_spline_label("Insert a Coordinate:")
 {
   set_title("Add Object");
@@ -50,7 +57,9 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   point_grid.attach(point_x_field, 2, 2, 1, 1);
   point_grid.attach(point_y_label, 1, 3, 1, 1);
   point_grid.attach(point_y_field, 2, 3, 1, 1);
-  point_grid.attach(button_save_point, 1, 4, 2, 1);
+  point_grid.attach(point_z_label, 1, 4, 1, 1);
+  point_grid.attach(point_z_field, 2, 4, 1, 1);
+  point_grid.attach(button_save_point, 1, 5, 2, 1);
   point_grid.set_border_width(10);
 
   //Add line grid
@@ -60,13 +69,17 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   line_grid.attach(line_name_field, 1, 1, 4, 1);
   line_grid.attach(line_x1_label, 1, 2, 1, 1);
   line_grid.attach(line_x1_field, 2, 2, 1, 1);
-  line_grid.attach(line_x2_label, 1, 3, 1, 1);
-  line_grid.attach(line_x2_field, 2, 3, 1, 1);
-  line_grid.attach(line_y1_label, 3, 2, 1, 1);
-  line_grid.attach(line_y1_field, 4, 2, 1, 1);
+  line_grid.attach(line_x2_label, 3, 2, 1, 1);
+  line_grid.attach(line_x2_field, 4, 2, 1, 1);
+  line_grid.attach(line_y1_label, 1, 3, 1, 1);
+  line_grid.attach(line_y1_field, 2, 3, 1, 1);
   line_grid.attach(line_y2_label, 3, 3, 1, 1);
   line_grid.attach(line_y2_field, 4, 3, 1, 1);
-  line_grid.attach(button_save_line, 1, 4, 4, 1);
+  line_grid.attach(line_z1_label, 1, 4, 1, 1);
+  line_grid.attach(line_z1_field, 2, 4, 1, 1);
+  line_grid.attach(line_z2_label, 3, 4, 1, 1);
+  line_grid.attach(line_z2_field, 4, 4, 1, 1);
+  line_grid.attach(button_save_line, 1, 5, 4, 1);
   line_grid.set_border_width(10);
 
   //Add polygon grid
@@ -80,8 +93,10 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   wire_grid.attach(wire_x_field, 2, 2, 1, 1);
   wire_grid.attach(wire_y_label, 1, 3, 1, 1);
   wire_grid.attach(wire_y_field, 2, 3, 1, 1);
-  wire_grid.attach(button_add_wire_coordinate, 1, 4, 1, 1);
-  wire_grid.attach(button_save_wire, 2, 4, 1, 1);
+  wire_grid.attach(wire_z_label, 1, 4, 1, 1);
+  wire_grid.attach(wire_z_field, 2, 4, 1, 1);
+  wire_grid.attach(button_add_wire_coordinate, 1, 5, 1, 1);
+  wire_grid.attach(button_save_wire, 2, 5, 1, 1);
   wire_grid.set_border_width(10);
 
   //Add curve grid
@@ -100,8 +115,12 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   curve_grid.attach(curve_y1_field, 2, 3, 1, 1);
   curve_grid.attach(curve_y2_label, 3, 3, 1, 1);
   curve_grid.attach(curve_y2_field, 4, 3, 1, 1);
-  curve_grid.attach(button_add_vector, 1, 4, 2, 1);
-  curve_grid.attach(button_save_curve, 3, 4, 2, 1);
+  curve_grid.attach(curve_z1_label, 1, 4, 1, 1);
+  curve_grid.attach(curve_z1_field, 2, 4, 1, 1);
+  curve_grid.attach(curve_z2_label, 3, 4, 1, 1);
+  curve_grid.attach(curve_z2_field, 4, 4, 1, 1);
+  curve_grid.attach(button_add_vector, 1, 5, 2, 1);
+  curve_grid.attach(button_save_curve, 3, 5, 2, 1);
   curve_grid.set_border_width(10);
 
   //Add spline grid
@@ -115,8 +134,10 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   spline_grid.attach(spline_x_field, 2, 2, 1, 1);
   spline_grid.attach(spline_y_label, 1, 3, 1, 1);
   spline_grid.attach(spline_y_field, 2, 3, 1, 1);
-  spline_grid.attach(button_add_spline_coordinate, 1, 4, 1, 1);
-  spline_grid.attach(button_save_spline, 2, 4, 1, 1);
+  spline_grid.attach(spline_z_label, 1, 4, 1, 1);
+  spline_grid.attach(spline_z_field, 2, 4, 1, 1);
+  spline_grid.attach(button_add_spline_coordinate, 1, 5, 1, 1);
+  spline_grid.attach(button_save_spline, 2, 5, 1, 1);
   spline_grid.set_border_width(10);
 
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
@@ -165,24 +186,27 @@ AddObjectWindow::~AddObjectWindow()
 
 void AddObjectWindow::on_button_save_point()
 {
-  std::string name = point_name_field.get_text().raw();
+  string name = point_name_field.get_text().raw();
   if (name.empty())
   {
     point_name_field.grab_focus();
     return;
   }
-  std::string x_string = point_x_field.get_text().raw();
-  std::string y_string = point_y_field.get_text().raw();
+  string x_string = point_x_field.get_text().raw();
+  string y_string = point_y_field.get_text().raw();
+  string z_string = point_z_field.get_text().raw();
   int x_cord = atoi(x_string.c_str());
   int y_cord = atoi(y_string.c_str());
-  Coordinate point_cord = Coordinate(x_cord, y_cord);
+  int z_cord = atoi(z_string.c_str());
+  Coordinate point_cord = Coordinate(x_cord, y_cord, z_cord);
   Point *point = new Point(name, point_cord);
   this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(point);
   this->mainWindow->getViewport()->queue_draw();
 
   mainWindow->getLogTextView()->add_log_line(
     "Point named [" + name + "] was added with ("
-        + to_string((int)x_cord) + ", " + to_string((int)y_cord) + ")\n"
+        + to_string((int)x_cord) + ", " + to_string((int)y_cord) + ", " 
+        + to_string((int)z_cord)+ ")\n"
   );
 
   close();
@@ -190,30 +214,35 @@ void AddObjectWindow::on_button_save_point()
 
 void AddObjectWindow::on_button_save_line()
 {
-  std::string name = line_name_field.get_text().raw();
+  string name = line_name_field.get_text().raw();
   if (name.empty())
   {
     line_name_field.grab_focus();
     return;
   }
-  std::string x1_string = line_x1_field.get_text().raw();
-  std::string y1_string = line_y1_field.get_text().raw();
-  std::string x2_string = line_x2_field.get_text().raw();
-  std::string y2_string = line_y2_field.get_text().raw();
+  string x1_string = line_x1_field.get_text().raw();
+  string y1_string = line_y1_field.get_text().raw();
+  string z1_string = line_z1_field.get_text().raw();
+  string x2_string = line_x2_field.get_text().raw();
+  string y2_string = line_y2_field.get_text().raw();
+  string z2_string = line_z2_field.get_text().raw();
   int x1_cord = atoi(x1_string.c_str());
   int y1_cord = atoi(y1_string.c_str());
+  int z1_cord = atoi(z1_string.c_str());
   int x2_cord = atoi(x2_string.c_str());
   int y2_cord = atoi(y2_string.c_str());
-  Coordinate point_cord1 = Coordinate(x1_cord, y1_cord);
-  Coordinate point_cord2 = Coordinate(x2_cord, y2_cord);
+  int z2_cord = atoi(z2_string.c_str());
+  Coordinate point_cord1 = Coordinate(x1_cord, y1_cord, z1_cord);
+  Coordinate point_cord2 = Coordinate(x2_cord, y2_cord, z2_cord);
   Line *line = new Line(name, point_cord1, point_cord2);
   this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(line);
   this->mainWindow->getViewport()->queue_draw();
 
   mainWindow->getLogTextView()->add_log_line(
-    "Line named [" + name + "] was added with (" + to_string((int)x1_cord)+ ", "
-        + to_string((int)y1_cord) + ") and " + "(" + to_string((int)x2_cord) + ", "
-        + to_string((int)y2_cord) + ")\n"
+    "Line named [" + name + "] was added with (" + to_string((int)x1_cord) + ", "
+        + to_string((int)y1_cord) + ", " + to_string((int)z1_cord) + ") and " 
+        + "(" + to_string((int)x2_cord) + ", " + to_string((int)y2_cord) + ", " 
+        + to_string((int)z2_cord)+ ")\n"
   );
 
   close();
@@ -223,7 +252,7 @@ void AddObjectWindow::on_button_save_polygon()
 {
   if (!wire_cord_list.empty())
   {
-    std::string name = wire_name_field.get_text().raw();
+    string name = wire_name_field.get_text().raw();
     if (name.empty())
     {
       wire_name_field.grab_focus();
@@ -233,13 +262,13 @@ void AddObjectWindow::on_button_save_polygon()
     this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(wire);
     this->mainWindow->getViewport()->queue_draw();
 
-    std::string polygon_string_cord = "";
+    string polygon_string_cord = "";
     while(!wire_cord_list.empty())
     {
       Coordinate cord = wire_cord_list.back();
       wire_cord_list.pop_back();
       polygon_string_cord += "(" + to_string((int)cord.getx()) + ", " +
-          to_string((int)cord.gety()) + ") ";
+          to_string((int)cord.gety()) + ", " + to_string((int)cord.getz())+ ") ";
     }
 
     mainWindow->getLogTextView()->add_log_line(
@@ -256,60 +285,71 @@ void AddObjectWindow::on_button_save_polygon()
 
 void AddObjectWindow::on_button_add_wire_coordinate()
 {
-  std::string x_string = wire_x_field.get_text().raw();
-  std::string y_string = wire_y_field.get_text().raw();
+  string x_string = wire_x_field.get_text().raw();
+  string y_string = wire_y_field.get_text().raw();
+  string z_string = wire_z_field.get_text().raw();
   int x_cord = atoi(x_string.c_str());
   int y_cord = atoi(y_string.c_str());
-  Coordinate wire_cord = Coordinate(x_cord, y_cord);
+  int z_cord = atoi(z_string.c_str());
+  Coordinate wire_cord = Coordinate(x_cord, y_cord, z_cord);
   wire_cord_list.push_back(wire_cord);
 
   wire_x_field.set_text("");
   wire_y_field.set_text("");
+  wire_z_field.set_text("");
 
-  info_wire_label.set_text("Added X : " + std::to_string(x_cord) +
-                      " Y : " + std::to_string(y_cord));
+  info_wire_label.set_text("Added X : " + to_string(x_cord) +
+                      " Y : " + to_string(y_cord) + " Z : " + to_string(z_cord));
 }
 
 void AddObjectWindow::on_button_add_vector()
 {
-  std::string x1_string = curve_x1_field.get_text().raw();
-  std::string y1_string = curve_y1_field.get_text().raw();
-  std::string x2_string = curve_x2_field.get_text().raw();
-  std::string y2_string = curve_y2_field.get_text().raw();
+  string x1_string = curve_x1_field.get_text().raw();
+  string y1_string = curve_y1_field.get_text().raw();
+  string z1_string = curve_z1_field.get_text().raw();
+  string x2_string = curve_x2_field.get_text().raw();
+  string y2_string = curve_y2_field.get_text().raw();
+  string z2_string = curve_z2_field.get_text().raw();
   int x1_cord = atoi(x1_string.c_str());
   int y1_cord = atoi(y1_string.c_str());
+  int z1_cord = atoi(z1_string.c_str());
   int x2_cord = atoi(x2_string.c_str());
   int y2_cord = atoi(y2_string.c_str());
+  int z2_cord = atoi(z2_string.c_str());
 
-  Coordinate begin(x1_cord, y1_cord);
+  Coordinate begin(x1_cord, y1_cord, z1_cord);
   if (check_type_of_vector.get_active())
   {
-    Coordinate end(x2_cord, y2_cord);
+    Coordinate end(x2_cord, y2_cord, z2_cord);
     Vector vector(begin, end);
     curve_vector_list.push_back(vector);
   }
   else
   {
-    Vector vector(begin, x2_cord, y2_cord);
+    Vector vector(begin, x2_cord, y2_cord, z2_cord);
     curve_vector_list.push_back(vector);
   }
 
   curve_x1_field.set_text("");
   curve_x2_field.set_text("");
+  curve_z1_field.set_text("");
   curve_y1_field.set_text("");
   curve_y2_field.set_text("");
+  curve_z2_field.set_text("");
 
-  info_curve_label.set_text("Added X1 : " + std::to_string(x1_cord) +
-                      " Y1 : " + std::to_string(y1_cord) +
-                      " X2 : " + std::to_string(x2_cord) +
-                      " Y2 : " + std::to_string(y2_cord));
+  info_curve_label.set_text("Added X1 : " + to_string(x1_cord) +
+                      " Y1 : " + to_string(y1_cord) +
+                      " Z1 : " + to_string(z1_cord) +
+                      " X2 : " + to_string(x2_cord) +
+                      " Y2 : " + to_string(y2_cord) +
+                      " Z2 : " + to_string(z2_cord));
 }
 
 void AddObjectWindow::on_button_save_curve()
 {
   if (curve_vector_list.size() > 1)
   {
-    std::string name = curve_name_field.get_text().raw();
+    string name = curve_name_field.get_text().raw();
     if (name.empty())
     {
       curve_name_field.grab_focus();
@@ -320,14 +360,15 @@ void AddObjectWindow::on_button_save_curve()
     this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(curve);
     this->mainWindow->getViewport()->queue_draw();
 
-    std::string curve_string_cord = "";
+    string curve_string_cord = "";
     while(!curve_vector_list.empty())
     {
       Vector vec = curve_vector_list.front();
       curve_vector_list.pop_front();
-      curve_string_cord += "(" + to_string((int)vec.getBegin().getx()) + ", " +
-          to_string((int)vec.getBegin().gety()) + ") " + "(" + to_string((int)vec.getEnd().getx()) +
-          ", " + to_string((int)vec.getEnd().gety()) + ") ";
+      curve_string_cord += "(" + to_string((int)vec.getBegin().getx()) + ", "
+          + to_string((int)vec.getBegin().gety()) + ", " + to_string((int)vec.getBegin().getz())+ ") "
+          + "(" + to_string((int)vec.getEnd().getx()) + ", " + to_string((int)vec.getEnd().gety()) 
+          + ", " + to_string((int)vec.getEnd().getz())  + ") ";
     }
 
     mainWindow->getLogTextView()->add_log_line(
@@ -344,25 +385,28 @@ void AddObjectWindow::on_button_save_curve()
 
 void AddObjectWindow::on_button_add_spline_coordinate()
 {
-  std::string x_string = spline_x_field.get_text().raw();
-  std::string y_string = spline_y_field.get_text().raw();
+  string x_string = spline_x_field.get_text().raw();
+  string y_string = spline_y_field.get_text().raw();
+  string z_string = spline_z_field.get_text().raw();
   int x_cord = atoi(x_string.c_str());
   int y_cord = atoi(y_string.c_str());
-  Coordinate spline_cord = Coordinate(x_cord, y_cord);
+  int z_cord = atoi(z_string.c_str());
+  Coordinate spline_cord = Coordinate(x_cord, y_cord, z_cord);
   spline_cord_list.push_back(spline_cord);
 
   spline_x_field.set_text("");
   spline_y_field.set_text("");
+  spline_z_field.set_text("");
 
-  info_spline_label.set_text("Added X : " + std::to_string(x_cord) +
-                      " Y : " + std::to_string(y_cord));
+  info_spline_label.set_text("Added X : " + to_string(x_cord) +
+                      " Y : " + to_string(y_cord) + " Z : " + to_string(z_cord));
 }
 
 void AddObjectWindow::on_button_save_spline()
 {
   if (spline_cord_list.size() > 3)
   {
-    std::string name = spline_name_field.get_text().raw();
+    string name = spline_name_field.get_text().raw();
     if (name.empty())
     {
       spline_name_field.grab_focus();
@@ -373,13 +417,13 @@ void AddObjectWindow::on_button_save_spline()
     this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(curve);
     this->mainWindow->getViewport()->queue_draw();
 
-    std::string curve_string_cord = "";
+    string curve_string_cord = "";
     while(!spline_cord_list.empty())
     {
       Coordinate cord = spline_cord_list.front();
       spline_cord_list.pop_front();
       curve_string_cord += "(" + to_string((int)cord.getx()) + ", " +
-          to_string((int)cord.gety()) + ") ";
+          to_string((int)cord.gety()) + ", " + to_string((int)cord.getz()) + ") ";
     }
 
     mainWindow->getLogTextView()->add_log_line(
