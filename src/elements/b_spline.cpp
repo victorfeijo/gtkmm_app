@@ -1,6 +1,6 @@
 #include "b_spline.hpp"
 
-BSpline::BSpline(std::list<Coordinate> coordinates)
+BSpline::BSpline(list<Coordinate> coordinates)
     : coordinates(coordinates)
 {
 }
@@ -9,15 +9,15 @@ BSpline::~BSpline()
 {
 }
 
-std::list<Coordinate> BSpline::blend()
+list<Coordinate> BSpline::blend()
 {
-  std::list<Coordinate> cord_list;
+  list<Coordinate> cord_list;
 
   for(unsigned int i = 0; i < coordinates.size()-3; i++)
   {
     Matrix<double> current_curve(4,3);
 
-    std::list<Coordinate>::iterator it_cord = coordinates.begin();
+    list<Coordinate>::iterator it_cord = coordinates.begin();
     advance(it_cord, i);
     for (unsigned int j = 0; j < 4; j++)
     {

@@ -22,9 +22,9 @@ Vector BezierCurve::getVector2()
   return vector2;
 }
 
-std::list<Coordinate> BezierCurve::blend()
+list<Coordinate> BezierCurve::blend()
 {
-  std::list<Coordinate> cord_list;
+  list<Coordinate> cord_list;
 
   Matrix<double> p1 = vector1.getBegin().toMatrix();
   Matrix<double> p2 = vector1.getEnd().toMatrix();

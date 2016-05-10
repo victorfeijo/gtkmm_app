@@ -13,11 +13,11 @@ public:
   BSpline(std::list<Coordinate> coordinates);
   ~BSpline();
 
-  std::list<Coordinate> blend();
-  std::list<Coordinate> calcForwardDifferences(Matrix<double> cord_array);
+  list<Coordinate> blend();
+  list<Coordinate> calcForwardDifferences(Matrix<double> cord_array);
   Matrix<double> getBase();
   
 private:
-  std::list<Coordinate> coordinates;
+  list<Coordinate> coordinates;
 };
 #endif
