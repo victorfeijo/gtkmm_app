@@ -1,5 +1,7 @@
 #include "bezier_curve.hpp"
 
+#define DELTA 0.008
+
 BezierCurve::BezierCurve(Vector vector1, Vector vector2)
     : vector1(vector1),
       vector2(vector2)
@@ -20,9 +22,9 @@ Vector BezierCurve::getVector2()
   return vector2;
 }
 
-std::list<Coordinate> BezierCurve::blend()
+list<Coordinate> BezierCurve::blend()
 {
-  std::list<Coordinate> cord_list;
+  list<Coordinate> cord_list;
 
   Matrix<double> p1 = vector1.getBegin().toMatrix();
   Matrix<double> p2 = vector1.getEnd().toMatrix();

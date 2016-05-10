@@ -57,8 +57,15 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
       if (object->getType() == object_type::WIREFRAME) // wireframe case
       {
         cr->close_path();
-        cr->stroke_preserve();
-        cr->fill();
+        if(viewport->getFill())
+        {
+          cr->stroke_preserve();
+          cr->fill();
+        }
+        else
+        {
+          cr->stroke();
+        }
       }
       else
       {

@@ -5,8 +5,6 @@
 #include "vector.hpp"
 #include "matrix.hpp"
 
-#define DELTA 0.008
-
 using namespace std;
 
 class BezierCurve
@@ -16,7 +14,7 @@ public:
   ~BezierCurve();
   Vector getVector1();
   Vector getVector2();
-  std::list<Coordinate> blend();
+  list<Coordinate> blend();
 private:
   Vector vector1, vector2;
 };

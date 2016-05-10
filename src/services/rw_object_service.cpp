@@ -41,7 +41,9 @@ list<DrawableObject*> RwObjectService::read(string file_path)
         int pos = line.find(tag);
         groupname = line.substr(pos+2, line.length());
       }
-      else if (strcmp(tag, "f") == 0 || strcmp(tag, "curv2") == 0)
+      else if ( strcmp(tag, "f") == 0 ||
+                strcmp(tag, "curv2bz") == 0 ||
+                strcmp(tag, "curv2sp") == 0 )
       {
         string facename = groupname;
         if (groupfaces != 0)
@@ -70,9 +72,13 @@ list<DrawableObject*> RwObjectService::read(string file_path)
         }
         else
         {
-          if (strcmp(tag, "curv2") == 0)
+          if (strcmp(tag, "curv2bz") == 0)
           {
-            object = new Curve2D(facename, current_cord_list);
+            object = new Curve2D(facename, current_cord_list, BEZIER2D);
+          }
+          else if (strcmp(tag, "curv2sp") == 0)
+          {
+            object = new Curve2D(facename, current_cord_list, BSPLINE2D);
           }
           else
           {
@@ -105,9 +111,13 @@ void RwObjectService::write(list<DrawableObject*> objects_list, string file_path
   for (DrawableObject* obj : objects_list)
   {
     myfile << "g " + obj->getName() + "\n";
-    if (obj->getType() == CURVE2D)
+    if (obj->getType() == BEZIER2D)
     {
-      myfile << "curv2";
+      myfile << "curv2bz";
+    }
+    else if (obj->getType() == BSPLINE2D)
+    {
+      myfile << "curv2sp";
     }
     else
     {

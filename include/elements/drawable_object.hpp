@@ -17,7 +17,7 @@ public:
   DrawableObject(string name);
   DrawableObject(string name, list<Coordinate> coordinates);
   ~DrawableObject();
-  std::string getName();
+  string getName();
   list<Coordinate> getCoordinatesWorld();
   list<Coordinate> getCoordinatesWindow();
   list<Coordinate> getCoordinatesClipped();

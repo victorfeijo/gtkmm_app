@@ -52,6 +52,24 @@ T Matrix<T>::get(int row, int column)
 }
 
 template <typename T>
+Matrix<T> Matrix<T>::getRow(int row)
+{
+  if (row >= this->rows)
+  {
+    throw 12;
+  }
+  else
+  {
+    Matrix<T> aux(1,columns);
+    for (int i = 0; i < columns; i++)
+    {
+      aux.set(0, i, this->matrix[row][i]);
+    }
+    return aux;
+  }
+}
+
+template <typename T>
 int Matrix<T>::getRows()
 {
   return this->rows;
@@ -126,8 +144,8 @@ void f1()
   // INSERT TEMPLATE VARIATIONS THAT WILL BE USED AND CALL EVERY FUNCTION
   // int
   Matrix<int> m1(1,1);
-  m1.getRows(); m1.getColumns(); m1.get(0,0); m1.set(0,0,0); m1+m1; m1-m1; m1*m1; m1*1;
+  m1.getRows(); m1.getColumns(); m1.get(0,0); m1.getRow(0); m1.set(0,0,0); m1+m1; m1-m1; m1*m1; m1*1;
   // double
   Matrix<double> m2(1,1);
-  m2.getRows(); m2.getColumns(); m2.get(0,0); m2.set(0,0,0); m2+m2; m2-m2; m2*m2; m2*1;
+  m2.getRows(); m2.getColumns(); m2.get(0,0); m2.getRow(0); m2.set(0,0,0); m2+m2; m2-m2; m2*m2; m2*1;
 }

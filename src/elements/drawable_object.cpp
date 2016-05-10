@@ -24,7 +24,7 @@ void DrawableObject::destroyList(list<Coordinate> coordinates)
   }
 }
 
-std::string DrawableObject::getName()
+string DrawableObject::getName()
 {
   return name;
 }

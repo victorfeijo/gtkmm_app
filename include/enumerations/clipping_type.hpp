@@ -1,7 +1,8 @@
 #ifndef GTKMM_APP_ENUM_CLIPPING_TYPE
 #define GTKMM_APP_ENUM_CLIPPING_TYPE
 
-enum clipping_type {
+enum clipping_type
+{
   NONE = 0,
   PC = 1,  // Point clipping
   CS = 2,  // Cohen-Sutherland
