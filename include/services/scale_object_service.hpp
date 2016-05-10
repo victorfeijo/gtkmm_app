@@ -12,7 +12,7 @@ class ScaleObjectService
 public:
   ScaleObjectService();
   ~ScaleObjectService();
-  void scale(DrawableObject *object, double sx, double sy);
+  void scale(DrawableObject *object, double sx, double sy, double sz = 1);
 protected:
   TranslateObjectService translate_service;
 };

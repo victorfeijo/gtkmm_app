@@ -35,8 +35,8 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
 
   for (DrawableObject* object : objectsList)
   {
-    rotate_service.rotate(object, windowCenter.getx(), windowCenter.gety(),
-                          windowAngle, transform_type::ON_WINDOW);
+    rotate_service.rotateZ(object, windowCenter.getx(), windowCenter.gety(),
+                          windowCenter.getz(), windowAngle, transform_type::ON_WINDOW);
     clipping_service.clip(viewport->getViewWindow(), object);
     list<Coordinate> objectCoordinates = object->getCoordinatesClipped();
     Coordinate firstCordConverted = convertFromWindowToViewport(

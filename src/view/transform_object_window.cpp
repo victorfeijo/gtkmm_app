@@ -149,7 +149,7 @@ void TransformObjectWindow::on_button_rotate()
   int dy = atoi(dy_string.c_str());
   int angle = atoi(angle_string.c_str());
 
-  rotate_service.rotate(this->object, dx, dy, angle);
+  rotate_service.rotateZ(this->object, dx, dy, angle);
 
   this->mainWindow->getViewport()->queue_draw();
 

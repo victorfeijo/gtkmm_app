@@ -20,11 +20,10 @@ void TranslateObjectService::translate(DrawableObject* object, int dx, int dy, i
       cord_list = object->getCoordinatesWindow();
     break;
   }
+  Matrix<double> translate_bitmap = Coordinate(dx, dy, dz).toMatrix();
   for(Coordinate cord : cord_list)
   {
     Matrix<double> object_bitmap = cord.toMatrix();
-    Matrix<double> translate_bitmap = Coordinate(dx, dy, dz).toMatrix();
-
     Matrix<double> new_bitmap = object_bitmap + translate_bitmap;
     new_cord_list.push_back(Coordinate(new_bitmap));
   }
