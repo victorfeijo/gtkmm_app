@@ -1,42 +1,52 @@
 #include "main_window.hpp"
-#include "draw_options_box.hpp"
+#include "draw_actions_box.hpp"
+#include "draw_control_box.hpp"
 
 MainWindow::MainWindow()
     : main_box(Gtk::ORIENTATION_VERTICAL),
       drawable_box(Gtk::ORIENTATION_HORIZONTAL),
-      left_box(Gtk::ORIENTATION_VERTICAL),
-      left_frame("Buttons"),
-      right_frame("Viewport"),
-      down_frame("Log Bar"),
+      control_box(Gtk::ORIENTATION_VERTICAL),
+      actions_box(Gtk::ORIENTATION_VERTICAL),
+      vp_frame("Viewport"),
+      down_frame("Log"),
       viewport(),
       log_text_view("logs/log_file.txt")
 {
   set_border_width(15);
   set_title("Main Window");
-  set_default_size(750, 600);
+  set_default_size(850, 600);
 
   add(main_box);
 
   main_box.pack_start(drawable_box, Gtk::PACK_EXPAND_WIDGET);
 
-  drawable_box.pack_start(left_frame, Gtk::PACK_SHRINK);
 
-  left_frame.set_border_width(5);
+  // left_frame.set_border_width(5);
 
-  left_box.set_border_width(10);
-  left_frame.add(left_box);
+  // left_frame.add(left_box);
 
-  // Adding the draw options box to left frame
-  left_box.pack_start(
-    *Gtk::manage(new DrawOptionsBox("Draw Options", 10, Gtk::BUTTONBOX_START, this)),
+  // Adding the control box to the right
+  control_box.set_border_width(5);
+  control_box.pack_start(
+    *Gtk::manage(new DrawControlBox("Control", 10, Gtk::BUTTONBOX_START, this)),
     Gtk::PACK_EXPAND_WIDGET
   );
+  drawable_box.pack_start(control_box, Gtk::PACK_SHRINK);
+
 
   // viewport
-  drawable_box.pack_start(right_frame, Gtk::PACK_EXPAND_WIDGET);
-  right_frame.set_border_width(5);
-  right_frame.add(viewport);
+  drawable_box.pack_start(vp_frame, Gtk::PACK_EXPAND_WIDGET);
+  vp_frame.set_border_width(5);
+  vp_frame.add(viewport);
   viewport.show();
+
+  // Adding the actions box to the right
+  actions_box.set_border_width(5);
+  actions_box.pack_start(
+    *Gtk::manage(new DrawActionsBox("Actions", 10, Gtk::BUTTONBOX_START, this)),
+    Gtk::PACK_EXPAND_WIDGET
+  );
+  drawable_box.pack_start(actions_box, Gtk::PACK_SHRINK);
 
   //Log
   scrolled_log.add(log_text_view);

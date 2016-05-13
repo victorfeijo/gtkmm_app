@@ -5,7 +5,12 @@ ViewWindow::ViewWindow(int Xwmin, int Ywmin, int Xwmax, int Ywmax)
       Ywmin(Ywmin),
       Xwmax(Xwmax),
       Ywmax(Ywmax),
-      rotationAngle(0),
+      xVec(1,0,0),
+      yVec(0,1,0),
+      zVec(0,0,1),
+      rotationX(0),
+      rotationY(0),
+      rotationZ(0),
       clippingType(clipping_type::DEFAULT_CLIPPING)
 {
 }
@@ -66,38 +71,38 @@ void ViewWindow::zoom_out(double scale)
 
 void ViewWindow::move_up(int length)
 {
-  Coordinate viewUp = this->viewUp();
-  this->Ywmin += viewUp.gety() * length;
-  this->Ywmax += viewUp.gety() * length;
-  this->Xwmin += viewUp.getx() * length;
-  this->Xwmax += viewUp.getx() * length;
+  this->Xwmin += yVec.getx() * length;
+  this->Xwmax += yVec.getx() * length;
+  this->Ywmin += yVec.gety() * length;
+  this->Ywmax += yVec.gety() * length;
+  this->windowZ += yVec.getz() * length;
 }
 
 void ViewWindow::move_down(int length)
 {
-  Coordinate viewUp = this->viewUp();
-  this->Ywmin -= viewUp.gety() * length;
-  this->Ywmax -= viewUp.gety() * length;
-  this->Xwmin -= viewUp.getx() * length;
-  this->Xwmax -= viewUp.getx() * length;
+  this->Xwmin -= yVec.getx() * length;
+  this->Xwmax -= yVec.getx() * length;
+  this->Ywmin -= yVec.gety() * length;
+  this->Ywmax -= yVec.gety() * length;
+  this->windowZ -= yVec.getz() * length;
 }
 
 void ViewWindow::move_left(int length)
 {
-  Coordinate viewUp = this->viewUp();
-  this->Ywmin += viewUp.getx() * length;
-  this->Ywmax += viewUp.getx() * length;
-  this->Xwmin -= viewUp.gety() * length;
-  this->Xwmax -= viewUp.gety() * length;
+  this->Xwmin -= xVec.getx() * length;
+  this->Xwmax -= xVec.getx() * length;
+  this->Ywmin -= xVec.gety() * length;
+  this->Ywmax -= xVec.gety() * length;
+  this->windowZ -= xVec.getz() * length;
 }
 
 void ViewWindow::move_right(int length)
 {
-  Coordinate viewUp = this->viewUp();
-  this->Ywmin -= viewUp.getx() * length;
-  this->Ywmax -= viewUp.getx() * length;
-  this->Xwmin += viewUp.gety() * length;
-  this->Xwmax += viewUp.gety() * length;
+  this->Xwmin += xVec.getx() * length;
+  this->Xwmax += xVec.getx() * length;
+  this->Ywmin += xVec.gety() * length;
+  this->Ywmax += xVec.gety() * length;
+  this->windowZ += xVec.getz() * length;
 }
 
 double ViewWindow::getXwmin()
@@ -151,33 +156,103 @@ ViewWindow::~ViewWindow()
 
 Coordinate ViewWindow::getCenter()
 {
-  return Coordinate((Xwmax+Xwmin)/2, (Ywmin+Ywmax)/2);
+  return Coordinate((Xwmax+Xwmin)/2, (Ywmin+Ywmax)/2, windowZ);
 }
 
-void ViewWindow::rotate(int angle)
+void ViewWindow::rotateX(int angle)
 {
-  this->rotationAngle += angle;
+  double angleRad = angle * M_PI / 180;
+  Matrix<double> rotateX(3,3);
+  rotateX.set(0, 0, 1);
+  rotateX.set(1, 1, cos(angleRad));
+  rotateX.set(1, 2, -sin(angleRad));
+  rotateX.set(2, 1, sin(angleRad));
+  rotateX.set(2, 2, cos(angleRad));
+  xVec = xVec.toMatrix() * rotateX;
+  yVec = yVec.toMatrix() * rotateX;
+  zVec = zVec.toMatrix() * rotateX;
+  rotationX += angle;
 }
 
-int ViewWindow::getRotation()
+void ViewWindow::rotateY(int angle)
 {
-  return this->rotationAngle;
+  double angleRad = angle * M_PI / 180;
+  Matrix<double> rotateY(3,3);
+  rotateY.set(0, 0, cos(angleRad));
+  rotateY.set(0, 2, sin(angleRad));
+  rotateY.set(1, 1, 1);
+  rotateY.set(2, 0, -sin(angleRad));
+  rotateY.set(2, 2, cos(angleRad));
+  xVec = xVec.toMatrix() * rotateY;
+  yVec = yVec.toMatrix() * rotateY;
+  zVec = zVec.toMatrix() * rotateY;
+  rotationY += angle;
 }
 
-Coordinate ViewWindow::viewUp()
+void ViewWindow::rotateZ(int angle)
 {
-  Matrix<double> up = Coordinate(0,1,0).toMatrix();
-  double angleRad = -this->rotationAngle * M_PI / 180;
+  double angleRad = angle * M_PI / 180;
+  Matrix<double> rotateZ(3,3);
+  rotateZ.set(0, 0, cos(angleRad));
+  rotateZ.set(0, 1, -sin(angleRad));
+  rotateZ.set(1, 0, sin(angleRad));
+  rotateZ.set(1, 1, cos(angleRad));
+  rotateZ.set(2, 2, 1);
+  xVec = xVec.toMatrix() * rotateZ;
+  yVec = yVec.toMatrix() * rotateZ;
+  zVec = zVec.toMatrix() * rotateZ;
+  rotationZ += angle;
+}
 
-  Matrix<double> angle(3,3);
-  angle.set(0, 0, cos(angleRad));
-  angle.set(0, 1, -sin(angleRad));
-  angle.set(1, 0, sin(angleRad));
-  angle.set(1, 1, cos(angleRad));
-  angle.set(2, 2, 1);
+double ViewWindow::getRotationX()
+{
+  // double vx = zVec.getx();
+  // double vy = zVec.gety();
+  // double vz = zVec.getz();
+  // double angleX = acos(vy / sqrt(vx*vx + vy*vy + vz*vz));
+  // if (vz < 0)
+  // {
+  //   angleX *= -1;
+  // }
+  // return (M_PI / 2 - angleX) * 180 / M_PI;
+  return rotationX;
+}
 
-  Matrix<double> upRotated = up * angle;
-  return Coordinate(upRotated);
+double ViewWindow::getRotationY()
+{
+  // int angleX = getRotationX();
+  // rotateX(angleX);
+  // double vx = zVec.getx();
+  // double vy = zVec.gety();
+  // double vz = zVec.getz();
+  // double angleY = acos(vx / sqrt(vx*vx + vy*vy + vz*vz));
+  // if (vz < 0)
+  // {
+  //   angleY *= -1;
+  // }
+  // rotateX(-angleX);
+  // return (M_PI / 2 - angleY) * 180 / M_PI;
+  return rotationY;
+}
+
+double ViewWindow::getRotationZ()
+{
+  // int angleX = getRotationX();
+  // int angleY = getRotationY();
+  // rotateX(angleX);
+  // rotateY(angleY);
+  // double vx = yVec.getx();
+  // double vy = yVec.gety();
+  // double vz = yVec.getz();
+  // double angleZ = acos(vx / sqrt(vx*vx + vy*vy + vz*vz));
+  // if (vz < 0)
+  // {
+  //   angleZ *= -1;
+  // }
+  // rotateY(-angleY);
+  // rotateX(-angleX);
+  // return (M_PI / 2 - angleZ) * 180 / M_PI;
+  return rotationZ;
 }
 
 clipping_type ViewWindow::getClippingType()

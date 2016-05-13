@@ -5,10 +5,13 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
       object(object),
       label_translation_x("Translate x : "),
       label_translation_y("Translate y : "),
+      label_translation_z("Translate z : "),
       label_scale_sx("Scale Sx : "),
       label_scale_sy("Scale Sy : "),
+      label_scale_sz("Scale Sz : "),
       label_rotate_x("Rotate point x : "),
       label_rotate_y("Rotate point y : "),
+      label_rotate_z("Rotate point z : "),
       label_rotate_degree("Angle to rotate : "),
       m_vbox(Gtk::ORIENTATION_VERTICAL),
       button_close("Close"),
@@ -34,9 +37,11 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
   translation_grid.set_column_spacing(10);
   translation_grid.attach(label_translation_x, 1, 1, 1, 1);
   translation_grid.attach(label_translation_y, 1, 2, 1, 1);
+  translation_grid.attach(label_translation_z, 1, 3, 1, 1);
   translation_grid.attach(translation_x_field, 2, 1, 1, 1);
   translation_grid.attach(translation_y_field, 2, 2, 1, 1);
-  translation_grid.attach(button_add_translation, 2, 3, 1, 1);
+  translation_grid.attach(translation_z_field, 2, 3, 1, 1);
+  translation_grid.attach(button_add_translation, 2, 4, 1, 1);
   translation_grid.set_border_width(10);
 
   //Add scale grid
@@ -45,12 +50,17 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
   scale_grid.set_column_spacing(10);
   scale_grid.attach(label_scale_sx, 1, 1, 1, 1);
   scale_grid.attach(label_scale_sy, 1, 2, 1, 1);
+  scale_grid.attach(label_scale_sz, 1, 3, 1, 1);
   scale_grid.attach(scale_sx_field, 2, 1, 1, 1);
   scale_grid.attach(scale_sy_field, 2, 2, 1, 1);
-  scale_grid.attach(button_add_scale, 2, 3, 1, 1);
+  scale_grid.attach(scale_sz_field, 2, 3, 1, 1);
+  scale_grid.attach(button_add_scale, 2, 4, 1, 1);
   scale_grid.set_border_width(10);
 
   //Add rotate grid
+  rotate_axis.append("X Axis");
+  rotate_axis.append("Y Axis");
+  rotate_axis.append("Z Axis");
   rotate_grid.set_column_homogeneous(true);
   rotate_grid.set_row_spacing(10);
   rotate_grid.set_column_spacing(10);
@@ -58,11 +68,14 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
   rotate_grid.attach(rotate_degree_field, 2, 1, 1, 1);
   rotate_grid.attach(label_rotate_x, 1, 2, 1, 1);
   rotate_grid.attach(label_rotate_y, 1, 3, 1, 1);
+  rotate_grid.attach(label_rotate_z, 1, 4, 1, 1);
   rotate_grid.attach(rotate_x_field, 2, 2, 1, 1);
   rotate_grid.attach(rotate_y_field, 2, 3, 1, 1);
-  rotate_grid.attach(button_rotate_object, 1, 4, 1, 1);
-  rotate_grid.attach(button_rotate_world, 2, 4, 1, 1);
-  rotate_grid.attach(button_add_rotate, 2, 5, 1, 1);
+  rotate_grid.attach(rotate_z_field, 2, 4, 1, 1);
+  rotate_grid.attach(button_rotate_object, 1, 5, 1, 1);
+  rotate_grid.attach(button_rotate_world, 2, 5, 1, 1);
+  rotate_grid.attach(rotate_axis, 1, 6, 1, 1);
+  rotate_grid.attach(button_add_rotate, 2, 6, 1, 1);
   rotate_grid.set_border_width(10);
 
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
@@ -108,16 +121,18 @@ void TransformObjectWindow::on_button_translate()
 {
   std::string dx_string = translation_x_field.get_text().raw();
   std::string dy_string = translation_y_field.get_text().raw();
+  std::string dz_string = translation_z_field.get_text().raw();
   int dx = atoi(dx_string.c_str());
   int dy = atoi(dy_string.c_str());
+  int dz = atoi(dz_string.c_str());
 
-  translate_service.translate(this->object, dx, dy);
+  translate_service.translate(this->object, dx, dy, dz);
 
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getTypeName() + " named [" + this->object->getName() + "] was translated in ("
-      + to_string(dx) + ", " + to_string(dy) + ")\n"
+      + to_string(dx) + ", " + to_string(dy) + ", " + to_string(dz) + ")\n"
   );
   hide();
 }
@@ -126,16 +141,18 @@ void TransformObjectWindow::on_button_scale()
 {
   std::string sx_string = scale_sx_field.get_text().raw();
   std::string sy_string = scale_sy_field.get_text().raw();
+  std::string sz_string = scale_sz_field.get_text().raw();
   float sx = atof(sx_string.c_str());
   float sy = atof(sy_string.c_str());
+  float sz = atof(sz_string.c_str());
 
-  scale_service.scale(this->object, sx, sy);
+  scale_service.scale(this->object, sx, sy, sz);
 
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getTypeName() + " named [" + this->object->getName() + "] was scaled in ("
-      + to_string(sx) + ", " + to_string(sy) + ")\n"
+      + to_string(sx) + ", " + to_string(sy) + ", " + to_string(sz) + ")\n"
   );
   hide();
 }
@@ -144,18 +161,32 @@ void TransformObjectWindow::on_button_rotate()
 {
   std::string dx_string = rotate_x_field.get_text().raw();
   std::string dy_string = rotate_y_field.get_text().raw();
+  std::string dz_string = rotate_z_field.get_text().raw();
   std::string angle_string = rotate_degree_field.get_text().raw();
   int dx = atoi(dx_string.c_str());
   int dy = atoi(dy_string.c_str());
+  int dz = atoi(dz_string.c_str());
   int angle = atoi(angle_string.c_str());
 
-  rotate_service.rotate(this->object, dx, dy, angle);
+  if (rotate_axis.get_active_row_number() == 0)
+  {
+    rotate_service.rotateX(this->object, dx, dy, dz, angle);
+  }
+  else if (rotate_axis.get_active_row_number() == 1)
+  {
+    rotate_service.rotateY(this->object, dx, dy, dz, angle);
+  }
+  else
+  {
+    rotate_service.rotateZ(this->object, dx, dy, dz, angle);
+  }
 
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getTypeName() + " named [" + this->object->getName() + "] was rotated in "
-      + to_string(angle) + "º around (" + to_string(dx) + ", " + to_string(dy) + ")\n"
+      + to_string(angle) + "º around (" + to_string(dx) + ", " + to_string(dy)
+      + ", " + to_string(dz) + ") in " + rotate_axis.get_active_text() + "\n"
   );
   hide();
 }
@@ -165,13 +196,13 @@ void TransformObjectWindow::on_button_rotate_world()
   std::string angle_string = rotate_degree_field.get_text().raw();
   int angle = atoi(angle_string.c_str());
 
-  rotate_service.rotateCenterWorld(this->object, angle);
+  rotate_service.rotateCenterWorldX(this->object, angle);
 
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getTypeName() + " named [" + this->object->getName() + "] was rotated in "
-      + to_string(angle) + "º around world center\n"
+      + to_string(angle) + "º around world center in " + rotate_axis.get_active_text() + "\n"
   );
   hide();
 }
@@ -181,13 +212,13 @@ void TransformObjectWindow::on_button_rotate_object()
   std::string angle_string = rotate_degree_field.get_text().raw();
   int angle = atoi(angle_string.c_str());
 
-  rotate_service.rotateCenterObject(this->object, angle);
+  rotate_service.rotateCenterObjectZ(this->object, angle);
 
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getTypeName() + " named [" + this->object->getName() + "] was rotated in "
-      + to_string(angle) + "º around its center\n"
+      + to_string(angle) + "º around its center in " + rotate_axis.get_active_text() + "\n"
   );
   hide();
 }

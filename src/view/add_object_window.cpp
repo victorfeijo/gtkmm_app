@@ -26,12 +26,12 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
       wire_y_label("Coordinate Y: "),
       wire_z_label("Coordinate Z: "),
       info_wire_label("Insert a Coordinate:"),
-      curve_x1_label("Vector X1: "),
-      curve_y1_label("Vector Y1: "),
-      curve_z1_label("Vector Z1: "),
-      curve_x2_label("Vector X2: "),
-      curve_y2_label("Vector Y2: "),
-      curve_z2_label("Vector Z2: "),
+      curve_x1_label("Coordinate X\u2081: "),
+      curve_y1_label("Coordinate Y\u2081: "),
+      curve_z1_label("Coordinate Z\u2081: "),
+      curve_x2_label("Coordinate X\u2082: "),
+      curve_y2_label("Coordinate Y\u2082: "),
+      curve_z2_label("Coordinate Z\u2082: "),
       info_curve_label("Insert a Vector:"),
       spline_x_label("Coordinate X: "),
       spline_y_label("Coordinate Y: "),
@@ -104,6 +104,7 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   curve_grid.set_row_spacing(10);
   curve_grid.set_column_spacing(10);
   curve_name_field.set_placeholder_text("Name");
+  check_type_of_vector.set_active();
   curve_grid.attach(check_type_of_vector, 1, 1, 1, 1);
   curve_grid.attach(curve_name_field, 2, 1, 1, 1);
   curve_grid.attach(info_curve_label, 3, 1, 2, 1);
@@ -205,7 +206,7 @@ void AddObjectWindow::on_button_save_point()
 
   mainWindow->getLogTextView()->add_log_line(
     "Point named [" + name + "] was added with ("
-        + to_string((int)x_cord) + ", " + to_string((int)y_cord) + ", " 
+        + to_string((int)x_cord) + ", " + to_string((int)y_cord) + ", "
         + to_string((int)z_cord)+ ")\n"
   );
 
@@ -240,8 +241,8 @@ void AddObjectWindow::on_button_save_line()
 
   mainWindow->getLogTextView()->add_log_line(
     "Line named [" + name + "] was added with (" + to_string((int)x1_cord) + ", "
-        + to_string((int)y1_cord) + ", " + to_string((int)z1_cord) + ") and " 
-        + "(" + to_string((int)x2_cord) + ", " + to_string((int)y2_cord) + ", " 
+        + to_string((int)y1_cord) + ", " + to_string((int)z1_cord) + ") and "
+        + "(" + to_string((int)x2_cord) + ", " + to_string((int)y2_cord) + ", "
         + to_string((int)z2_cord)+ ")\n"
   );
 
@@ -367,7 +368,7 @@ void AddObjectWindow::on_button_save_curve()
       curve_vector_list.pop_front();
       curve_string_cord += "(" + to_string((int)vec.getBegin().getx()) + ", "
           + to_string((int)vec.getBegin().gety()) + ", " + to_string((int)vec.getBegin().getz())+ ") "
-          + "(" + to_string((int)vec.getEnd().getx()) + ", " + to_string((int)vec.getEnd().gety()) 
+          + "(" + to_string((int)vec.getEnd().getx()) + ", " + to_string((int)vec.getEnd().gety())
           + ", " + to_string((int)vec.getEnd().getz())  + ") ";
     }
 

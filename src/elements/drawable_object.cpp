@@ -82,3 +82,17 @@ Coordinate DrawableObject::getCenterOnWorld()
 
   return Coordinate(xAvg, yAvg, zAvg);
 }
+
+bool DrawableObject::isInFrontOfWindow(double viewportZ)
+{
+  double zSum = 0;
+  int count = 0;
+  for (Coordinate cord : coordinatesWorld)
+  {
+    zSum += cord.getz();
+    count++;
+  }
+  double zAvg = zSum / count;
+
+  return zAvg >= viewportZ;
+}

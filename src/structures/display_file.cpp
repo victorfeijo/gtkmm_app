@@ -5,7 +5,7 @@ DisplayFile::DisplayFile()
   // add origin
   this->addObject(new Line(string("origin_x"), Coordinate(-10,0), Coordinate(10,0)));
   this->addObject(new Line(string("origin_y"), Coordinate(0,-10), Coordinate(0,10)));
-  // this->addObject(new Line(string("origin_z"), Coordinate(0,0,-10), Coordinate(0,0,10)));
+  this->addObject(new Line(string("origin_z"), Coordinate(0,0,-10), Coordinate(0,0,10)));
 }
 
 DisplayFile::~DisplayFile()
