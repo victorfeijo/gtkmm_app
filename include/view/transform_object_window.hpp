@@ -5,6 +5,7 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/button.h>
 #include <gtkmm/notebook.h>
+#include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
 #include <gtkmm/entry.h>
 #include <string>
@@ -37,6 +38,7 @@ protected:
              rotate_x_field, rotate_y_field, rotate_z_field, rotate_degree_field;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
+  Gtk::ComboBoxText rotate_axis;
   Gtk::Button button_close, button_add_translation, button_add_scale,
               button_add_rotate, button_rotate_object, button_rotate_world;
 
