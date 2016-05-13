@@ -29,12 +29,12 @@ protected:
   ScaleObjectService scale_service;
   RotateObjectService rotate_service;
   Gtk::Grid translation_grid, scale_grid, rotate_grid;
-  Gtk::Label label_translation_x, label_translation_y,
-             label_scale_sx, label_scale_sy,
-             label_rotate_x, label_rotate_y, label_rotate_degree;
-  Gtk::Entry translation_x_field, translation_y_field,
-             scale_sx_field, scale_sy_field,
-             rotate_x_field, rotate_y_field, rotate_degree_field;
+  Gtk::Label label_translation_x, label_translation_y, label_translation_z,
+             label_scale_sx, label_scale_sy, label_scale_sz,
+             label_rotate_x, label_rotate_y, label_rotate_z, label_rotate_degree;
+  Gtk::Entry translation_x_field, translation_y_field, translation_z_field,
+             scale_sx_field, scale_sy_field, scale_sz_field,
+             rotate_x_field, rotate_y_field, rotate_z_field, rotate_degree_field;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
   Gtk::Button button_close, button_add_translation, button_add_scale,

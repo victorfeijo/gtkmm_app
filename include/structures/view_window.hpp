@@ -33,16 +33,21 @@ public:
   void setXwmax(double Xwmax);
   void setYwmax(double Ywmax);
   Coordinate getCenter();
-  void rotate(int angle);
-  int getRotation();
+  void rotateX(int angle);
+  void rotateY(int angle);
+  void rotateZ(int angle);
+  double getRotationX();
+  double getRotationY();
+  double getRotationZ();
   clipping_type getClippingType();
   void setClippingType(clipping_type clippingType);
 
 protected:
   DisplayFile displayFile;
   double Xwmin, Ywmin, Xwmax, Ywmax;
-  int rotationAngle;
-  Coordinate viewUp();
+  double windowZ;
+  Coordinate xVec, yVec, zVec;
+  int rotationX, rotationY, rotationZ;
   RotateObjectService rotateService;
   clipping_type clippingType;
 

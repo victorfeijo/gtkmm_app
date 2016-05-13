@@ -7,8 +7,10 @@ TransformObjectWindow::TransformObjectWindow(MainWindow* mainWindow, DrawableObj
       label_translation_y("Translate y : "),
       label_scale_sx("Scale Sx : "),
       label_scale_sy("Scale Sy : "),
+      label_scale_sz("Scale Sz : "),
       label_rotate_x("Rotate point x : "),
       label_rotate_y("Rotate point y : "),
+      label_rotate_z("Rotate point z : "),
       label_rotate_degree("Angle to rotate : "),
       m_vbox(Gtk::ORIENTATION_VERTICAL),
       button_close("Close"),
@@ -108,16 +110,18 @@ void TransformObjectWindow::on_button_translate()
 {
   std::string dx_string = translation_x_field.get_text().raw();
   std::string dy_string = translation_y_field.get_text().raw();
+  std::string dz_string = translation_z_field.get_text().raw();
   int dx = atoi(dx_string.c_str());
   int dy = atoi(dy_string.c_str());
+  int dz = atoi(dz_string.c_str());
 
-  translate_service.translate(this->object, dx, dy);
+  translate_service.translate(this->object, dx, dy, dz);
 
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getTypeName() + " named [" + this->object->getName() + "] was translated in ("
-      + to_string(dx) + ", " + to_string(dy) + ")\n"
+      + to_string(dx) + ", " + to_string(dy) + ", " + to_string(dz) + ")\n"
   );
   hide();
 }
@@ -144,18 +148,21 @@ void TransformObjectWindow::on_button_rotate()
 {
   std::string dx_string = rotate_x_field.get_text().raw();
   std::string dy_string = rotate_y_field.get_text().raw();
+  std::string dz_string = rotate_z_field.get_text().raw();
   std::string angle_string = rotate_degree_field.get_text().raw();
   int dx = atoi(dx_string.c_str());
   int dy = atoi(dy_string.c_str());
+  int dz = atoi(dz_string.c_str());
   int angle = atoi(angle_string.c_str());
 
-  rotate_service.rotateZ(this->object, dx, dy, angle);
+  rotate_service.rotateZ(this->object, dx, dy, dz, angle);
 
   this->mainWindow->getViewport()->queue_draw();
 
   this->mainWindow->getLogTextView()->add_log_line(
       this->object->getTypeName() + " named [" + this->object->getName() + "] was rotated in "
-      + to_string(angle) + "º around (" + to_string(dx) + ", " + to_string(dy) + ")\n"
+      + to_string(angle) + "º around (" + to_string(dx) + ", " + to_string(dy)
+      + ", " + to_string(dz) + ")\n"
   );
   hide();
 }
@@ -165,7 +172,7 @@ void TransformObjectWindow::on_button_rotate_world()
   std::string angle_string = rotate_degree_field.get_text().raw();
   int angle = atoi(angle_string.c_str());
 
-  rotate_service.rotateCenterWorld(this->object, angle);
+  rotate_service.rotateCenterWorldX(this->object, angle);
 
   this->mainWindow->getViewport()->queue_draw();
 
@@ -181,7 +188,7 @@ void TransformObjectWindow::on_button_rotate_object()
   std::string angle_string = rotate_degree_field.get_text().raw();
   int angle = atoi(angle_string.c_str());
 
-  rotate_service.rotateCenterObject(this->object, angle);
+  rotate_service.rotateCenterObjectZ(this->object, angle);
 
   this->mainWindow->getViewport()->queue_draw();
 

@@ -27,6 +27,7 @@ public:
   void setYvpmax(double Yvpmax);
   bool getFill();
   void setFill(bool fill);
+  void resetWindow();
 
 protected:
   bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;

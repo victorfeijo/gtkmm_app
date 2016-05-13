@@ -23,6 +23,16 @@ ViewWindow * Viewport::getViewWindow()
   return this->viewWindow;
 }
 
+void Viewport::resetWindow()
+{
+  delete viewWindow;
+  this->Xvpmin = 0;
+  this->Xvpmax = 0;
+  this->Yvpmax = 0;
+  this->Yvpmin = 0;
+  viewWindow = new ViewWindow(0,0,0,0);
+}
+
 double Viewport::getXvpmin()
 {
   return this->Xvpmin;

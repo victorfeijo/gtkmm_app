@@ -27,6 +27,7 @@ public:
   void setCoordinatesWindow(list<Coordinate> coordinates);
   void setCoordinatesClipped(list<Coordinate> coordinates);
   Coordinate getCenterOnWorld();
+  bool isInFrontOfWindow(double viewportZ);
   virtual void resetWindowCoordinates() = 0;
 
 protected:

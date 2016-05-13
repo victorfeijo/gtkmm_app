@@ -28,8 +28,8 @@ public:
 protected:
   /* Add here any components or frames
    */
-  Gtk::Box main_box, drawable_box, left_box, down_box;
-  Gtk::Frame left_frame, right_frame, down_frame;
+  Gtk::Box main_box, drawable_box, control_box, actions_box, down_box;
+  Gtk::Frame vp_frame, down_frame;
 
   Viewport viewport;
   Gtk::ScrolledWindow scrolled_log;
