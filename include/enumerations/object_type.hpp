@@ -7,7 +7,7 @@ enum object_type
   LINE,
   WIREFRAME,
   BEZIER2D,
+  OBJECT3D,
   BSPLINE2D
 };
-
 #endif

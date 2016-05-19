@@ -59,10 +59,30 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
       }
       else
       {
-        for (Coordinate coordinate : objectCoordinates)
+        if (object->getType() == object_type::OBJECT3D)
         {
-          Coordinate cordConverted = convertFromWindowToViewport(coordinate, viewport);
-          cr->line_to(cordConverted.getx(),cordConverted.gety());
+          int k = 0;
+          for (Coordinate coordinate : objectCoordinates)
+          {
+            Coordinate cordConverted = convertFromWindowToViewport(coordinate, viewport);
+            if (k%2 == 0)
+            {
+              cr->move_to(cordConverted.getx(),cordConverted.gety());
+            }
+            else
+            {
+              cr->line_to(cordConverted.getx(),cordConverted.gety());
+            }
+            k++;
+          }
+        }
+        else
+        {
+          for (Coordinate coordinate : objectCoordinates)
+          {
+            Coordinate cordConverted = convertFromWindowToViewport(coordinate, viewport);
+            cr->line_to(cordConverted.getx(),cordConverted.gety());
+          }
         }
         if (object->getType() == object_type::WIREFRAME) // wireframe case
         {

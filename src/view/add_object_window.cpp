@@ -7,11 +7,13 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
       button_add_wire_coordinate("Add Coordinate"),
       button_add_vector("Add Vector"),
       button_add_spline_coordinate("Add Coordinate"),
+      button_add_line3d("Add Line"),
       button_save_line("Save Line"),
       button_save_wire("Save Polygon"),
       button_save_point("Save Point"),
       button_save_curve("Save Curve"),
       button_save_spline("Save Spline"),
+      button_save_object3d("Save Object"),
       button_close("Close"),
       point_x_label("Coordinate X: "),
       point_y_label("Coordinate Y: "),
@@ -33,6 +35,13 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
       curve_y2_label("Coordinate Y\u2082: "),
       curve_z2_label("Coordinate Z\u2082: "),
       info_curve_label("Insert a Vector:"),
+      object3d_x1_label("Coordinate X\u2081: "),
+      object3d_y1_label("Coordinate Y\u2081: "),
+      object3d_z1_label("Coordinate Z\u2081: "),
+      object3d_x2_label("Coordinate X\u2082: "),
+      object3d_y2_label("Coordinate Y\u2082: "),
+      object3d_z2_label("Coordinate Z\u2082: "),
+      info_object3d_label("Insert a Line:"),
       spline_x_label("Coordinate X: "),
       spline_y_label("Coordinate Y: "),
       spline_z_label("Coordinate Z: "),
@@ -141,6 +150,29 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   spline_grid.attach(button_save_spline, 2, 5, 1, 1);
   spline_grid.set_border_width(10);
 
+  //Add object3d grid
+  object3d_grid.set_column_homogeneous(true);
+  object3d_grid.set_row_spacing(10);
+  object3d_grid.set_column_spacing(10);
+  object3d_name_field.set_placeholder_text("Name");
+  object3d_grid.attach(object3d_name_field, 1, 1, 2, 1);
+  object3d_grid.attach(info_object3d_label, 3, 1, 2, 1);
+  object3d_grid.attach(object3d_x1_label, 1, 2, 1, 1);
+  object3d_grid.attach(object3d_x1_field, 2, 2, 1, 1);
+  object3d_grid.attach(object3d_x2_label, 3, 2, 1, 1);
+  object3d_grid.attach(object3d_x2_field, 4, 2, 1, 1);
+  object3d_grid.attach(object3d_y1_label, 1, 3, 1, 1);
+  object3d_grid.attach(object3d_y1_field, 2, 3, 1, 1);
+  object3d_grid.attach(object3d_y2_label, 3, 3, 1, 1);
+  object3d_grid.attach(object3d_y2_field, 4, 3, 1, 1);
+  object3d_grid.attach(object3d_z1_label, 1, 4, 1, 1);
+  object3d_grid.attach(object3d_z1_field, 2, 4, 1, 1);
+  object3d_grid.attach(object3d_z2_label, 3, 4, 1, 1);
+  object3d_grid.attach(object3d_z2_field, 4, 4, 1, 1);
+  object3d_grid.attach(button_add_line3d, 1, 5, 2, 1);
+  object3d_grid.attach(button_save_object3d, 3, 5, 2, 1);
+  object3d_grid.set_border_width(10);
+
   button_close.signal_clicked().connect(sigc::mem_fun(*this,
     &AddObjectWindow::on_button_close) );
 
@@ -168,11 +200,18 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
   button_save_spline.signal_clicked().connect(sigc::mem_fun(*this,
     &AddObjectWindow::on_button_save_spline) );
 
+  button_add_line3d.signal_clicked().connect(sigc::mem_fun(*this,
+    &AddObjectWindow::on_button_add_line3d) );
+
+  button_save_object3d.signal_clicked().connect(sigc::mem_fun(*this,
+    &AddObjectWindow::on_button_save_object3d) );
+
   m_notebook.append_page(point_grid, "Point");
   m_notebook.append_page(line_grid, "Line");
   m_notebook.append_page(wire_grid, "Polygon");
   m_notebook.append_page(curve_grid, "Bezier Curve");
   m_notebook.append_page(spline_grid, "B-Spline");
+  m_notebook.append_page(object3d_grid, "Object 3D");
 
   set_type_hint(Gdk::WINDOW_TYPE_HINT_DIALOG);
   set_modal();
@@ -381,6 +420,83 @@ void AddObjectWindow::on_button_save_curve()
   else
   {
    info_curve_label.set_text("You need at least 2 vectors");
+  }
+}
+
+void AddObjectWindow::on_button_add_line3d()
+{
+  string x1_string = object3d_x1_field.get_text().raw();
+  string y1_string = object3d_y1_field.get_text().raw();
+  string z1_string = object3d_z1_field.get_text().raw();
+  string x2_string = object3d_x2_field.get_text().raw();
+  string y2_string = object3d_y2_field.get_text().raw();
+  string z2_string = object3d_z2_field.get_text().raw();
+  int x1_cord = atoi(x1_string.c_str());
+  int y1_cord = atoi(y1_string.c_str());
+  int z1_cord = atoi(z1_string.c_str());
+  int x2_cord = atoi(x2_string.c_str());
+  int y2_cord = atoi(y2_string.c_str());
+  int z2_cord = atoi(z2_string.c_str());
+
+  Coordinate begin(x1_cord, y1_cord, z1_cord);
+  Coordinate end(x2_cord, x2_cord, z2_cord);
+  object3d_cord_list.push_back(begin);
+  object3d_cord_list.push_back(end);
+
+  object3d_x1_field.set_text("");
+  object3d_x2_field.set_text("");
+  object3d_z1_field.set_text("");
+  object3d_y1_field.set_text("");
+  object3d_y2_field.set_text("");
+  object3d_z2_field.set_text("");
+
+  info_object3d_label.set_text(
+    "Added X1 : " + to_string(x1_cord) +
+    " Y1 : " + to_string(y1_cord) +
+    " Z1 : " + to_string(z1_cord) +
+    " X2 : " + to_string(x2_cord) +
+    " Y2 : " + to_string(y2_cord) +
+    " Z2 : " + to_string(z2_cord)
+  );
+}
+
+void AddObjectWindow::on_button_save_object3d()
+{
+  if (object3d_cord_list.size() > 1)
+  {
+    string name = object3d_name_field.get_text().raw();
+    if (name.empty())
+    {
+      object3d_name_field.grab_focus();
+      return;
+    }
+
+    Object3D *object3d = new Object3D(name, object3d_cord_list);
+    this->mainWindow->getViewport()->getViewWindow()->getDisplayFile()->addObject(object3d);
+    this->mainWindow->getViewport()->queue_draw();
+
+    string object3d_string_cord = "";
+    while(!object3d_cord_list.empty())
+    {
+      Coordinate cord1 = object3d_cord_list.front();
+      object3d_cord_list.pop_front();
+      Coordinate cord2 = object3d_cord_list.front();
+      object3d_cord_list.pop_front();
+      object3d_string_cord += "(" + to_string((int)cord1.getx()) + ", "
+          + to_string((int)cord1.gety()) + ", " + to_string((int)cord1.getz())+ ") "
+          + "(" + to_string((int)cord2.getx()) + ", " + to_string((int)cord2.gety())
+          + ", " + to_string((int)cord2.getz())  + ") ";
+    }
+
+    mainWindow->getLogTextView()->add_log_line(
+      "A 3D Object named [" + name + "] was added with " + object3d_string_cord + "\n"
+    );
+
+    close();
+  }
+  else
+  {
+   info_object3d_label.set_text("You need at least 1 line");
   }
 }
 
