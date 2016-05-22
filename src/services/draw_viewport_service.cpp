@@ -56,6 +56,7 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
       if (objectCoordinates.size() == 1)  // point case
       {
         cr->line_to(firstCordConverted.getx()+1,firstCordConverted.gety()+1);
+        cr->stroke();
       }
       else
       {

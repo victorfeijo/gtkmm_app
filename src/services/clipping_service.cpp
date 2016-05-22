@@ -97,7 +97,13 @@ void ClippingService::clipPoint(ViewWindow* window, DrawableObject *object)
     throw 30;
   }
   std::list<Coordinate> windowCordList;
-  if (calcRegionCode(window, object->getCoordinatesWindow().front()) == INSIDE)
+  Coordinate point = object->getCoordinatesWindow().front();
+  Coordinate point_end = Coordinate(point.getx()+1,point.gety()-1);
+
+  if (
+    calcRegionCode(window, point) == INSIDE &&
+    calcRegionCode(window, point_end) == INSIDE
+  )
   {
     windowCordList = object->getCoordinatesWindow();
   }
