@@ -37,15 +37,15 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
 
   for (DrawableObject* object : objectsList)
   {
-    if (object->isInFrontOfWindow(0))
+    object->resetWindowCoordinates();
+    rotate_service.rotateX(object, windowCenter.getx(), windowCenter.gety(),
+    windowCenter.getz(), windowAngleX, transform_type::ON_WINDOW);
+    rotate_service.rotateY(object, windowCenter.getx(), windowCenter.gety(),
+    windowCenter.getz(), windowAngleY, transform_type::ON_WINDOW);
+    rotate_service.rotateZ(object, windowCenter.getx(), windowCenter.gety(),
+    windowCenter.getz(), windowAngleZ, transform_type::ON_WINDOW);
+    if (object->isInFrontOfWindow(viewport->getViewWindow()->getZ()))
     {
-      object->resetWindowCoordinates();
-      rotate_service.rotateX(object, windowCenter.getx(), windowCenter.gety(),
-                  windowCenter.getz(), windowAngleX, transform_type::ON_WINDOW);
-      rotate_service.rotateY(object, windowCenter.getx(), windowCenter.gety(),
-                  windowCenter.getz(), windowAngleY, transform_type::ON_WINDOW);
-      rotate_service.rotateZ(object, windowCenter.getx(), windowCenter.gety(),
-                  windowCenter.getz(), windowAngleZ, transform_type::ON_WINDOW);
 
       clipping_service.clip(viewport->getViewWindow(), object);
       list<Coordinate> objectCoordinates = object->getCoordinatesClipped();

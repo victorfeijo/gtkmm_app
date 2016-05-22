@@ -35,9 +35,10 @@ public:
 protected:
   MainWindow* mainWindow;
   Gtk::Button button_move_up, button_move_down, button_move_left,
-              button_move_right, button_zoom_in, button_zoom_out,
-              button_rotate_x1, button_rotate_x2, button_rotate_y1,
-              button_rotate_y2, button_rotate_z1, button_rotate_z2;
+              button_move_right, button_move_in, button_move_out,
+              button_zoom_in, button_zoom_out, button_rotate_x1,
+              button_rotate_x2, button_rotate_y1, button_rotate_y2,
+              button_rotate_z1, button_rotate_z2;
   Gtk::Grid grid_move, grid_zoom, grid_rotation;
   Gtk::Entry entry_move_length, entry_zoom_scale, entry_rotation_angle;
 
@@ -45,6 +46,8 @@ protected:
   void on_button_move_down();
   void on_button_move_left();
   void on_button_move_right();
+  void on_button_move_in();
+  void on_button_move_out();
   void on_button_zoom_in();
   void on_button_zoom_out();
   void on_button_rotate_x1();
