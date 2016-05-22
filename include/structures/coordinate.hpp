@@ -6,6 +6,7 @@
 class Coordinate
 {
 public:
+  Coordinate();
   Coordinate(double x, double y);
   Coordinate(double x, double y, double z);
   Coordinate(Matrix<double> matrix);

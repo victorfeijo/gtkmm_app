@@ -140,11 +140,6 @@ double ViewWindow::getYwmax()
   return this->Ywmax;
 }
 
-double ViewWindow::getZ()
-{
-  return this->windowZ;
-}
-
 void ViewWindow::setXwmin(double Xwmin)
 {
   this->Xwmin = Xwmin;

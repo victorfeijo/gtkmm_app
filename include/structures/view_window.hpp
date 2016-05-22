@@ -30,7 +30,6 @@ public:
   double getYwmin();
   double getXwmax();
   double getYwmax();
-  double getZ();
   void setXwmin(double Xwmin);
   void setYwmin(double Ywmin);
   void setXwmax(double Xwmax);

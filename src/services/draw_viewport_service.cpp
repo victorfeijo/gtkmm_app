@@ -44,7 +44,7 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
     windowCenter.getz(), windowAngleY, transform_type::ON_WINDOW);
     rotate_service.rotateZ(object, windowCenter.getx(), windowCenter.gety(),
     windowCenter.getz(), windowAngleZ, transform_type::ON_WINDOW);
-    if (object->isInFrontOfWindow(viewport->getViewWindow()->getZ()))
+    if (object->isInFrontOfWindow(windowCenter.getz()))
     {
 
       clipping_service.clip(viewport->getViewWindow(), object);
