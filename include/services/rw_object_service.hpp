@@ -12,6 +12,7 @@
 #include "line.hpp"
 #include "wireframe.hpp"
 #include "curve_2d.hpp"
+#include "object_3d.hpp"
 
 using namespace std;
 
@@ -22,6 +23,9 @@ public:
   ~RwObjectService();
   list<DrawableObject*> read(string file_path);
   void write(list<DrawableObject*> objects_list, string file_path);
+
+protected:
+  DrawableObject* addGroup(list<Coordinate> cord_list, string name);
 };
 
 #endif
