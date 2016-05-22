@@ -439,7 +439,7 @@ void AddObjectWindow::on_button_add_line3d()
   int z2_cord = atoi(z2_string.c_str());
 
   Coordinate begin(x1_cord, y1_cord, z1_cord);
-  Coordinate end(x2_cord, x2_cord, z2_cord);
+  Coordinate end(x2_cord, y2_cord, z2_cord);
   object3d_cord_list.push_back(begin);
   object3d_cord_list.push_back(end);
 
