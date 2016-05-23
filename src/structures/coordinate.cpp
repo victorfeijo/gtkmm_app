@@ -1,7 +1,12 @@
 #include "coordinate.hpp"
 
+Coordinate::Coordinate()
+    : cord_x(0), cord_y(0), cord_z(0)
+{
+}
+
 Coordinate::Coordinate(double x, double y)
-    : cord_x(x), cord_y(y), cord_z(1)
+    : cord_x(x), cord_y(y), cord_z(0)
 {
 }
 

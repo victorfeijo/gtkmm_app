@@ -15,6 +15,7 @@
 #include "translate_object_service.hpp"
 #include "scale_object_service.hpp"
 #include "rotate_object_service.hpp"
+#include "vector.hpp"
 
 class TransformObjectWindow : public Gtk::Window
 {
@@ -31,23 +32,28 @@ protected:
   RotateObjectService rotate_service;
   Gtk::Grid translation_grid, scale_grid, rotate_grid;
   Gtk::Label label_translation_x, label_translation_y, label_translation_z,
-             label_scale_sx, label_scale_sy, label_scale_sz,
-             label_rotate_x, label_rotate_y, label_rotate_z, label_rotate_degree;
+             label_scale_sx, label_scale_sy, label_scale_sz, label_rotate_axis,
+             label_rotate_x, label_rotate_y, label_rotate_z, label_rotate_degree,
+             label_rotate_point, label_rotate_axis_x1, label_rotate_axis_y1,
+             label_rotate_axis_z1, label_rotate_axis_x2, label_rotate_axis_y2,
+             label_rotate_axis_z2;
   Gtk::Entry translation_x_field, translation_y_field, translation_z_field,
              scale_sx_field, scale_sy_field, scale_sz_field,
-             rotate_x_field, rotate_y_field, rotate_z_field, rotate_degree_field;
+             rotate_x_field, rotate_y_field, rotate_z_field, rotate_degree_field,
+             rotate_axis_x1_field, rotate_axis_y1_field, rotate_axis_z1_field,
+             rotate_axis_x2_field, rotate_axis_y2_field, rotate_axis_z2_field;
   Gtk::Notebook m_notebook;
   Gtk::Box m_vbox;
-  Gtk::ComboBoxText rotate_axis;
+  Gtk::ComboBoxText rotate_axis, rotate_point;
   Gtk::Button button_close, button_add_translation, button_add_scale,
-              button_add_rotate, button_rotate_object, button_rotate_world;
+              button_add_rotate;
 
   void on_button_close();
   void on_button_translate();
   void on_button_scale();
   void on_button_rotate();
-  void on_button_rotate_world();
-  void on_button_rotate_object();
+  void on_rotate_axis_changed();
+  void on_rotate_point_changed();
 };
 
 #endif

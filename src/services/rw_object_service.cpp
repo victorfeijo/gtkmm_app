@@ -16,7 +16,7 @@ list<DrawableObject*> RwObjectService::read(string file_path)
   string line;
   ifstream myfile(file_path);
   string groupname = "#";
-  int groupfaces = 0;
+  list<Coordinate> group_cord_list;
   if(myfile.is_open())
   {
     while(getline(myfile, line))
@@ -37,7 +37,11 @@ list<DrawableObject*> RwObjectService::read(string file_path)
       }
       else if (strcmp(tag, "g") == 0)
       {
-        groupfaces = 0;
+        if (!group_cord_list.empty())
+        {
+          objects_list.push_back(addGroup(group_cord_list, groupname));
+        }
+        group_cord_list.clear();
         int pos = line.find(tag);
         groupname = line.substr(pos+2, line.length());
       }
@@ -45,12 +49,6 @@ list<DrawableObject*> RwObjectService::read(string file_path)
                 strcmp(tag, "curv2bz") == 0 ||
                 strcmp(tag, "curv2sp") == 0 )
       {
-        string facename = groupname;
-        if (groupfaces != 0)
-        {
-          facename += "#" + to_string(groupfaces);
-        }
-        groupfaces++;
         list<Coordinate> current_cord_list;
         for (char *cord_index = strtok(NULL, " \t\r"); cord_index != NULL;
             cord_index = strtok(NULL, " \t\r"))
@@ -62,35 +60,60 @@ list<DrawableObject*> RwObjectService::read(string file_path)
         DrawableObject *object;
         if (current_cord_list.size() == 1)
         {
-          object = new Point(facename, current_cord_list.front());
+          object = new Point(groupname, current_cord_list.front());
         }
-        else if (cord_list.size() == 2)
+        else if (current_cord_list.size() == 2)
         {
           Coordinate cord_x = current_cord_list.front();
           Coordinate cord_y = current_cord_list.back();
-          object = new Line(facename, cord_x, cord_y);
+          group_cord_list.push_back(cord_x);
+          group_cord_list.push_back(cord_y);
+          object = NULL;
         }
         else
         {
           if (strcmp(tag, "curv2bz") == 0)
           {
-            object = new Curve2D(facename, current_cord_list, BEZIER2D);
+            object = new Curve2D(groupname, current_cord_list, BEZIER2D);
           }
           else if (strcmp(tag, "curv2sp") == 0)
           {
-            object = new Curve2D(facename, current_cord_list, BSPLINE2D);
+            object = new Curve2D(groupname, current_cord_list, BSPLINE2D);
           }
           else
           {
-            object = new WireFrame(facename, current_cord_list);
+            object = new WireFrame(groupname, current_cord_list);
           }
         }
-        objects_list.push_back(object);
+        if (object != NULL)
+        {
+          objects_list.push_back(object);
+        }
       }
+    }
+    if (!group_cord_list.empty())
+    {
+      objects_list.push_back(addGroup(group_cord_list, groupname));
     }
     myfile.close();
   }
   return objects_list;
+}
+
+DrawableObject* RwObjectService::addGroup(list<Coordinate> cord_list, string name)
+{
+  DrawableObject* object;
+  if (cord_list.size() == 2)
+  {
+    Coordinate cord_x = cord_list.front();
+    Coordinate cord_y = cord_list.back();
+    object = new Line(name, cord_x, cord_y);
+  }
+  else
+  {
+    object = new Object3D(name, cord_list);
+  }
+  return object;
 }
 
 void RwObjectService::write(list<DrawableObject*> objects_list, string file_path)
@@ -123,9 +146,15 @@ void RwObjectService::write(list<DrawableObject*> objects_list, string file_path
     {
       myfile << "f";
     }
+    int k = 0;
     for (Coordinate cord : obj->getCoordinatesWorld())
     {
+      if (k % 2 == 0 && obj->getType() == OBJECT3D && k > 0)
+      {
+      myfile << "\nf";
+      }
       myfile << " " + to_string(current_vertice++);
+      k++;
     }
     myfile << "\n";
   }

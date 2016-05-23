@@ -22,7 +22,7 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
   this->clipping_options.set_active(this->mainWindow->getViewport()->
                                     getViewWindow()->getClippingType());
 
-  this->fill_options.append("None");
+  this->fill_options.append("Outline");
   this->fill_options.append("Fill");
 
   this->fill_options.set_active(this->mainWindow->getViewport()->getFill());
