@@ -149,11 +149,11 @@ void RwObjectService::write(list<DrawableObject*> objects_list, string file_path
     int k = 0;
     for (Coordinate cord : obj->getCoordinatesWorld())
     {
-      myfile << " " + to_string(current_vertice++);
-      if (k % 2 == 1)
+      if (k % 2 == 0 && obj->getType() == OBJECT3D && k > 0)
       {
       myfile << "\nf";
       }
+      myfile << " " + to_string(current_vertice++);
       k++;
     }
     myfile << "\n";

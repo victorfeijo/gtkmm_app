@@ -33,6 +33,7 @@ public:
                );
   virtual ~DrawActionsBox();
   void save_object(std::string file_path);
+  void on_button_close();
 
 protected:
   MainWindow* mainWindow;
@@ -46,13 +47,13 @@ protected:
   SettingsWindow* settings_window;
   RwObjectService rw_object_service;
   unsigned long int resetTime;
+  unsigned long int closeTime;
 
   void on_button_add_object();
   void on_button_open_object();
   void on_button_save_object();
   void on_button_settings();
   void on_button_list_objects();
-  void on_button_close();
   void on_button_reset();
 };
 #endif // GTKMM_APP_DRAW_ACTIONS_BOX

@@ -18,7 +18,8 @@ DrawActionsBox::DrawActionsBox(const Glib::ustring& title,
       choose_file_window(nullptr),
       list_objects_window(nullptr),
       settings_window(nullptr),
-      resetTime(0)
+      resetTime(0),
+      closeTime(0)
 {
   Gtk::ButtonBox* bbox = Gtk::manage( new Gtk::ButtonBox(Gtk::ORIENTATION_VERTICAL) );
   bbox->set_border_width(10);
@@ -125,7 +126,17 @@ void DrawActionsBox::on_button_reset()
 
 void DrawActionsBox::on_button_close()
 {
-  exit(0);
+  unsigned long int timeNow = duration_cast< milliseconds >(
+    system_clock::now().time_since_epoch()
+  ).count();
+  if (closeTime > timeNow - RESET_INTERVAL)
+  {
+    exit(0);
+  }
+  else
+  {
+    closeTime = timeNow;
+  }
 }
 
 void DrawActionsBox::on_button_save_object()

@@ -6,15 +6,15 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
       check_type_of_vector("Use coordinate"),
       button_add_wire_coordinate("Add Coordinate"),
       button_add_vector("Add Vector"),
+      button_save_object3d("Save Object"),
       button_add_spline_coordinate("Add Coordinate"),
-      button_add_line3d("Add Line"),
       button_save_line("Save Line"),
       button_save_wire("Save Polygon"),
       button_save_point("Save Point"),
       button_save_curve("Save Curve"),
       button_save_spline("Save Spline"),
-      button_save_object3d("Save Object"),
       button_close("Close"),
+      button_add_line3d("Add Line"),
       point_x_label("Coordinate X: "),
       point_y_label("Coordinate Y: "),
       point_z_label("Coordinate Z: "),
@@ -30,22 +30,22 @@ AddObjectWindow::AddObjectWindow(MainWindow* mainWindow)
       info_wire_label("Insert a Coordinate:"),
       curve_x1_label("Coordinate X\u2081: "),
       curve_y1_label("Coordinate Y\u2081: "),
-      curve_z1_label("Coordinate Z\u2081: "),
       curve_x2_label("Coordinate X\u2082: "),
       curve_y2_label("Coordinate Y\u2082: "),
+      curve_z1_label("Coordinate Z\u2081: "),
       curve_z2_label("Coordinate Z\u2082: "),
       info_curve_label("Insert a Vector:"),
-      object3d_x1_label("Coordinate X\u2081: "),
-      object3d_y1_label("Coordinate Y\u2081: "),
-      object3d_z1_label("Coordinate Z\u2081: "),
-      object3d_x2_label("Coordinate X\u2082: "),
-      object3d_y2_label("Coordinate Y\u2082: "),
-      object3d_z2_label("Coordinate Z\u2082: "),
-      info_object3d_label("Insert a Line:"),
       spline_x_label("Coordinate X: "),
       spline_y_label("Coordinate Y: "),
       spline_z_label("Coordinate Z: "),
-      info_spline_label("Insert a Coordinate:")
+      info_spline_label("Insert a Coordinate:"),
+      object3d_x1_label("Coordinate X\u2081: "),
+      object3d_y1_label("Coordinate Y\u2081: "),
+      object3d_x2_label("Coordinate X\u2082: "),
+      object3d_y2_label("Coordinate Y\u2082: "),
+      object3d_z1_label("Coordinate Z\u2081: "),
+      object3d_z2_label("Coordinate Z\u2082: "),
+      info_object3d_label("Insert a Line:")
 {
   set_title("Add Object");
   set_border_width(12);
@@ -338,8 +338,8 @@ void AddObjectWindow::on_button_add_wire_coordinate()
   wire_y_field.set_text("");
   wire_z_field.set_text("");
 
-  info_wire_label.set_text("Added X : " + to_string(x_cord) +
-                      " Y : " + to_string(y_cord) + " Z : " + to_string(z_cord));
+  info_wire_label.set_text("Added X:" + to_string(x_cord) +
+                      " Y:" + to_string(y_cord) + " Z:" + to_string(z_cord));
 }
 
 void AddObjectWindow::on_button_add_vector()
@@ -377,12 +377,12 @@ void AddObjectWindow::on_button_add_vector()
   curve_y2_field.set_text("");
   curve_z2_field.set_text("");
 
-  info_curve_label.set_text("Added X1 : " + to_string(x1_cord) +
-                      " Y1 : " + to_string(y1_cord) +
-                      " Z1 : " + to_string(z1_cord) +
-                      " X2 : " + to_string(x2_cord) +
-                      " Y2 : " + to_string(y2_cord) +
-                      " Z2 : " + to_string(z2_cord));
+  info_curve_label.set_text("Added X1:" + to_string(x1_cord) +
+                      " Y1:" + to_string(y1_cord) +
+                      " Z1:" + to_string(z1_cord) +
+                      " X2:" + to_string(x2_cord) +
+                      " Y2:" + to_string(y2_cord) +
+                      " Z2:" + to_string(z2_cord));
 }
 
 void AddObjectWindow::on_button_save_curve()
@@ -451,12 +451,12 @@ void AddObjectWindow::on_button_add_line3d()
   object3d_z2_field.set_text("");
 
   info_object3d_label.set_text(
-    "Added X1 : " + to_string(x1_cord) +
-    " Y1 : " + to_string(y1_cord) +
-    " Z1 : " + to_string(z1_cord) +
-    " X2 : " + to_string(x2_cord) +
-    " Y2 : " + to_string(y2_cord) +
-    " Z2 : " + to_string(z2_cord)
+    "Added X1:" + to_string(x1_cord) +
+    " Y1:" + to_string(y1_cord) +
+    " Z1:" + to_string(z1_cord) +
+    " X2:" + to_string(x2_cord) +
+    " Y2:" + to_string(y2_cord) +
+    " Z2:" + to_string(z2_cord)
   );
 }
 
@@ -515,8 +515,8 @@ void AddObjectWindow::on_button_add_spline_coordinate()
   spline_y_field.set_text("");
   spline_z_field.set_text("");
 
-  info_spline_label.set_text("Added X : " + to_string(x_cord) +
-                      " Y : " + to_string(y_cord) + " Z : " + to_string(z_cord));
+  info_spline_label.set_text("Added X:" + to_string(x_cord) +
+                      " Y:" + to_string(y_cord) + " Z:" + to_string(z_cord));
 }
 
 void AddObjectWindow::on_button_save_spline()

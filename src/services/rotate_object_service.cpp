@@ -8,6 +8,37 @@ RotateObjectService::~RotateObjectService()
 {
 }
 
+void RotateObjectService::rotateAxis(DrawableObject *object, Vector vec, int angle)
+{
+  // convert from deg to rad
+  double angleRad = angle * M_PI / 180;
+
+  double bx = vec.getBegin().getx();
+  double by = vec.getBegin().gety();
+  double bz = vec.getBegin().getz();
+  double ex = vec.getEnd().getx()-bx;
+  double ey = vec.getEnd().gety()-by;
+  double ez = vec.getEnd().getz()-bz;
+  double eModule = sqrt(ex*ex + ey*ey + ez*ez);
+
+  double ax = ex/eModule;
+  double ay = ey/eModule;
+  double az = ez/eModule;
+
+  Matrix<double> rotationMatrix(3,3);
+  rotationMatrix.set(0, 0,      cos(angleRad)      + ax*ax*(1-cos(angleRad)));
+  rotationMatrix.set(0, 1, ax*ay*(1-cos(angleRad)) -    az*sin(angleRad));
+  rotationMatrix.set(0, 2, ax*az*(1-cos(angleRad)) +    ay*sin(angleRad));
+  rotationMatrix.set(1, 0, ay*ax*(1-cos(angleRad)) +    az*sin(angleRad));
+  rotationMatrix.set(1, 1,      cos(angleRad)      + ay*ay*(1-cos(angleRad)));
+  rotationMatrix.set(1, 2, ay*az*(1-cos(angleRad)) -    ax*sin(angleRad));
+  rotationMatrix.set(2, 0, az*ax*(1-cos(angleRad)) -    ay*sin(angleRad));
+  rotationMatrix.set(2, 1, ay*az*(1-cos(angleRad)) +    ax*sin(angleRad));
+  rotationMatrix.set(2, 2,      cos(angleRad)      + az*az*(1-cos(angleRad)));
+
+  rotate(object, bx, by, bz, rotationMatrix);
+}
+
 void RotateObjectService::rotateX(DrawableObject *object, int dx, int dy, int dz,
                                   int angle, transform_type type)
 {
@@ -22,7 +53,6 @@ void RotateObjectService::rotateX(DrawableObject *object, int dx, int dy, int dz
   rotateX.set(2, 2, cos(angleRad));
 
   rotate(object, dx, dy, dz, rotateX, type);
-
 }
 void RotateObjectService::rotateY(DrawableObject *object, int dx, int dy, int dz,
                                   int angle, transform_type type)
@@ -86,37 +116,4 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int dz,
     break;
   }
   translate_service.translate(object, dx, dy, dz, type);
-}
-
-void RotateObjectService::rotateCenterObjectX(DrawableObject *object, int angle)
-{
-  Coordinate center = object->getCenterOnWorld();
-  rotateX(object, center.getx(), center.gety(), center.getz(), angle);
-}
-
-void RotateObjectService::rotateCenterObjectY(DrawableObject *object, int angle)
-{
-  Coordinate center = object->getCenterOnWorld();
-  rotateY(object, center.getx(), center.gety(), center.getz(), angle);
-}
-
-void RotateObjectService::rotateCenterObjectZ(DrawableObject *object, int angle)
-{
-  Coordinate center = object->getCenterOnWorld();
-  rotateZ(object, center.getx(), center.gety(), center.getz(), angle);
-}
-
-void RotateObjectService::rotateCenterWorldX(DrawableObject *object, int angle)
-{
-  rotateX(object, 0, 0, 0, angle);
-}
-
-void RotateObjectService::rotateCenterWorldY(DrawableObject *object, int angle)
-{
-  rotateY(object, 0, 0, 0, angle);
-}
-
-void RotateObjectService::rotateCenterWorldZ(DrawableObject *object, int angle)
-{
-  rotateZ(object, 0, 0, 0, angle);
 }
