@@ -7,10 +7,12 @@ DrawControlBox::DrawControlBox(const Glib::ustring& title,
                               )
     : Gtk::Frame(title),
       mainWindow(mainWindow),
-      button_move_up("\u2227"),
-      button_move_down("\u2228"),
-      button_move_left("<"),
-      button_move_right(">"),
+      button_move_up("\u2191"),
+      button_move_down("\u2193"),
+      button_move_left("\u2190"),
+      button_move_right("\u2192"),
+      button_move_in("\u2297"),
+      button_move_out("\u2299"),
       button_zoom_in("+"),
       button_zoom_out("-"),
       button_rotate_x1("\u2909"),
@@ -33,6 +35,8 @@ DrawControlBox::DrawControlBox(const Glib::ustring& title,
   button_move_down.signal_clicked().connect(sigc::mem_fun(*this, &DrawControlBox::on_button_move_down));
   button_move_left.signal_clicked().connect(sigc::mem_fun(*this, &DrawControlBox::on_button_move_left));
   button_move_right.signal_clicked().connect(sigc::mem_fun(*this, &DrawControlBox::on_button_move_right));
+  button_move_in.signal_clicked().connect(sigc::mem_fun(*this, &DrawControlBox::on_button_move_in));
+  button_move_out.signal_clicked().connect(sigc::mem_fun(*this, &DrawControlBox::on_button_move_out));
 
   entry_move_length.set_width_chars(1);
   entry_move_length.set_text(DEFAULT_MOVE_LENGTH);
@@ -42,7 +46,9 @@ DrawControlBox::DrawControlBox(const Glib::ustring& title,
   grid_move.attach(button_move_left, 1, 2, 1, 1);
   grid_move.attach(entry_move_length, 2, 2, 1, 1);
   grid_move.attach(button_move_right, 3, 2, 1, 1);
+  grid_move.attach(button_move_in, 1, 3, 1, 1);
   grid_move.attach(button_move_down, 2, 3, 1, 1);
+  grid_move.attach(button_move_out, 3, 3, 1, 1);
 
   bbox->add(grid_move);
 
@@ -136,6 +142,34 @@ void DrawControlBox::on_button_move_right()
   else
   {
     this->mainWindow->getViewport()->getViewWindow()->move_right(move_length);
+    this->mainWindow->getViewport()->queue_draw();
+  }
+}
+
+void DrawControlBox::on_button_move_in()
+{
+  int move_length = atoi(entry_move_length.get_text().raw().c_str());
+  if (move_length == 0)
+  {
+    entry_move_length.set_text(DEFAULT_MOVE_LENGTH);
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->move_in(move_length);
+    this->mainWindow->getViewport()->queue_draw();
+  }
+}
+
+void DrawControlBox::on_button_move_out()
+{
+  int move_length = atoi(entry_move_length.get_text().raw().c_str());
+  if (move_length == 0)
+  {
+    entry_move_length.set_text(DEFAULT_MOVE_LENGTH);
+  }
+  else
+  {
+    this->mainWindow->getViewport()->getViewWindow()->move_out(move_length);
     this->mainWindow->getViewport()->queue_draw();
   }
 }

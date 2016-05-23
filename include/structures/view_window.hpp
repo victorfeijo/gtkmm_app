@@ -23,11 +23,14 @@ public:
   void move_down(int length = 10);
   void move_left(int length = 10);
   void move_right(int length = 10);
+  void move_in(int length = 10);
+  void move_out(int length = 10);
   DisplayFile* getDisplayFile();
   double getXwmin();
   double getYwmin();
   double getXwmax();
   double getYwmax();
+  double getZ();
   void setXwmin(double Xwmin);
   void setYwmin(double Ywmin);
   void setXwmax(double Xwmax);
@@ -41,12 +44,17 @@ public:
   double getRotationZ();
   clipping_type getClippingType();
   void setClippingType(clipping_type clippingType);
+  Coordinate getXVec();
+  Coordinate getYVec();
+  Coordinate getZVec();
 
 protected:
+  Coordinate rotateVecX(Coordinate vec, int angle);
+  Coordinate rotateVecY(Coordinate vec, int angle);
+  Coordinate rotateVecZ(Coordinate vec, int angle);
   DisplayFile displayFile;
   double Xwmin, Ywmin, Xwmax, Ywmax;
   double windowZ;
-  Coordinate xVec, yVec, zVec;
   int rotationX, rotationY, rotationZ;
   RotateObjectService rotateService;
   clipping_type clippingType;

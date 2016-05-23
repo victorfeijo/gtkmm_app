@@ -9,7 +9,7 @@
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/grid.h>
 #include <string>
-#include <ctime>
+#include <chrono>
 #include "main_window.hpp"
 #include "view_window.hpp"
 #include "add_object_window.hpp"
@@ -17,6 +17,10 @@
 #include "list_objects_window.hpp"
 #include "settings_window.hpp"
 #include "rw_object_service.hpp"
+
+#define RESET_INTERVAL 500
+
+using namespace std::chrono;
 
 class DrawActionsBox : public Gtk::Frame
 {
@@ -41,7 +45,7 @@ protected:
   ListObjectsWindow* list_objects_window;
   SettingsWindow* settings_window;
   RwObjectService rw_object_service;
-  int resetTime;
+  unsigned long int resetTime;
 
   void on_button_add_object();
   void on_button_open_object();

@@ -87,12 +87,11 @@ bool DrawableObject::isInFrontOfWindow(double viewportZ)
 {
   double zSum = 0;
   int count = 0;
-  for (Coordinate cord : coordinatesWorld)
+  for (Coordinate cord : coordinatesWindow)
   {
     zSum += cord.getz();
     count++;
   }
   double zAvg = zSum / count;
-
   return zAvg >= viewportZ;
 }

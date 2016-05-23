@@ -108,7 +108,10 @@ void DrawActionsBox::on_button_list_objects()
 
 void DrawActionsBox::on_button_reset()
 {
-  if (resetTime == time(0))
+  unsigned long int timeNow = duration_cast< milliseconds >(
+    system_clock::now().time_since_epoch()
+  ).count();
+  if (resetTime > timeNow - RESET_INTERVAL)
   {
     this->mainWindow->getViewport()->resetWindow();
     this->mainWindow->getViewport()->queue_draw();
@@ -116,7 +119,7 @@ void DrawActionsBox::on_button_reset()
   }
   else
   {
-    resetTime = time(0);
+    resetTime = timeNow;
   }
 }
 
