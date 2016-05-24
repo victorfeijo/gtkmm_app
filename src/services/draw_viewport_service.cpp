@@ -66,6 +66,10 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
           for (Coordinate coordinate : objectCoordinates)
           {
             Coordinate cordConverted = convertFromWindowToViewport(coordinate, viewport);
+            if (viewport->getProjection())
+            {
+              cordConverted = this->applyPerspective(cordConverted, viewport);
+            }
             if (k%2 == 0)
             {
               cr->move_to(cordConverted.getx(),cordConverted.gety());
@@ -82,6 +86,10 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
           for (Coordinate coordinate : objectCoordinates)
           {
             Coordinate cordConverted = convertFromWindowToViewport(coordinate, viewport);
+            if (viewport->getProjection())
+            {
+              cordConverted = this->applyPerspective(cordConverted, viewport);
+            }
             cr->line_to(cordConverted.getx(),cordConverted.gety());
           }
         }
@@ -181,4 +189,21 @@ void DrawViewportService::updateViewportAllocation(Gtk::Allocation allocation, V
 
   viewport->set_allocation(allocation);
 
+}
+
+/*
+ * COP = CENTER OBSERVER POINT
+ */
+Coordinate DrawViewportService::applyPerspective(Coordinate cord, Viewport* viewport)
+{
+  double height = viewport->getHeight();
+  double width = viewport->getWidth();
+  Coordinate cop(width/2, height/2, COP_Z);
+  Coordinate translated_cord = cord.toMatrix() + (cop.toMatrix()*-1);
+  Coordinate projection_cord(
+    translated_cord.getx()/(translated_cord.getz()*COP_Z), 
+    translated_cord.gety()/(translated_cord.getz()*COP_Z), 
+    COP_Z
+  );
+  return projection_cord.toMatrix() + cop.toMatrix();
 }

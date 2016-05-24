@@ -21,12 +21,16 @@ public:
   double getYvpmin();
   double getXvpmax();
   double getYvpmax();
+  double getWidth();
+  double getHeight();
   void setXvpmin(double Xvpmin);
   void setYvpmin(double Yvpmin);
   void setXvpmax(double Xvpmax);
   void setYvpmax(double Yvpmax);
   bool getFill();
   void setFill(bool fill);
+  bool getProjection();
+  void setProjection(bool projection);
   void resetWindow();
 
 protected:
@@ -34,7 +38,7 @@ protected:
   ViewWindow* viewWindow;
   double Xvpmin, Yvpmin, Xvpmax, Yvpmax;
   bool fillPolygon;
-
+  bool perspectiveProjection;
 };
 
 #endif

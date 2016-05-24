@@ -6,6 +6,7 @@
 #define RED 0.8, 0, 0
 #define BLACK 0, 0, 0
 #define WHITE 1, 1, 1
+#define COP_Z -10
 
 #include <cairomm/context.h>
 #include <gtkmm/drawingarea.h>
@@ -24,6 +25,7 @@ public:
 private:
   Coordinate convertFromWindowToViewport(Coordinate cord, Viewport* viewport);
   void updateViewportAllocation(Gtk::Allocation newAllocation, Viewport* viewport);
+  Coordinate applyPerspective(Coordinate cord, Viewport* viewport);
   RotateObjectService rotate_service;
   ClippingService clipping_service;
 };

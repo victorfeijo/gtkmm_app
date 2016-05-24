@@ -27,14 +27,21 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
 
   this->fill_options.set_active(this->mainWindow->getViewport()->getFill());
 
+  this->projection_options.append("Pararell");
+  this->projection_options.append("Perspective");
+
+  this->projection_options.set_active(this->mainWindow->getViewport()->getProjection());
+
   set_title("Settings");
   set_border_width(10);
   set_resizable(false);
 
   clipping_options.set_border_width(10);
   fill_options.set_border_width(10);
+  projection_options.set_border_width(10);
   m_notebook.append_page(clipping_options, "Clipping");
   m_notebook.append_page(fill_options, "Polygon");
+  m_notebook.append_page(projection_options, "Projection");
 
   settings_vbox.pack_start(m_notebook);
   settings_vbox.pack_start(button_close, Gtk::PACK_SHRINK);
@@ -45,6 +52,8 @@ SettingsWindow::SettingsWindow(MainWindow* mainWindow)
       sigc::mem_fun(*this, &SettingsWindow::on_clipping_changed));
   fill_options.signal_changed().connect(
       sigc::mem_fun(*this, &SettingsWindow::on_fill_changed));
+  projection_options.signal_changed().connect(
+      sigc::mem_fun(*this, &SettingsWindow::on_projection_changed));
   button_close.signal_clicked().connect(
       sigc::mem_fun(*this, &SettingsWindow::on_button_close));
 
@@ -69,6 +78,15 @@ void SettingsWindow::on_fill_changed()
   bool fill = (bool) fill_options.get_active_row_number();
   this->mainWindow->getViewport()->setFill(fill);
   this->mainWindow->getViewport()->queue_draw();
+}
+
+void SettingsWindow::on_projection_changed()
+{
+  bool projection = (bool) projection_options.get_active_row_number();
+  this->mainWindow->getViewport()->setProjection(projection);
+  this->mainWindow->getViewport()->queue_draw();
+  this->mainWindow->getLogTextView()->add_log_line("Projection set to " +
+      (string)projection_options.get_active_text() + "\n");
 }
 
 SettingsWindow::~SettingsWindow()
