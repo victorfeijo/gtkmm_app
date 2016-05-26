@@ -19,13 +19,14 @@ public:
 protected:
   MainWindow* mainWindow;
   Gtk::Notebook m_notebook;
-  Gtk::ComboBoxText clipping_options, fill_options;
+  Gtk::ComboBoxText clipping_options, fill_options, projection_options;
   Gtk::Button button_close;
   Gtk::Box settings_vbox;
 
   void on_button_close();
   void on_clipping_changed();
   void on_fill_changed();
+  void on_projection_changed();
 
 };
 #endif

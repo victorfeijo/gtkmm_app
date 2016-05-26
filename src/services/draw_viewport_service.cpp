@@ -46,7 +46,10 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
     windowCenter.getz(), windowAngleZ, transform_type::ON_WINDOW);
     if (object->isInFrontOfWindow(windowCenter.getz()))
     {
-
+      if (viewport->getProjection())
+      {
+        applyPerspective(object, windowCenter);
+      }
       clipping_service.clip(viewport->getViewWindow(), object);
       list<Coordinate> objectCoordinates = object->getCoordinatesClipped();
       Coordinate firstCordConverted = convertFromWindowToViewport(
@@ -181,4 +184,28 @@ void DrawViewportService::updateViewportAllocation(Gtk::Allocation allocation, V
 
   viewport->set_allocation(allocation);
 
+}
+
+/*
+ * COP = CENTER OBSERVER POINT
+ */
+ void DrawViewportService::applyPerspective(DrawableObject* object, Coordinate windowCenter)
+{
+  Coordinate cop(
+    windowCenter.getx(),
+    windowCenter.gety(),
+    windowCenter.getz() + COP_Z
+  );
+  list<Coordinate> cord_list;
+  for (Coordinate cord : object->getCoordinatesWindow())
+  {
+    Coordinate translated_cord = cord.toMatrix() + (cop.toMatrix()*-1);
+    Coordinate projection_cord(
+      translated_cord.getx()/(translated_cord.getz()/abs(COP_Z)),
+      translated_cord.gety()/(translated_cord.getz()/abs(COP_Z)),
+      abs(COP_Z)
+    );
+    cord_list.push_back(projection_cord.toMatrix() + cop.toMatrix());
+  }
+  object->setCoordinatesWindow(cord_list);
 }
