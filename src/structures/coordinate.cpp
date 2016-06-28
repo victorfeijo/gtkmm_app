@@ -47,5 +47,6 @@ Matrix<double> Coordinate::toMatrix()
   mat.set(0, 0, cord_x);
   mat.set(0, 1, cord_y);
   mat.set(0, 2, cord_z);
+
   return mat;
 }

@@ -12,6 +12,8 @@
 #define BOTTOM 4  // 0100
 #define TOP    8  // 1000
 
+using namespace std;
+
 class ViewWindow;
 
 class ClippingService {
