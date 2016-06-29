@@ -30,7 +30,7 @@ Curve2D::~Curve2D()
 
 string Curve2D::getTypeName()
 {
-  if (type == object_type::BEZIER2D) { return "2D Bezier Curve" };
+  if (type == object_type::BEZIER2D) { return "2D Bezier Curve"; }
 
   return "2D B-Spline";
 }
