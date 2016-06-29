@@ -90,8 +90,8 @@ void RotateObjectService::rotate(DrawableObject *object, int dx, int dy, int dz,
                           Matrix<double> transform_matrix, transform_type type)
 {
   translate_service.translate(object, -dx, -dy, -dz, type);
-  std::list<Coordinate> new_cord_list;
-  std::list<Coordinate> cord_list;
+  list<Coordinate> new_cord_list;
+  list<Coordinate> cord_list;
   switch (type) {
     case transform_type::ON_WORLD:
       cord_list = object->getCoordinatesWorld();

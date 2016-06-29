@@ -15,7 +15,7 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
   updateViewportAllocation(viewport->get_allocation(), viewport);
 
   // paint white background
-  cr->set_source_rgb(WHITE);
+  cr->set_source_rgb(RED);
   cr->move_to(viewport->getXvpmin(),viewport->getYvpmin());
   cr->line_to(viewport->getXvpmax(),viewport->getYvpmin());
   cr->line_to(viewport->getXvpmax(),viewport->getYvpmax());
@@ -33,7 +33,7 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
   int windowAngleX = viewport->getViewWindow()->getRotationX();
   int windowAngleY = viewport->getViewWindow()->getRotationY();
   int windowAngleZ = viewport->getViewWindow()->getRotationZ();
-  std::list<DrawableObject*> objectsList = displayFile->getObjects();
+  list<DrawableObject*> objectsList = displayFile->getObjects();
 
   for (DrawableObject* object : objectsList)
   {

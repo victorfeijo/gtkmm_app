@@ -93,5 +93,6 @@ bool DrawableObject::isInFrontOfWindow(double viewportZ)
     count++;
   }
   double zAvg = zSum / count;
+
   return zAvg >= viewportZ - 0.001;
 }

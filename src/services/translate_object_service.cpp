@@ -10,8 +10,8 @@ TranslateObjectService::~TranslateObjectService()
 
 void TranslateObjectService::translate(DrawableObject* object, int dx, int dy, int dz, transform_type type)
 {
-  std::list<Coordinate> new_cord_list;
-  std::list<Coordinate> cord_list;
+  list<Coordinate> new_cord_list;
+  list<Coordinate> cord_list;
   switch (type) {
     case transform_type::ON_WORLD:
       cord_list = object->getCoordinatesWorld();
