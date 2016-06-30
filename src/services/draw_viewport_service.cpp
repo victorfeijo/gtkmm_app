@@ -33,7 +33,7 @@ void DrawViewportService::draw(const Cairo::RefPtr<Cairo::Context>& cr, Viewport
   int windowAngleX = viewport->getViewWindow()->getRotationX();
   int windowAngleY = viewport->getViewWindow()->getRotationY();
   int windowAngleZ = viewport->getViewWindow()->getRotationZ();
-  std::list<DrawableObject*> objectsList = displayFile->getObjects();
+  list<DrawableObject*> objectsList = displayFile->getObjects();
 
   for (DrawableObject* object : objectsList)
   {

@@ -7,6 +7,8 @@
 #include "drawable_object.hpp"
 #include "line.hpp"
 
+using namespace std;
+
 class DisplayFile
 {
 public:
@@ -15,11 +17,11 @@ public:
   void addObject(DrawableObject* object);
   DrawableObject* getObjectByName(string name);
   void removeObjectByName(string name);
-  std::list<string> getNamesList();
-  std::list<DrawableObject*> getObjects();
+  list<string> getNamesList();
+  list<DrawableObject*> getObjects();
 
 protected:
-  std::map<string, DrawableObject*> objectsMap;
+  map<string, DrawableObject*> objectsMap;
   void destroyMap();
 
 };

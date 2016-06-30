@@ -6,6 +6,8 @@
 #include "matrix.hpp"
 #include "transform_type.hpp"
 
+using namespace std;
+
 class TranslateObjectService
 {
 public:

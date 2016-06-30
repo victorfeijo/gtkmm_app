@@ -14,6 +14,8 @@
 #include "rotate_object_service.hpp"
 #include "clipping_service.hpp"
 
+using namespace std;
+
 class Viewport;
 
 class DrawViewportService

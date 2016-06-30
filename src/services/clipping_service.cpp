@@ -12,7 +12,7 @@ ClippingService::~ClippingService()
 void ClippingService::clip(ViewWindow* window, DrawableObject *object)
 {
   clipping_type type = window->getClippingType();
-  std::list<Coordinate> coordinatesWindow = object->getCoordinatesWindow();
+  list<Coordinate> coordinatesWindow = object->getCoordinatesWindow();
   int size = coordinatesWindow.size();
 
   switch (size) {
@@ -116,6 +116,7 @@ void ClippingService::clip(ViewWindow* window, DrawableObject *object)
     }
   }
   return;
+
   DO_NOT_CLIP:
   object->setCoordinatesClipped(object->getCoordinatesWindow());
 }
@@ -126,14 +127,13 @@ void ClippingService::clipPoint(ViewWindow* window, DrawableObject *object)
   {
     throw 30;
   }
-  std::list<Coordinate> windowCordList;
+
+  list<Coordinate> windowCordList;
   Coordinate point = object->getCoordinatesWindow().front();
   Coordinate point_end = Coordinate(point.getx()+1,point.gety()-1);
 
-  if (
-    calcRegionCode(window, point) == INSIDE &&
-    calcRegionCode(window, point_end) == INSIDE
-  )
+  if (calcRegionCode(window, point) == INSIDE &&
+      calcRegionCode(window, point_end) == INSIDE)
   {
     windowCordList = object->getCoordinatesWindow();
   }
@@ -146,7 +146,7 @@ void ClippingService::clipCohenSutherland(ViewWindow* window, DrawableObject *ob
   {
     throw 31;
   }
-  std::list<Coordinate> clippedCoordinates;
+  list<Coordinate> clippedCoordinates;
   Coordinate p1, p2;
   int k = 0;
   for (Coordinate cord : object->getCoordinatesWindow())
@@ -228,7 +228,8 @@ void ClippingService::clipLiangBarsky(ViewWindow* window, DrawableObject *object
   {
     throw 32;
   }
-  std::list<Coordinate> clippedCoordinates;
+
+  list<Coordinate> clippedCoordinates;
   Coordinate p1, p2;
   int k = 0;
   for (Coordinate cord : object->getCoordinatesWindow())
@@ -315,12 +316,12 @@ void ClippingService::clipSutherlandHodgman(ViewWindow *window, DrawableObject *
     throw 33;
   }
 
-  std::list<Coordinate> output = object->getCoordinatesWindow();
+  list<Coordinate> output = object->getCoordinatesWindow();
 
   for (int i = 0; i < 4; i++)  // for each edge in window
   {
     int edge_code = pow(2, i);  // LEFT // RIGHT // BOTTOM // TOP //
-    std::list<Coordinate> input = output;
+    list<Coordinate> input = output;
     output.clear();
     Coordinate last = input.back();
     if (object->getType() == BEZIER2D || object->getType() == BSPLINE2D)
@@ -377,6 +378,7 @@ Coordinate ClippingService::calcIntersection(Coordinate cord1, Coordinate cord2,
         cord1.getx()) / (cord2.getx() - cord1.getx());
     x = window->getXwmin();
   }
+
   return Coordinate(x, y);
 }
 
@@ -400,5 +402,6 @@ Coordinate ClippingService::alignToEdge(Coordinate cord, ViewWindow *window, int
   {
     x = window->getXwmin();
   }
+
   return Coordinate(x, y);
 }

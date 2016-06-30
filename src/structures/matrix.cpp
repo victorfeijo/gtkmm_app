@@ -28,14 +28,8 @@ Matrix<T>::~Matrix()
 template <typename T>
 void Matrix<T>::set(int row, int column, T value)
 {
-  if (column >= this->columns || row >= this->rows)
-  {
-    return;
-  }
-  else
-  {
-    this->matrix[row][column] = value;
-  }
+  if (column >= this->columns || row >= this->rows) { return; }
+  this->matrix[row][column] = value;
 }
 
 template <typename T>

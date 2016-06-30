@@ -1,8 +1,8 @@
 #include "display_file.hpp"
 
+// Create the display file with a origin object
 DisplayFile::DisplayFile()
 {
-  // add origin
   this->addObject(new Line(string("origin_x"), Coordinate(-10,0), Coordinate(10,0)));
   this->addObject(new Line(string("origin_y"), Coordinate(0,-10), Coordinate(0,10)));
   this->addObject(new Line(string("origin_z"), Coordinate(0,0,-10), Coordinate(0,0,10)));
@@ -17,14 +17,10 @@ void DisplayFile::addObject(DrawableObject* object)
 {
   if (this->objectsMap.count(object->getName()))
   {
-    if (this->objectsMap.find(object->getName())->second == object)
-    {  // same object
-      return;
-    }
-    else
-    {  // delete older object with same
-      removeObjectByName(object->getName());
-    }
+    // same object
+    if (this->objectsMap.find(object->getName())->second == object) { return; }
+    // delete older object with same
+    removeObjectByName(object->getName());
   }
   this->objectsMap[object->getName()] = object;
 }
@@ -41,9 +37,9 @@ void DisplayFile::removeObjectByName(string name)
   delete object;
 }
 
-std::list<string> DisplayFile::getNamesList()
+list<string> DisplayFile::getNamesList()
 {
-  std::list<string> list;
+  list<string> list;
   for(auto &key : objectsMap)
   {
     list.push_back(key.first);
@@ -52,14 +48,13 @@ std::list<string> DisplayFile::getNamesList()
 
 }
 
-std::list<DrawableObject*> DisplayFile::getObjects()
+list<DrawableObject*> DisplayFile::getObjects()
 {
-  std::list<DrawableObject*> list;
+  list<DrawableObject*> list;
   for(auto &key : objectsMap){
     list.push_back(key.second);
   }
   return list;
-
 }
 
 void DisplayFile::destroyMap()

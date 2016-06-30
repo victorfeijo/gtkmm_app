@@ -9,6 +9,8 @@
 #include "translate_object_service.hpp"
 #include "transform_type.hpp"
 
+using namespace std;
+
 class RotateObjectService
 {
 public:

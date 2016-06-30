@@ -13,8 +13,8 @@ void ScaleObjectService::scale(DrawableObject* object, double sx, double sy, dou
   Coordinate center_cord = object->getCenterOnWorld();
   translate_service.translate(object, center_cord.getx() *- 1, center_cord.gety() *- 1);
 
-  std::list<Coordinate> new_cord_list;
-  std::list<Coordinate> cord_list = object->getCoordinatesWorld();
+  list<Coordinate> new_cord_list;
+  list<Coordinate> cord_list = object->getCoordinatesWorld();
 
   Matrix<double> scale_bitmap(3, 3);
   scale_bitmap.set(0, 0, sx);

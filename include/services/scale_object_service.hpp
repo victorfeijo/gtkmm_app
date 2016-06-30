@@ -7,6 +7,8 @@
 #include "matrix.hpp"
 #include "translate_object_service.hpp"
 
+using namespace std;
+
 class ScaleObjectService
 {
 public:

@@ -1,7 +1,5 @@
 #include "bezier_curve.hpp"
 
-#define DELTA 0.008
-
 BezierCurve::BezierCurve(Vector vector1, Vector vector2)
     : vector1(vector1),
       vector2(vector2)
@@ -43,5 +41,6 @@ list<Coordinate> BezierCurve::blend()
     Matrix<double> p33 = p22 + ((p32 - p22) * t);
     cord_list.push_back(Coordinate(p33));
   }
+
   return cord_list;
 }

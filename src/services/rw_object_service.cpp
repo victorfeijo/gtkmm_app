@@ -97,6 +97,7 @@ list<DrawableObject*> RwObjectService::read(string file_path)
     }
     myfile.close();
   }
+
   return objects_list;
 }
 
@@ -113,6 +114,7 @@ DrawableObject* RwObjectService::addGroup(list<Coordinate> cord_list, string nam
   {
     object = new Object3D(name, cord_list);
   }
+
   return object;
 }
 

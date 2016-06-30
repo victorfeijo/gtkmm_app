@@ -1,6 +1,8 @@
 #ifndef GTKMM_APP_BEZIER_CURVE
 #define GTKMM_APP_BEZIER_CURVE
 
+#define DELTA 0.008
+
 #include <list>
 #include "vector.hpp"
 #include "matrix.hpp"

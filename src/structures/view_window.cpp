@@ -14,55 +14,47 @@ ViewWindow::ViewWindow(int Xwmin, int Ywmin, int Xwmax, int Ywmax)
 
 void ViewWindow::zoom_in(double scale)
 {
-  if (scale < 1)
+  if (scale < 1) { return; }
+
+  double width = this->Xwmax - this->Xwmin;
+  double height = this->Ywmax - this->Ywmin;
+  double newXwmin = Xwmin + (width - (width / scale)) / 2;
+  double newXwmax = Xwmax - (width - (width / scale)) / 2;
+  double newYwmin = Ywmin + (height - (height / scale)) / 2;
+  double newYwmax = Ywmax - (height - (height/ scale)) / 2;
+
+  if ((newXwmax - newXwmin) < MIN_WIDTH || (newYwmax - newYwmin) < MIN_HEIGHT)
   {
     return;
   }
-  else
-  {
-    double width = this->Xwmax - this->Xwmin;
-    double height = this->Ywmax - this->Ywmin;
-    double newXwmin = Xwmin + (width - (width / scale)) / 2;
-    double newXwmax = Xwmax - (width - (width / scale)) / 2;
-    double newYwmin = Ywmin + (height - (height / scale)) / 2;
-    double newYwmax = Ywmax - (height - (height/ scale)) / 2;
-    if ((newXwmax - newXwmin) < MIN_WIDTH || (newYwmax - newYwmin) < MIN_HEIGHT)
-    {
-      return;
-    }
-    else{
-      this->Xwmin = newXwmin;
-      this->Xwmax = newXwmax;
-      this->Ywmin = newYwmin;
-      this->Ywmax = newYwmax;
-    }
+  else{
+    this->Xwmin = newXwmin;
+    this->Xwmax = newXwmax;
+    this->Ywmin = newYwmin;
+    this->Ywmax = newYwmax;
   }
 }
 
 void ViewWindow::zoom_out(double scale)
 {
-  if (scale < 1)
+  if (scale < 1) { return; }
+
+  double width = this->Xwmax - this->Xwmin;
+  double height = this->Ywmax - this->Ywmin;
+  double newXwmin = Xwmin - ((width * scale) - width) / 2;
+  double newXwmax = Xwmax + ((width * scale) - width) / 2;
+  double newYwmin = Ywmin - ((height * scale) - height) / 2;
+  double newYwmax = Ywmax + ((height * scale) - height) / 2;
+
+  if ((newXwmax - newXwmin) > MAX_WIDTH || (newYwmax - newYwmin) > MAX_HEIGHT)
   {
     return;
   }
-  else
-  {
-    double width = this->Xwmax - this->Xwmin;
-    double height = this->Ywmax - this->Ywmin;
-    double newXwmin = Xwmin - ((width * scale) - width) / 2;
-    double newXwmax = Xwmax + ((width * scale) - width) / 2;
-    double newYwmin = Ywmin - ((height * scale) - height) / 2;
-    double newYwmax = Ywmax + ((height * scale) - height) / 2;
-    if ((newXwmax - newXwmin) > MAX_WIDTH || (newYwmax - newYwmin) > MAX_HEIGHT)
-    {
-      return;
-    }
-    else{
-      this->Xwmin = newXwmin;
-      this->Xwmax = newXwmax;
-      this->Ywmin = newYwmin;
-      this->Ywmax = newYwmax;
-    }
+  else{
+    this->Xwmin = newXwmin;
+    this->Xwmax = newXwmax;
+    this->Ywmin = newYwmin;
+    this->Ywmax = newYwmax;
   }
 }
 
@@ -183,6 +175,7 @@ Coordinate ViewWindow::rotateVecX(Coordinate vec, int angle)
   rotateX.set(1, 2, -sin(angleRad));
   rotateX.set(2, 1, sin(angleRad));
   rotateX.set(2, 2, cos(angleRad));
+
   return vec.toMatrix() * rotateX;
 }
 
@@ -195,6 +188,7 @@ Coordinate ViewWindow::rotateVecY(Coordinate vec, int angle)
   rotateY.set(1, 1, 1);
   rotateY.set(2, 0, -sin(angleRad));
   rotateY.set(2, 2, cos(angleRad));
+
   return vec.toMatrix() * rotateY;
 }
 
@@ -207,6 +201,7 @@ Coordinate ViewWindow::rotateVecZ(Coordinate vec, int angle)
   rotateZ.set(1, 0, sin(angleRad));
   rotateZ.set(1, 1, cos(angleRad));
   rotateZ.set(2, 2, 1);
+
   return vec.toMatrix() * rotateZ;
 }
 
@@ -246,6 +241,7 @@ Coordinate ViewWindow::getXVec()
   xVec = rotateVecX(xVec, -getRotationX());
   xVec = rotateVecY(xVec, -getRotationY());
   xVec = rotateVecZ(xVec, -getRotationZ());
+
   return xVec;
 }
 
@@ -255,6 +251,7 @@ Coordinate ViewWindow::getYVec()
   yVec = rotateVecX(yVec, -getRotationX());
   yVec = rotateVecY(yVec, -getRotationY());
   yVec = rotateVecZ(yVec, -getRotationZ());
+
   return yVec;
 }
 
@@ -264,6 +261,7 @@ Coordinate ViewWindow::getZVec()
   zVec = rotateVecX(zVec, -getRotationX());
   zVec = rotateVecY(zVec, -getRotationY());
   zVec = rotateVecZ(zVec, -getRotationZ());
+
   return zVec;
 }
 
